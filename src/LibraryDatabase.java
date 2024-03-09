@@ -18,9 +18,9 @@ public class LibraryDatabase {
 
     }
     
-    protected String getItemInfo(){
+    protected Item getItemInfo(){
 
-        return "";
+        return null;
 
     }
 
