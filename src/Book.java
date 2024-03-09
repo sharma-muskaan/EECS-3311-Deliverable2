@@ -1,82 +1,105 @@
-
-public class Book {
-
-
-	public String name;
-	public String author;
-	public String edition;
-	public String issue;
-	public String publisherName;
-	public String itemID;
-	public String libLocation;
+public class Book extends PhysicalItem {
 	
 	public Book(String name, String author, String edition, String issue,
-			String publisherName, String itemID, String libLocation) {
+			String publisherName, String itemID, String libLocation, int copyNumber) {
 		
-		this.name = name;
-		this.author = author;
-		this.edition = edition;
-		this.issue = issue;
-		this.publisherName = publisherName;
-		this.itemID = itemID;
-		this.libLocation = libLocation;
+		super(name, author, edition, issue, publisherName, itemID, libLocation, copyNumber);
 		
 	}
 	
-	public String getName() {
-		return name;
-	}
-
+	@Override
 	public void setName(String name) {
 		this.name = name;
+
 	}
 
+	@Override
 	public String getAuthor() {
 		return author;
 	}
 
+	@Override
 	public void setAuthor(String author) {
 		this.author = author;
 	}
 
+	@Override
 	public String getEdition() {
 		return edition;
 	}
 
+	@Override
 	public void setEdition(String edition) {
 		this.edition = edition;
 	}
 
+	@Override
 	public String getIssue() {
 		return issue;
 	}
 
+	@Override
 	public void setIssue(String issue) {
 		this.issue = issue;
 	}
 
+	@Override
 	public String getPublisherName() {
 		return publisherName;
 	}
 
+	@Override
 	public void setPublisherName(String publisherName) {
 		this.publisherName = publisherName;
 	}
 
+	@Override
 	public String getItemID() {
 		return itemID;
 	}
 
+	@Override
 	public void setItemID(String itemID) {
 		this.itemID = itemID;
 	}
 
+	@Override
 	public String getLibLocation() {
 		return libLocation;
 	}
 
+	@Override
 	public void setLibLocation(String libLocation) {
 		this.libLocation = libLocation;
 	}
+
+	@Override
+	public String getName() {
+		return this.name;
+	}
+
+
+
+	@Override
+	public int getCopyNumber() {
+		// TODO Auto-generated method stub
+		return copyNumber;
+	}
+
+
+
+	@Override
+	public void rentCopy(int copyNumber) {
+		this.copyNumber = copyNumber - 1;
+	}
+
+
+
+	@Override
+	public void returnCopy(int copyNumber) {
+		this.copyNumber = copyNumber + 1;
+	}
+
+
 	
 }

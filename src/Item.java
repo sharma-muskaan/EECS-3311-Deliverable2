@@ -22,60 +22,32 @@ abstract class Item {
 		
 	}
 	
-	public String getName() {
-		return name;
-	}
+	public abstract String getName();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public abstract void setName(String name); 
 
-	public String getAuthor() {
-		return author;
-	}
+	public abstract String getAuthor();
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+	public abstract void setAuthor(String author);
 
-	public String getEdition() {
-		return edition;
-	}
+	public abstract String getEdition();
 
-	public void setEdition(String edition) {
-		this.edition = edition;
-	}
+	public abstract void setEdition(String edition);
 
-	public String getIssue() {
-		return issue;
-	}
+	public abstract String getIssue();
 
-	public void setIssue(String issue) {
-		this.issue = issue;
-	}
+	public abstract void setIssue(String issue);
 
-	public String getPublisherName() {
-		return publisherName;
-	}
+	public abstract String getPublisherName();
 
-	public void setPublisherName(String publisherName) {
-		this.publisherName = publisherName;
-	}
+	public abstract void setPublisherName(String publisherName);
 
-	public String getItemID() {
-		return itemID;
-	}
+	public abstract String getItemID();
 
-	public void setItemID(String itemID) {
-		this.itemID = itemID;
-	}
+	public abstract void setItemID(String itemID);
 
-	public String getLibLocation() {
-		return libLocation;
-	}
+	public abstract String getLibLocation();
 
-	public void setLibLocation(String libLocation) {
-		this.libLocation = libLocation;
-	}
+	public abstract void setLibLocation(String libLocation);
 	
 }
