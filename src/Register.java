@@ -4,6 +4,7 @@ public class Register {
     protected String email;
     protected String password;
     protected String accType;
+    public boolean approved;
 
     protected String getEmail(){
         return this.email;
@@ -25,6 +26,11 @@ public class Register {
     protected void setAccType(String type){
         this.accType = type;
     }
+    public void setApproved(boolean approved) {
+    	this.approved = approved;
+    }
+    
+    
 
 
 
