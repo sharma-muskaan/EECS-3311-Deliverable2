@@ -1,10 +1,16 @@
 
 public class PhysicalItemFactory {
 	
-	public PhysicalItem getPhysicalItem(String physicalItemType) {
-		// TODO - replace with actual code
-		PhysicalItem physicalItem = new PhysicalItem("1", "2", "3", "4", "5", "6", "7"); //placeholder object
-		return physicalItem;
+	public PhysicalItem getPhysicalItem(String physicalItemType, String name, String author, String edition, String issue, String publisherName, String itemID,
+			String libLocation, int copyNumber) {
+		
+		if(physicalItemType.equals("Book")) {
+			PhysicalItem physicalItem = new Book(name, author, edition, issue, publisherName, itemID, libLocation, copyNumber); //placeholder object
+			return physicalItem;
+		}
+		
+		else return null;
+		
 	}
 
 }
