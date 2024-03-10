@@ -2,15 +2,12 @@ public class Book extends PhysicalItem {
 	
 	public Book(String name, String author, String edition, String issue,
 			String publisherName, String itemID, String libLocation, int copyNumber) {
-		
 		super(name, author, edition, issue, publisherName, itemID, libLocation, copyNumber);
-		
 	}
 	
 	@Override
 	public void setName(String name) {
 		this.name = name;
-
 	}
 
 	@Override
@@ -78,28 +75,18 @@ public class Book extends PhysicalItem {
 		return this.name;
 	}
 
-
-
 	@Override
 	public int getCopyNumber() {
-		// TODO Auto-generated method stub
 		return copyNumber;
 	}
 
-
-
 	@Override
 	public void rentCopy(int copyNumber) {
-		this.copyNumber = copyNumber - 1;
+		this.copyNumber = copyNumber--;
 	}
-
-
 
 	@Override
 	public void returnCopy(int copyNumber) {
-		this.copyNumber = copyNumber + 1;
+		this.copyNumber = copyNumber++;
 	}
-
-
-	
 }

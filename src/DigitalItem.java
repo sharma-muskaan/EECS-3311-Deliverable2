@@ -1,25 +1,9 @@
 
-public class DigitalItem {
+public class DigitalItem extends Item {
 
-	public String name;
-	public String author;
-	public String edition;
-	public String issue;
-	public String publisherName;
-	public String itemID;
-	public String libLocation;
-	
 	public DigitalItem(String name,String author, String edition, String issue,
 			String publisherName, String itemID, String libLocation) {
-		
-		this.name = name;
-		this.author = author;
-		this.edition = edition;
-		this.issue = issue;
-		this.publisherName = publisherName;
-		this.itemID = itemID;
-		this.libLocation = libLocation;
-		
+		super(name, author, edition, issue, publisherName, itemID, libLocation);
 	}
 	
 	public String getName() {
