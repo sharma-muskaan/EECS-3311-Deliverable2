@@ -1,10 +1,15 @@
 public class Register {
 
-
     protected String email;
     protected String password;
     protected String accType;
     public boolean approved;
+    
+	public Register(String email, String password, String accType) {
+		this.email = email;
+		this.password = password;
+		this.accType = accType;
+	}
 
     protected String getEmail(){
         return this.email;
@@ -29,10 +34,4 @@ public class Register {
     public void setApproved(boolean approved) {
     	this.approved = approved;
     }
-    
-    
-
-
-
-
 }

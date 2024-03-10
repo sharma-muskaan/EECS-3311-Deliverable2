@@ -1,10 +1,15 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Account {
+public class Account extends Register {
+	
 	protected ArrayList<DigitalItem> digitalItemList = new ArrayList<>();
 	protected ArrayList<PhysicalItem> physicalItemList = new ArrayList<>();
 	
+	public Account(String email, String password, String accType) {
+		super(email, password, accType);
+	}
+
 	protected void openOnlineBook(DigitalItem digItem) {
 		
 	}
