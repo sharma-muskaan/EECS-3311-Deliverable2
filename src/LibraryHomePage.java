@@ -18,10 +18,26 @@ public class LibraryHomePage {
         //to follow design principles (single responsibility) this should later be moved to a new method
         if (accType.equals("Visitor")) {
         	Account visitor = new Visitor(email, password, accType);
-        	//LibraryDatabase.setAccInfo(visitor);
-        	
+        	//LibraryDatabase.setAccInfo(visitor);     	
         }
+        
+        if (accType.equals("Student")) {
+        	Account student = new Student(email, password, accType);
+        	//LibraryDatabase.setAccInfo(student);
+        }
+        
+        if (accType.equals("Faculty")) {
+        	Account faculty = new Faculty(email, password, accType);
+        	//LibraryDatabase.setAccInfo(faculty);
+        }
+        
+        if (accType.equals("NonFaculty")) {
+        	Account nonFaculty = new NonFaculty(email, password, accType);
+        	//LibraryDatabase.setAccInfo(nonFaculty);
+        }             
+ 
     }
+    
     protected void login(){
         
     }

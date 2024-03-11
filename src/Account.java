@@ -1,41 +1,37 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Account extends Register {
+public interface Account  {
 	
-	protected ArrayList<DigitalItem> digitalItemList = new ArrayList<>();
-	protected ArrayList<PhysicalItem> physicalItemList = new ArrayList<>();
+	public ArrayList<DigitalItem> digitalItemList = new ArrayList<>();
+	public ArrayList<PhysicalItem> physicalItemList = new ArrayList<>();
 	
-	public Account(String email, String password, String accType) {
-		super(email, password, accType);
-	}
-
-	protected void openOnlineBook(DigitalItem digItem) {
-		
-	}
+	public String getEmail();
+  
+	public String getPassword();
+    	
+    public String getAccType();
+    
+    public void setEmail(String email);
+    
+    public void setPassword(String pass);
+    
+    public void setAccType(String type);
+    
+    public void setApproved(boolean approved);
 	
-	public ArrayList<Item> search(String search) {
-		return null;
-	}
+	public void openOnlineBook(DigitalItem digItem);
 	
-	protected void subToNews(DigitalItem digItem) {
-		
-	}
+	public ArrayList<Item> search(String search);
 	
-	protected void rentBook(PhysicalItem physItem) {
-		
-	}
+	public void subToNews(DigitalItem digItem);
 	
-	protected void purchaseItem(Item item) {
-		
-	}
+	public void rentBook(PhysicalItem physItem);
 	
-	protected Date getDueDate() {
-		return null;
-	}
+	public void purchaseItem(Item item);
 	
-	protected void returnBook(PhysicalItem physItem) {
-		
-	}
-		
+	public Date getDueDate();
+	
+	public void returnBook(PhysicalItem physItem);
+	
 }

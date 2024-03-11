@@ -1,11 +1,8 @@
+public class Student extends Decorator {
 
-public class Student extends Account {
-	
-	protected void makeCopy(Item textbook) {
-		
+	public Student(String email, String password, String accType) {
+		super(email, password, accType);
+		// TODO Auto-generated constructor stub
 	}
-	
-	protected void removeCopy(Item textbook) {
-		
-	}
+
 }
