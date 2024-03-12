@@ -1,5 +1,5 @@
 
-public class Visitor extends Decorator {
+public class Visitor extends Account {
 
 	public Visitor(String email, String password, String accType) {
 		super(email, password, accType);

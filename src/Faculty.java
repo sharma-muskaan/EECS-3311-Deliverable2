@@ -1,11 +1,6 @@
 import java.util.ArrayList;
 
-public class Faculty extends Decorator{
-	public Faculty(String email, String password, String accType) {
-		super(email, password, accType);
-		// TODO Auto-generated constructor stub
-	}
-
+public class Faculty extends Account{
 	protected String courseName;
 	protected ArrayList<String> currentCourses;
 	private Originator originator;
