@@ -1,41 +1,39 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Account extends Register {
+public abstract class Account extends Register {
 	
 	protected ArrayList<DigitalItem> digitalItemList = new ArrayList<>();
 	protected ArrayList<PhysicalItem> physicalItemList = new ArrayList<>();
 	
-	public Account(String email, String password, String accType) {
-		super(email, password, accType);
+	public Account(String name, String email, String password, String accType) {
+		super(name, email, password, accType);
 	}
+	
+	public Account(String name, String email, String password, String accType, 
+			ArrayList<DigitalItem> digitalItemList, ArrayList<PhysicalItem> physicalItemList) {
+		super(name, email, password, accType);
+		this.digitalItemList = digitalItemList;
+		this.physicalItemList = physicalItemList;
+	}
+	
 
-	protected void openOnlineBook(DigitalItem digItem) {
-		
-	}
+	protected abstract void openOnlineBook(DigitalItem digItem);
 	
-	public ArrayList<Item> search(String search) {
-		return null;
-	}
+	public abstract ArrayList<Item> search(String search);
 	
-	protected void subToNews(DigitalItem digItem) {
-		
-	}
+	protected abstract void subToNews(DigitalItem digItem);
 	
-	protected void rentBook(PhysicalItem physItem) {
+	protected abstract void rentBook(PhysicalItem physItem);
 		
-	}
+	protected abstract void purchaseItem(Item item);
 	
-	protected void purchaseItem(Item item) {
-		
-	}
+	protected abstract Date getDueDate();
 	
-	protected Date getDueDate() {
-		return null;
-	}
+	protected abstract void returnBook(PhysicalItem physItem);
 	
-	protected void returnBook(PhysicalItem physItem) {
-		
-	}
-		
+	protected abstract ArrayList<DigitalItem> getDigitalItemList();
+	
+	protected abstract ArrayList<PhysicalItem> getPhysicalItemList();
+			
 }

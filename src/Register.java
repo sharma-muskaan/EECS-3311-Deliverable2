@@ -1,11 +1,13 @@
 public class Register {
 
+	protected String name;
     protected String email;
     protected String password;
     protected String accType;
     public boolean approved;
     
-	public Register(String email, String password, String accType) {
+	public Register(String name, String email, String password, String accType) {
+		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.accType = accType;
