@@ -3,9 +3,9 @@ import java.util.Scanner;
 public class LibraryHomePage {
 
     protected boolean isValid;
+    Scanner input = new Scanner(System.in);
 
     protected void Register(){
-        Scanner input = new Scanner(System.in);
         System.out.println("Enter name:");
         String name = input.nextLine();
         
@@ -22,15 +22,14 @@ public class LibraryHomePage {
         if (accType.equals("Visitor")) {
         	Account visitor = new Visitor(name, email, password, accType);
         	//LibraryDatabase.setAccInfo(visitor);
-        	
         }
         if (accType.equals("Student")) {
-        	Account student = new Student(name, email, password, accType);
+        	Account student = new Student(new ConcreteAccount(name, email, password, accType));
         	//LibraryDatabase.setAccInfo(student);
         }
         
         if (accType.equals("Faculty")) {
-        	Account faculty = new Faculty(name, email, password, accType);
+        	Account faculty = new Faculty(new ConcreteAccount(name, email, password, accType));
         	//LibraryDatabase.setAccInfo(faculty);
         }
         
@@ -40,8 +39,14 @@ public class LibraryHomePage {
         }  
         
     }
+    
     protected void login(){
+    	System.out.println("Enter email:");
+        String email = input.nextLine();
         
+        System.out.println("Enter password:");
+        String password = input.nextLine();
+        
+        //TODO - Assess if matches with database entry!
     }
-
 }

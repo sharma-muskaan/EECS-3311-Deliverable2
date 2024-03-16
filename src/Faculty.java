@@ -2,121 +2,71 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Faculty extends Decorator{
+	
 	protected String courseName;
-	protected ArrayList<String> currentCourses;
 	private Originator originator;
+	protected ArrayList<String> currentCourses;
 	private ArrayList<Originator.Memento> textbookHistory;
 	
-	public Faculty(String name, String email, String password, String accType) {
-		super(name, email, password, accType);
-	}
-	
-	public Faculty(Account account, String name, String email, String password, String accType,
-			String courseName, ArrayList<String> currentCourses, ArrayList<Originator.Memento> textbookHistory) {
-		super(account, name, email, password, accType);
+	public Faculty(Account account) {
+		super(account);
 		this.courseName = courseName;
 		this.currentCourses = currentCourses;
-		this.textbookHistory = textbookHistory;
-	}
-	
-	public Faculty(Account account, String name, String email, String password, String accType, 
-			ArrayList<DigitalItem> digitalItemList, ArrayList<PhysicalItem> physicalItemList, 
-			String courseName, ArrayList<String> currentCourses, ArrayList<Originator.Memento> textbookHistory) {
-		super(account, name, email, password, accType, digitalItemList, physicalItemList);
-		this.courseName = courseName;
-		this.currentCourses = currentCourses;
-		this.textbookHistory = textbookHistory;
-	}
-	
-	protected void notifyManager() {
 		
+		currentCourses = new ArrayList<String>();
+		textbookHistory = new ArrayList<Originator.Memento>();
+	}
+	
+	public Faculty(Account account, ArrayList<String> currentCourses) {
+		super(account);
+		this.courseName = courseName;
+		this.currentCourses = currentCourses;
+		
+		this.currentCourses = currentCourses;
+		textbookHistory = new ArrayList<Originator.Memento>();
+	}
+	
+//	TODO - FIGURE OUT CONSTRUCTORS NEEDED	
+//	public Faculty(Account account, ArrayList<Originator.Memento> textbookHistory) {
+//		super(account);
+//		this.courseName = courseName;
+//		this.currentCourses = currentCourses;
+//		
+//		currentCourses = new ArrayList<String>();
+//		this.textbookHistory = textbookHistory;
+//	}
+	
+	public Faculty(Account account, ArrayList<String> currentCourses, ArrayList<Originator.Memento> textbookHistory) {
+		super(account);
+		this.courseName = courseName;
+		this.currentCourses = currentCourses;
+		
+		this.currentCourses = currentCourses;
+		this.textbookHistory = textbookHistory;
+	}
+
+	public void notifyManager() {
+		//TODO - IMPLEMENT
 	}
 	
 	public ArrayList<String> getCourses() {
 		return currentCourses;
 	}
 	
-	public void setCourses(ArrayList<String> currentCourses) {
-		this.currentCourses = currentCourses;
+	public void addCourse(String course) {
+		currentCourses.add(course);
 	}
 	
+	//Should this be arraylist?
 	public String textbooksUsed() {
-		return null;
-		
+		return courseName;
 	}
 	
 	public void saveTextbookState() {
-		
+		//TODO - IMPLEMENT
 	}
 	
 	public void undoTextbookState() {
-		
+		//TODO - IMPLEMENT
 	}
-
-	@Override
-	protected void openOnlineBook(DigitalItem digItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public ArrayList<Item> search(String search) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void subToNews(DigitalItem digItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void rentBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void purchaseItem(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected Date getDueDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void returnBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected ArrayList<DigitalItem> getDigitalItemList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected ArrayList<PhysicalItem> getPhysicalItemList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -1,39 +1,24 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public abstract class Account extends Register {
+public interface Account {
 	
-	protected ArrayList<DigitalItem> digitalItemList = new ArrayList<>();
-	protected ArrayList<PhysicalItem> physicalItemList = new ArrayList<>();
+	public void openOnlineBook(DigitalItem digItem);
+	public ArrayList<Item> search(String search);
+	public void subToNews(DigitalItem digItem);
+	public void rentBook(PhysicalItem physItem);
+	public void purchaseItem(Item item);
+	public Date getDueDate();
+	public void returnBook(PhysicalItem physItem);
 	
-	public Account(String name, String email, String password, String accType) {
-		super(name, email, password, accType);
-	}
-	
-	public Account(String name, String email, String password, String accType, 
-			ArrayList<DigitalItem> digitalItemList, ArrayList<PhysicalItem> physicalItemList) {
-		super(name, email, password, accType);
-		this.digitalItemList = digitalItemList;
-		this.physicalItemList = physicalItemList;
-	}
-	
+	public ArrayList<DigitalItem> getDigitalItemList();
+	public ArrayList<PhysicalItem> getPhysicalItemList();
 
-	protected abstract void openOnlineBook(DigitalItem digItem);
-	
-	public abstract ArrayList<Item> search(String search);
-	
-	protected abstract void subToNews(DigitalItem digItem);
-	
-	protected abstract void rentBook(PhysicalItem physItem);
-		
-	protected abstract void purchaseItem(Item item);
-	
-	protected abstract Date getDueDate();
-	
-	protected abstract void returnBook(PhysicalItem physItem);
-	
-	protected abstract ArrayList<DigitalItem> getDigitalItemList();
-	
-	protected abstract ArrayList<PhysicalItem> getPhysicalItemList();
-			
+	public String getEmail();
+	public String getPass();
+	public String getAccType();
+	public void setEmail(String email);
+	public void setPassword(String pass);
+	public void setAccType(String type);
+	public void setApproved(boolean approved);
 }

@@ -1,74 +1,106 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Decorator extends Account {
-	Account account;
+public class Decorator implements Account {
 	
-	public Decorator(String name, String email, String password, String accType) {
-		super(name, email, password, accType);
-	}
-	public Decorator(Account account, String name, String email, String password, String accType) {
-		super(name, email, password, accType);
-		this.account = account;
-	}
+	protected Account wrappee;
 	
-	public Decorator(Account account, String name, String email, String password, String accType, 
-			ArrayList<DigitalItem> digitalItemList, ArrayList<PhysicalItem> physicalItemList) {
-		super(name, email, password, accType, digitalItemList, physicalItemList);
-		this.account = account;
+	public Decorator(Account account) {
+		wrappee = account;
 	}
 
 	@Override
-	protected void openOnlineBook(DigitalItem digItem) {
-		// TODO Auto-generated method stub
-		
+	public void openOnlineBook(DigitalItem digItem) {
+		wrappee.openOnlineBook(digItem);;
 	}
+
 
 	@Override
 	public ArrayList<Item> search(String search) {
-		// TODO Auto-generated method stub
-		return null;
+		return wrappee.search(search);
 	}
 
-	@Override
-	protected void subToNews(DigitalItem digItem) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	protected void rentBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
-		
+	public void subToNews(DigitalItem digItem) {
+		wrappee.subToNews(digItem);
 	}
 
-	@Override
-	protected void purchaseItem(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	protected Date getDueDate() {
-		// TODO Auto-generated method stub
-		return null;
+	public void rentBook(PhysicalItem physItem) {
+		wrappee.rentBook(physItem);
 	}
 
-	@Override
-	protected void returnBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	protected ArrayList<DigitalItem> getDigitalItemList() {
-		// TODO Auto-generated method stub
-		return null;
+	public void purchaseItem(Item item) {
+		wrappee.purchaseItem(item);
 	}
 
+
 	@Override
-	protected ArrayList<PhysicalItem> getPhysicalItemList() {
-		// TODO Auto-generated method stub
-		return null;
+	public Date getDueDate() {
+		return wrappee.getDueDate();
+	}
+
+
+	@Override
+	public void returnBook(PhysicalItem physItem) {
+		wrappee.returnBook(physItem);
+	}
+
+
+	@Override
+	public ArrayList<DigitalItem> getDigitalItemList() {
+		return wrappee.getDigitalItemList();
+	}
+
+
+	@Override
+	public ArrayList<PhysicalItem> getPhysicalItemList() {
+		return wrappee.getPhysicalItemList();
+	}
+
+
+	@Override
+	public String getEmail() {
+		return wrappee.getEmail();
+	}
+
+
+	@Override
+	public String getPass() {
+		return wrappee.getPass();
+	}
+
+
+	@Override
+	public String getAccType() {
+		return wrappee.getAccType();
+	}
+
+
+	@Override
+	public void setEmail(String email) {
+		wrappee.setEmail(email);
+	}
+
+
+	@Override
+	public void setPassword(String pass) {
+		wrappee.setPassword(pass);
+	}
+
+
+	@Override
+	public void setAccType(String type) {
+		wrappee.setAccType(type);
+	}
+
+
+	@Override
+	public void setApproved(boolean approved) {
+		wrappee.setApproved(approved);
 	}
 }
