@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ConcreteAccount implements Account {
-	protected String name;
     protected String email;
     protected String password;
     protected String accType;
@@ -10,8 +9,7 @@ public class ConcreteAccount implements Account {
 	protected ArrayList<DigitalItem> digitalItemList = new ArrayList<>();
 	protected ArrayList<PhysicalItem> physicalItemList = new ArrayList<>();
 	
-	public ConcreteAccount(String name, String email, String password, String accType) {
-		this.name = name;
+	public ConcreteAccount(String email, String password, String accType) {
 		this.email = email;
 		this.password = password;
 		this.accType = accType;

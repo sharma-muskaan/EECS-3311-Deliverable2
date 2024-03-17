@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Student extends Decorator {
+public class Student extends AccountDecorator {
 
 	public Student(Account account) {
 		super(account);

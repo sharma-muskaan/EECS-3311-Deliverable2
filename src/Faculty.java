@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Faculty extends Decorator{
+public class Faculty extends AccountDecorator{
 	
 	protected String courseName;
 	private Originator originator;

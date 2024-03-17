@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Decorator implements Account {
+public class AccountDecorator implements Account {
 	
 	protected Account wrappee;
 	
-	public Decorator(Account account) {
+	public AccountDecorator(Account account) {
 		wrappee = account;
 	}
 
 	@Override
 	public void openOnlineBook(DigitalItem digItem) {
-		wrappee.openOnlineBook(digItem);;
+		wrappee.openOnlineBook(digItem);
 	}
 
 

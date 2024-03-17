@@ -1,4 +1,4 @@
 interface IterableCollection {
 
-    public Iterator creatIterator();
+    public Iterator createIterator();
 }
