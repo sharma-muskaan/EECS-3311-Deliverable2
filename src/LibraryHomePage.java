@@ -8,16 +8,26 @@ import java.util.Scanner;
 
 public class LibraryHomePage {
 	
-	LibraryHomePage homePage;
-	public ArrayList<Account> users;
-	public String path;
-    Scanner input;
-	
-	public void load(LibraryHomePage homePage, String path) throws Exception{
+	private static LibraryHomePage homePage;
+	private ArrayList<Account> users;
+	private String path;
+    private Scanner input;
+    
+    private LibraryHomePage(String path) throws Exception {
 		users = new ArrayList<Account>();
-		this.homePage = homePage;
-		this.path = path;
 		input = new Scanner(System.in);
+		this.path = path;
+		load();
+    }
+    
+    public static LibraryHomePage getInstance(String path) throws Exception {
+    	if (homePage == null) {
+    		homePage = new LibraryHomePage(path);
+    	}
+		return homePage;
+    }
+	
+	public void load() throws Exception{
 		CsvReader reader = new CsvReader(path);
 		reader.readHeaders();
 		

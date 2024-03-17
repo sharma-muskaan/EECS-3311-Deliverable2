@@ -1,7 +1,7 @@
 email,password,accType
 ferfolya23@gmail.com,TPW,Student
-billy@hotmail.com,BPW,Visitor
-jessica@yahoo.com,JPW,Faculty
-arthur@icloud.com,APW,NonFaculty
-jane@hotmail.com,JPW,Student
+billy@gmail.com,BPW,Visitor
+jessica@gmail.com,JPW,Faculty
+arthur@gmail.com,APW,NonFaculty
+jane@gmail.com,JPW,Student
 matt@gmail.com,MPW,Student
