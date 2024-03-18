@@ -1,13 +1,11 @@
 
 public class DigitalItem extends Item {
 	
-	String itemType;
 	String genre;
 
-	public DigitalItem(String itemType, String name, String author, String genre,
-			String edition, String publisherName) {
+	public DigitalItem(String itemType, String genre, String name,
+			String author, String edition, String publisherName) {
 		super(itemType, name, author, edition, publisherName);
-		this.itemType = itemType;
 		this.genre = genre;
 	}
 	

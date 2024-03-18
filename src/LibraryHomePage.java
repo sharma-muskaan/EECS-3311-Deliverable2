@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LibraryHomePage {
@@ -39,8 +40,26 @@ public class LibraryHomePage {
     	}
     }
     
-    protected void loggedInHomePage() {
-    	System.out.println("Login completed!");
+    protected void loggedInHomePage(Account user) {
+    	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
+    	ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
+    	
+    	System.out.println("Login completed!\n");
+    	System.out.println("Rentals:");
+    	for (PhysicalItem p : userPhysicalItems) {
+    		System.out.println("Name: " + p.getName());
+    		System.out.println("Author: " + p.getAuthor());
+    		System.out.println("Item Type: " + p.getItemType());
+    		System.out.println("Due Date: " + p.getDueDate() + "\n");
+    	}
+    	
+    	System.out.println("E-Books:");
+    	for (DigitalItem d : userDigitalItems) {
+    		System.out.println("Name: " + d.getName());
+    		System.out.println("Author: " + d.getAuthor());
+    		System.out.println("Item Type: " + d.getItemType() + "\n");
+    	}
+    	
     	System.exit(0);
     	
     	// TODO
@@ -70,16 +89,16 @@ public class LibraryHomePage {
             }
             else {
                 // TODO - Add some validation method prior to account creation if not Visitor.
-        		Account account = database.accountGenerator(email, password, accType);
+        		database.accountGenerator(email, password, accType);
         		database.updateAccounts();
-        		System.out.println("Registration successful!");
+        		System.out.println("Registration successful! Please login.");
                 loggedOutHomePage();
             }
     	}
     }
     
     protected void login() throws Exception{
-    	Account infoExists = null;
+    	Account registeredAccount = null;
     	
     	while (true) {
     		
@@ -89,9 +108,9 @@ public class LibraryHomePage {
             System.out.println("Enter password:");
             String password = input.nextLine();
             
-            infoExists = database.iterateDB(email, password);
+            registeredAccount = database.iterateDB(email, password);
             
-            if (infoExists != null) {
+            if (registeredAccount != null) {
             	break;
             }
             
@@ -99,6 +118,6 @@ public class LibraryHomePage {
     	}
     	
     	// Maybe have infoExists provided as input to load user profile to loggedInHomePage.
-    	loggedInHomePage();
+    	loggedInHomePage(registeredAccount);
     }
 }

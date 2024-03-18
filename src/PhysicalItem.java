@@ -10,9 +10,9 @@ public class PhysicalItem extends Item {
 	public String itemID;
 	public String libLocation;
 	
-	public PhysicalItem(String name, String author, String edition, String issue, String publisherName, String itemID,
-			String libLocation) {
-		super(name, author, edition, issue, publisherName);
+	public PhysicalItem(String itemType, String name, String author,
+			String edition, String publisherName, String itemID, String libLocation) {
+		super(itemType, name, author, edition, publisherName);
 		this.itemID = itemID;
 		this.libLocation = libLocation;
 		copyNumber = 20;
