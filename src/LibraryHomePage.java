@@ -1,71 +1,23 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import com.csvreader.CsvReader;
-import com.csvreader.CsvWriter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LibraryHomePage {
 	
 	private static LibraryHomePage homePage;
-	private ArrayList<Account> users;
-	private String path;
+	private static LibraryDatabase database;
     private Scanner input;
     
-    private LibraryHomePage(String path) throws Exception {
-		users = new ArrayList<Account>();
+    private LibraryHomePage() throws Exception {
+    	database = LibraryDatabase.getInstance();
 		input = new Scanner(System.in);
-		this.path = path;
-		load();
     }
     
-    public static LibraryHomePage getInstance(String path) throws Exception {
+    public static LibraryHomePage getInstance() throws Exception {
     	if (homePage == null) {
-    		homePage = new LibraryHomePage(path);
+    		homePage = new LibraryHomePage();
     	}
 		return homePage;
     }
 	
-	public void load() throws Exception{
-		CsvReader reader = new CsvReader(path);
-		reader.readHeaders();
-		
-		while(reader.readRecord()){
-			
-			String email = reader.get("email");
-			String password = reader.get("password");
-			String accType = reader.get("accType");
-			accountGenerator(email, password, accType);
-		}
-		
-		loggedOutHomePage();
-	}
-	
-	public void update() throws Exception{
-		try {		
-				CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');
-				//email,password,accType
-				csvOutput.write("email");
-				csvOutput.write("password");
-		    	csvOutput.write("accType");
-				csvOutput.endRecord();
-
-				// else assume that the file already has the correct header line
-				// write out a few records
-				for(Account u: users){
-					csvOutput.write(u.getEmail());
-					csvOutput.write(u.getPass());
-					csvOutput.write(u.getAccType());
-					csvOutput.endRecord();
-				}
-				csvOutput.close();
-			
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-	}
-
     protected void loggedOutHomePage() throws Exception {
         
     	while (true) {
@@ -110,7 +62,7 @@ public class LibraryHomePage {
             System.out.println("Select Account Type: ");
             String accType = input.nextLine();
             
-            Account accountExists = iterateDB(email, password);
+            Account accountExists = database.iterateDB(email, password);
             
             if (accountExists != null) {
             	System.out.println("You already have an account. Please try logging in instead!");
@@ -118,8 +70,8 @@ public class LibraryHomePage {
             }
             else {
                 // TODO - Add some validation method prior to account creation if not Visitor.
-        		Account account = accountGenerator(email, password, accType);
-        		homePage.update();
+        		Account account = database.accountGenerator(email, password, accType);
+        		database.updateAccounts();
         		System.out.println("Registration successful!");
                 loggedOutHomePage();
             }
@@ -137,7 +89,7 @@ public class LibraryHomePage {
             System.out.println("Enter password:");
             String password = input.nextLine();
             
-            infoExists = iterateDB(email, password);
+            infoExists = database.iterateDB(email, password);
             
             if (infoExists != null) {
             	break;
@@ -149,60 +101,4 @@ public class LibraryHomePage {
     	// Maybe have infoExists provided as input to load user profile to loggedInHomePage.
     	loggedInHomePage();
     }
-    
-	public Account accountGenerator(String email, String password, String accType) {
-		
-		Account user = null;
-		
-	    if (accType.equals("Visitor")) {
-	    	user = new Visitor(email, password, accType);
-	    	users.add(user);
-	    }
-	    else if (accType.equals("Student")) {
-	    	user = new Student(new ConcreteAccount(email, password, accType));
-	    	users.add(user);
-	    }
-	    
-	    else if (accType.equals("Faculty")) {
-	    	user = new Faculty(new ConcreteAccount(email, password, accType));
-	    	users.add(user);
-	    }
-	    
-	    else if (accType.equals("NonFaculty")) {
-	    	user = new NonFaculty(email, password, accType);
-	    	users.add(user);
-	    }
-	    
-//	    else {
-//	    	throw new Exception("Invalid Account Type");
-//	    }
-	    
-		return user;
-	}
-	
-	public Account iterateDB(String email, String password) throws Exception{
-		
-		int i = 0;
-		Account account;
-		while (i < users.size()) {
-		    account = users.get(i);
-		    
-		    String DB_email = account.getEmail();
-		    String DB_password = account.getPass();
-		    
-		    if (email.equals(DB_email)) {
-		    	if (password.equals(DB_password)) {
-		    		return account;
-		    	}
-		    	else {
-		    		System.out.println("You already have an account linked to this email, but your password is incorrect.");
-		    		loggedOutHomePage();
-		    	}
-		    }
-		    
-		    i++;
-		}
-		
-		return null;
-	}
 }

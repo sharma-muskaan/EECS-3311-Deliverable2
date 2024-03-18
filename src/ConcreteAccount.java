@@ -6,13 +6,15 @@ public class ConcreteAccount implements Account {
     protected String password;
     protected String accType;
     public boolean approved;
-	protected ArrayList<DigitalItem> digitalItemList = new ArrayList<>();
-	protected ArrayList<PhysicalItem> physicalItemList = new ArrayList<>();
+	protected ArrayList<DigitalItem> digitalItemList;
+	protected ArrayList<PhysicalItem> physicalItemList;
 	
 	public ConcreteAccount(String email, String password, String accType) {
 		this.email = email;
 		this.password = password;
 		this.accType = accType;
+		digitalItemList = new ArrayList<>();
+		physicalItemList = new ArrayList<>();
 		approved = false;
 	}
 
@@ -60,14 +62,12 @@ public class ConcreteAccount implements Account {
 
 	@Override
 	public ArrayList<DigitalItem> getDigitalItemList() {
-		// TODO Auto-generated method stub
-		return null;
+		return digitalItemList;
 	}
 
 	@Override
 	public ArrayList<PhysicalItem> getPhysicalItemList() {
-		// TODO Auto-generated method stub
-		return null;
+		return physicalItemList;
 	}
 	
 	@Override

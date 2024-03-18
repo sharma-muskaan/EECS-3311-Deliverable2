@@ -1,9 +1,22 @@
 
 public class DigitalItem extends Item {
+	
+	String itemType;
+	String genre;
 
-	public DigitalItem(String name,String author, String edition, String issue,
-			String publisherName, String itemID, String libLocation) {
-		super(name, author, edition, issue, publisherName, itemID, libLocation);
+	public DigitalItem(String itemType, String name, String author, String genre,
+			String edition, String publisherName) {
+		super(itemType, name, author, edition, publisherName);
+		this.itemType = itemType;
+		this.genre = genre;
+	}
+	
+	public String getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
 	}
 	
 	public String getName() {
@@ -21,6 +34,14 @@ public class DigitalItem extends Item {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+	
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
 
 	public String getEdition() {
 		return edition;
@@ -30,14 +51,6 @@ public class DigitalItem extends Item {
 		this.edition = edition;
 	}
 
-	public String getIssue() {
-		return issue;
-	}
-
-	public void setIssue(String issue) {
-		this.issue = issue;
-	}
-
 	public String getPublisherName() {
 		return publisherName;
 	}
@@ -45,21 +58,4 @@ public class DigitalItem extends Item {
 	public void setPublisherName(String publisherName) {
 		this.publisherName = publisherName;
 	}
-
-	public String getItemID() {
-		return itemID;
-	}
-
-	public void setItemID(String itemID) {
-		this.itemID = itemID;
-	}
-
-	public String getLibLocation() {
-		return libLocation;
-	}
-
-	public void setLibLocation(String libLocation) {
-		this.libLocation = libLocation;
-	}
-	
 }
