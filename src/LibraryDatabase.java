@@ -31,11 +31,14 @@ public class LibraryDatabase {
 		reader.readHeaders();
 		
 		while(reader.readRecord()){
-			
+			//email,password,accType,itemsBorrowed,overdueItems,accountLocked
 			String email = reader.get("email");
 			String password = reader.get("password");
 			String accType = reader.get("accType");
-			accountGenerator(email, password, accType);
+			int itemsBorrowed = Integer.parseInt(reader.get("itemsBorrowed"));
+			int overdueItems = Integer.parseInt(reader.get("overdueItems"));
+			boolean accountLocked = Boolean.parseBoolean(reader.get("accountLocked"));
+			accountGenerator(email, password, accType, itemsBorrowed, overdueItems, accountLocked);
 		}
 	}
 	
@@ -92,7 +95,7 @@ public class LibraryDatabase {
 			String publisherName = reader.get("publisherName");
 			String itemID = reader.get("itemID");
 			String libLocation = reader.get("libLocation");
-			PhysicalItem newPhysItem = new PhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation);
+			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, 20, null);
 			physItemList.add(newPhysItem);
 		}
 	}
@@ -101,10 +104,13 @@ public class LibraryDatabase {
 		try {		
 				String filePath = path + "account_data.csv";
 				CsvWriter csvOutput = new CsvWriter(new FileWriter(filePath, false), ',');
-				//email,password,accType
+				//email,password,accType,itemsBorrowed,overdueItems,accountLocked
 				csvOutput.write("email");
 				csvOutput.write("password");
 		    	csvOutput.write("accType");
+		    	csvOutput.write("itemsBorrowed");
+		    	csvOutput.write("overdueItems");
+		    	csvOutput.write("accountLocked");
 				csvOutput.endRecord();
 
 				// else assume that the file already has the correct header line
@@ -113,6 +119,9 @@ public class LibraryDatabase {
 					csvOutput.write(u.getEmail());
 					csvOutput.write(u.getPass());
 					csvOutput.write(u.getAccType());
+					csvOutput.write(String.valueOf(u.getItemsBorrowed()));
+					csvOutput.write(String.valueOf(u.getAccType()));
+					csvOutput.write(String.valueOf(u.isAccountLocked()));
 					csvOutput.endRecord();
 				}
 				csvOutput.close();
@@ -192,28 +201,28 @@ public class LibraryDatabase {
 				}
 		}
 
-	// This method is used for 2 things - creating brand new registered accounts, and importing
-	// pre-existing ones as Account objects.
-	public Account accountGenerator(String email, String password, String accType) throws Exception {
+	// This method is used for 2 things - creating brand new registered accounts, and importing pre-existing ones as Account objects.
+	// Could use Factory Pattern to make less cluttered and more efficient.
+	public Account accountGenerator(String email, String password, String accType, int itemsBorrowed, int itemsOverdue, boolean accountLocked) throws Exception {
 		
 		Account user = null;
 		
 	    if (accType.equals("Visitor")) {
-	    	user = new Visitor(email, password, accType);
+	    	user = new Visitor(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked);
 	    	users.add(user);
 	    }
 	    else if (accType.equals("Student")) {
-	    	user = new Student(new ConcreteAccount(email, password, accType));
+	    	user = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
 	    }
 	    
 	    else if (accType.equals("Faculty")) {
-	    	user = new Faculty(new ConcreteAccount(email, password, accType));
+	    	user = new Faculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
 	    }
 	    
 	    else if (accType.equals("NonFaculty")) {
-	    	user = new NonFaculty(email, password, accType);
+	    	user = new NonFaculty(email, password, accType,  itemsBorrowed, itemsOverdue, accountLocked);
 	    	users.add(user);
 	    }
 	    
@@ -224,69 +233,9 @@ public class LibraryDatabase {
 	    
 	    String[] emailSplitter = email.split("@", 2);
 	    String splitEmail = emailSplitter[0];
-		doesListExist(user, "digItem", splitEmail);
-		doesListExist(user, "physItem", splitEmail);
-	    
+	    ItemListFactory.getItemList(user, "digItem", path, splitEmail);
+	    ItemListFactory.getItemList(user, "physItem", path, splitEmail);
 		return user;
-	}
-	
-	//Only checks for if user lists exist, does not check if main DB lists exist yet.
-	public void doesListExist(Account user, String listType, String email) throws Exception {
-		// Specify the file path
-		
-		String fileName = email;
-		String filePath = path;
-		
-		if (listType.equals("digItem")) {
-			fileName += "_digItem_data.csv";
-			filePath += fileName;
-		}
-		
-		else if (listType.equals("physItem")){
-			fileName += "_physItem_data.csv";
-			filePath += fileName;
-		}
-
-        // Create a File object
-        File file = new File(filePath);
-        boolean fileExists = file.createNewFile();
-        
-        try {
-            // Create the file
-            if (fileExists) {
-                System.out.println("File created successfully.");
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred while creating the file: " + e.getMessage());
-            e.printStackTrace();
-        }
-        
-        
-		if (listType.equals("digItem")) {
-	        if (fileExists == true) {
-	        	updateDigItems(user.getDigitalItemList(), filePath);
-	        }
-	        
-	        else if (fileExists == false) {
-	        	loadDigItems(user.getDigitalItemList(), email);
-	        }
-		}
-		
-		else if (listType.equals("physItem")){
-	        if (fileExists == true) {
-	        	updatePhysItems(user.getPhysicalItemList(), filePath);
-	        }
-	        
-	        else if (fileExists == false) {
-	        	loadPhysItems(user.getPhysicalItemList(), email);
-	        }
-		}
-		
-	    else {
-	    	throw new Exception("Invalid Account Type");
-	    }
 	}
 	
 	public Account iterateDB(String email, String password) throws Exception{

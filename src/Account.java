@@ -17,8 +17,14 @@ public interface Account {
 	public String getEmail();
 	public String getPass();
 	public String getAccType();
+	public int getItemsBorrowed();
+	public int getOverdueItems();
+	public boolean isAccountLocked();
+	
 	public void setEmail(String email);
 	public void setPassword(String pass);
 	public void setAccType(String type);
-	public void setApproved(boolean approved);
+	public void setItemsBorrowed(int itemsBorrowed);
+	public void setOverdueItems(int overdueItems);
+	public void setAccountLocked(boolean accountLocked);
 }

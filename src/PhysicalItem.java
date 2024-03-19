@@ -1,27 +1,18 @@
+import java.util.Calendar;
 import java.util.Date;
 
 
 // NOTE - should be an interface, however trying to make it an interface does not seem possible
 // when inhereting from an abstract class
-public class PhysicalItem extends Item {
+public abstract class PhysicalItem extends Item {
 	
 	int copyNumber;
 	Date dueDate;
 	public String itemID;
 	public String libLocation;
 	
-	public PhysicalItem(String itemType, String name, String author,
-			String edition, String publisherName, String itemID, String libLocation) {
+	public PhysicalItem(String itemType, String name, String author, String edition, String publisherName, String itemID, String libLocation, int copyNumber, Date dueDate) {
 		super(itemType, name, author, edition, publisherName);
-		this.itemID = itemID;
-		this.libLocation = libLocation;
-		copyNumber = 20;
-		dueDate = null;
-	}
-	
-	public PhysicalItem(String name, String author, String edition, String issue, String publisherName, String itemID,
-			String libLocation, int copyNumber, Date dueDate) {
-		super(name, author, edition, issue, publisherName);
 		this.itemID = itemID;
 		this.libLocation = libLocation;
 		this.copyNumber = copyNumber;
@@ -29,6 +20,13 @@ public class PhysicalItem extends Item {
 	}
 	
 	public void rentCopy(int copyNumber) {
+	    // Get current date
+	    Calendar calendar = Calendar.getInstance();
+	    // Add one month to the current date
+	    calendar.add(Calendar.MONTH, 1);
+	    dueDate = calendar.getTime();
+	    System.out.println("Enjoy! Due Date: " + dueDate);
+	    
 		//TODO
 		//Note - this implementation will involve cloning a copy of the book, and indicating that it is its own item.
 	}

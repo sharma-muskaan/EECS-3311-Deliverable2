@@ -98,9 +98,33 @@ public class AccountDecorator implements Account {
 		wrappee.setAccType(type);
 	}
 
+	@Override
+	public int getItemsBorrowed() {
+		return wrappee.getItemsBorrowed();
+	}
 
 	@Override
-	public void setApproved(boolean approved) {
-		wrappee.setApproved(approved);
+	public int getOverdueItems() {
+		return wrappee.getOverdueItems();
+	}
+
+	@Override
+	public boolean isAccountLocked() {
+		return wrappee.isAccountLocked();
+	}
+
+	@Override
+	public void setItemsBorrowed(int itemsBorrowed) {
+		wrappee.setItemsBorrowed(itemsBorrowed);
+	}
+
+	@Override
+	public void setOverdueItems(int overdueItems) {
+		wrappee.setOverdueItems(overdueItems);
+	}
+
+	@Override
+	public void setAccountLocked(boolean accountLocked) {
+		wrappee.setAccountLocked(accountLocked);
 	}
 }

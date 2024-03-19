@@ -40,7 +40,7 @@ public class LibraryHomePage {
     	}
     }
     
-    protected void loggedInHomePage(Account user) {
+    private void loggedInHomePage(Account user) {
     	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
     	ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
     	
@@ -69,35 +69,33 @@ public class LibraryHomePage {
     	// Also contains buttons for accessing common user tasks like search, rent, etc.
     }
     
-    protected void register() throws Exception{
-    	while (true) {
-        	System.out.println("Enter email: ");
-            String email = input.nextLine();
-            
-            System.out.println("Enter password: ");
-            String password = input.nextLine();
-            
-            // This would be replaced with a button in implementation.
-            System.out.println("Select Account Type: ");
-            String accType = input.nextLine();
-            
-            Account accountExists = database.iterateDB(email, password);
-            
-            if (accountExists != null) {
-            	System.out.println("You already have an account. Please try logging in instead!");
-            	loggedOutHomePage();
-            }
-            else {
-                // TODO - Add some validation method prior to account creation if not Visitor.
-        		database.accountGenerator(email, password, accType);
-        		database.updateAccounts();
-        		System.out.println("Registration successful! Please login.");
-                loggedOutHomePage();
-            }
-    	}
+    private void register() throws Exception{
+    	System.out.println("Enter email: ");
+        String email = input.nextLine();
+        
+        System.out.println("Enter password: ");
+        String password = input.nextLine();
+        
+        // This would be replaced with a button in implementation.
+        System.out.println("Select Account Type: ");
+        String accType = input.nextLine();
+        
+        Account accountExists = database.iterateDB(email, password);
+        
+        if (accountExists != null) {
+        	System.out.println("You already have an account. Please try logging in instead!");
+        	loggedOutHomePage();
+        }
+        else {
+            // TODO - Add some validation method prior to account creation if not Visitor.
+    		database.accountGenerator(email, password, accType, 0, 0, false);
+    		database.updateAccounts();
+    		System.out.println("Registration successful! Please login.");
+            loggedOutHomePage();
+        }
     }
     
-    protected void login() throws Exception{
+    private void login() throws Exception{
     	Account registeredAccount = null;
     	
     	while (true) {

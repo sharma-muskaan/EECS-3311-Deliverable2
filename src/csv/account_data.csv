@@ -1,5 +1,5 @@
-email,password,accType
-ferfolya23@gmail.com,TPW,Student
-billy@gmail.com,BPW,Visitor
-jessica@gmail.com,JPW,Faculty
-arthur@gmail.com,APW,NonFaculty
+email,password,accType,itemsBorrowed,overdueItems,accountLocked
+ferfolya23@gmail.com,TPW,Student,3,0,false
+billy@gmail.com,BPW,Visitor,0,0,false
+jessica@gmail.com,JPW,Faculty,0,0,false
+arthur@gmail.com,APW,NonFaculty,0,0,false

@@ -5,18 +5,28 @@ public class ConcreteAccount implements Account {
     protected String email;
     protected String password;
     protected String accType;
-    public boolean approved;
+    
+    protected int itemsBorrowed;
+    protected int overdueItems;
+    protected boolean accountLocked;
+    
 	protected ArrayList<DigitalItem> digitalItemList;
 	protected ArrayList<PhysicalItem> physicalItemList;
-	
-	public ConcreteAccount(String email, String password, String accType) {
+
+	public ConcreteAccount(String email, String password, String accType,
+			int itemsBorrowed, int overdueItems, boolean accountLocked) {
 		this.email = email;
 		this.password = password;
 		this.accType = accType;
+		
+		this.accountLocked  = accountLocked;
+		this.overdueItems = overdueItems;
+		this.accountLocked = accountLocked;
+		
 		digitalItemList = new ArrayList<>();
 		physicalItemList = new ArrayList<>();
-		approved = false;
 	}
+
 
 	@Override
 	public void openOnlineBook(DigitalItem digItem) {
@@ -95,8 +105,27 @@ public class ConcreteAccount implements Account {
 	public void setAccType(String type){
         this.accType = type;
     }
+	public int getItemsBorrowed() {
+		return itemsBorrowed;
+	}
 	@Override
-	public void setApproved(boolean approved) {
-    	this.approved = approved;
-    }
+	public void setItemsBorrowed(int itemsBorrowed) {
+		this.itemsBorrowed = itemsBorrowed;
+	}
+	@Override
+	public int getOverdueItems() {
+		return overdueItems;
+	}
+	@Override
+	public void setOverdueItems(int overdueItems) {
+		this.overdueItems = overdueItems;
+	}
+	@Override
+	public boolean isAccountLocked() {
+		return accountLocked;
+	}
+	@Override
+	public void setAccountLocked(boolean accountLocked) {
+		this.accountLocked = accountLocked;
+	}
 }
