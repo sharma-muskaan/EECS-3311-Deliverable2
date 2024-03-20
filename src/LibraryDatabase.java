@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 
@@ -95,7 +98,12 @@ public class LibraryDatabase {
 			String publisherName = reader.get("publisherName");
 			String itemID = reader.get("itemID");
 			String libLocation = reader.get("libLocation");
-			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, 20, null);
+			String dateString = reader.get("dueDate");
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+                Date dueDate = dateFormat.parse(dateString);
+
+			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, 20, dueDate);
 			physItemList.add(newPhysItem);
 		}
 	}
