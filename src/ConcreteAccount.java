@@ -21,7 +21,7 @@ public class ConcreteAccount implements Account {
 		this.password = password;
 		this.accType = accType;
 		
-		this.accountLocked  = accountLocked;
+		this.itemsBorrowed  = itemsBorrowed;
 		this.overdueItems = overdueItems;
 		this.accountLocked = accountLocked;
 		

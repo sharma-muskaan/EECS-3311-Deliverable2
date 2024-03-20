@@ -5,20 +5,12 @@ import java.util.Scanner;
 
 public class LibraryHomePage {
 	
-	private static LibraryHomePage homePage;
 	private static LibraryDatabase database;
     private Scanner input;
     
-    private LibraryHomePage() throws Exception {
+    public LibraryHomePage() throws Exception {
     	database = LibraryDatabase.getInstance();
 		input = new Scanner(System.in);
-    }
-    
-    public static LibraryHomePage getInstance() throws Exception {
-    	if (homePage == null) {
-    		homePage = new LibraryHomePage();
-    	}
-		return homePage;
     }
 	
     protected void loggedOutHomePage() throws Exception {
@@ -163,7 +155,7 @@ public class LibraryHomePage {
             if (newAccount.isValidEmail(email)) {
                 break;
             }
-            System.out.println("Please enter a York University email");
+            System.out.println("Please enter a valid email.");
     	}
  	
         while (true) {          
@@ -185,6 +177,13 @@ public class LibraryHomePage {
         // This would be replaced with a button in implementation.
         System.out.println("Select Account Type: ");
         String accType = input.nextLine();
+        
+        boolean verifiedByManager = newAccount.additionalValidation(email);
+        
+        if ((verifiedByManager == false) && !(accType.equals("Visitor"))) {
+        	System.out.println("Your account could not be validated. Please try signing up as a Visitor instead.");
+            loggedOutHomePage();
+        }
         
         Account accountExists = database.iterateDB(email, password);
         
@@ -237,6 +236,10 @@ public class LibraryHomePage {
     }
     
     private boolean isValidEmail(String email) {
+		return email.contains("@");
+	}
+    
+    private boolean additionalValidation(String email) {
 		return email.endsWith("yorku.ca");
 	}
     

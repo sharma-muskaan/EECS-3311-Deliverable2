@@ -138,7 +138,7 @@ public class LibraryDatabase {
 					csvOutput.write(u.getPass());
 					csvOutput.write(u.getAccType());
 					csvOutput.write(String.valueOf(u.getItemsBorrowed()));
-					csvOutput.write(String.valueOf(u.getAccType()));
+					csvOutput.write(String.valueOf(u.getOverdueItems()));
 					csvOutput.write(String.valueOf(u.isAccountLocked()));
 					csvOutput.endRecord();
 				}
