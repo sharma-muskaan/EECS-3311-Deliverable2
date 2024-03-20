@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,12 +11,15 @@ public class LibraryDatabase {
 	private ArrayList<Account> users;
 	protected ArrayList<DigitalItem> digItemsDB;
 	protected ArrayList<PhysicalItem> physItemsDB;
+	//IMPLEMENT COURSES
+	protected ArrayList<Course> coursesDB;
 	protected String path;
     
     private LibraryDatabase() throws Exception {
 		users = new ArrayList<Account>();
 		digItemsDB = new ArrayList<DigitalItem>();
 		physItemsDB = new ArrayList<PhysicalItem>();
+		coursesDB = new ArrayList<Course>();
 		path = "src/csv/";
     }
     
@@ -280,6 +282,54 @@ public class LibraryDatabase {
 				}
 		}
 
+		public void updateCourses(ArrayList<Course> courseList, String filePath) throws Exception{
+			try {		
+					CsvWriter csvOutput = new CsvWriter(new FileWriter(filePath, false), ',');
+			    	//itemType,genre,name,author,edition,publisherName
+					csvOutput.write("courseName");
+					csvOutput.write("itemType");
+					csvOutput.write("genre");
+					csvOutput.write("name");
+					csvOutput.write("author");
+					csvOutput.write("edition");
+					csvOutput.write("publisherName");
+					csvOutput.write("courseEndDate");
+					csvOutput.endRecord();
+					
+					// else assume that the file already has the correct header line
+					// write out a few records
+					for(Course c: courseList){
+						DigitalItem ccb = c.getCurrentCourseBook();
+						csvOutput.write(c.getCourseName());
+						csvOutput.write(ccb.getItemType());
+						csvOutput.write(ccb.getGenre());
+						csvOutput.write(ccb.getName());
+						csvOutput.write(ccb.getAuthor());
+						csvOutput.write(ccb.getEdition());
+						csvOutput.write(ccb.getPublisherName());
+						
+						Date courseEndDate = c.getCourseEndDate();
+				        String courseEndDateString = null;
+
+				        if (courseEndDate != null) {
+				            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+				            courseEndDateString = dateFormat.format(courseEndDate);
+				        }
+				        
+				        else {
+				        	courseEndDateString = "null";
+				        }
+				        
+						csvOutput.write(courseEndDateString);
+						csvOutput.endRecord();
+					}
+					csvOutput.close();
+				
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+		
 	// This method is used for 2 things - creating brand new registered accounts, and importing pre-existing ones as Account objects.
 	// Could use Factory Pattern to make less cluttered and more efficient.
 	public Account accountGenerator(String email, String password, String accType, int itemsBorrowed, int itemsOverdue, boolean accountLocked) throws Exception {
@@ -295,14 +345,14 @@ public class LibraryDatabase {
 	    else if (accType.equals("Student")) {
 	    	user = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
-	    	ListFactory.getItemList(user, "digItem", path, splitEmail);
+	    	ListFactory.getList(user, "digItem", path, splitEmail);
 	    	ListFactory.getList(user, "courses", path, splitEmail);
 	    }
 	    
 	    else if (accType.equals("Faculty")) {
 	    	user = new Faculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
-	    	ListFactory.getItemList(user, "digItem", path, splitEmail);
+	    	ListFactory.getList(user, "digItem", path, splitEmail);
 	    	ListFactory.getList(user, "courses", path, splitEmail);
 	    }
 	    
@@ -315,7 +365,7 @@ public class LibraryDatabase {
 	    	throw new Exception("Invalid Account Type");
 	    }
 	    
-	    ListFactory.getItemList(user, "physItem", path, splitEmail);
+	    ListFactory.getList(user, "physItem", path, splitEmail);
 	    
 		return user;
 	}

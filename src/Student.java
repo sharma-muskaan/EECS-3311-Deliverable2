@@ -28,10 +28,6 @@ public class Student extends AccountDecorator {
 	public void setDigitalCourseBooks(ArrayList<DigitalItem> digitalCourseBooks) {
 		this.digitalCourseBooks = digitalCourseBooks;
 	}
-
-	public ArrayList<DigitalItem> getDigitalItemList() {
-		return digitalCourseBooks;
-	}
 	
 	protected void makeCopy(Item textbook) {
 		//TODO - IMPLEMENT

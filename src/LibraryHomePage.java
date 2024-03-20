@@ -36,7 +36,8 @@ public class LibraryHomePage {
     
     private void loggedInHomePageGeneral(Account user) {
     	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
-    	ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
+    	//ArrayList<DigitalItem> userDigitalItems = user.getDigitalCourseBooks();
+    	//ArrayList<DigitalItem> userDigitalItems = user.getCourseBookHistory();
     	
     	System.out.println("Login completed!\n");
     	System.out.println("Rentals:");
@@ -52,13 +53,14 @@ public class LibraryHomePage {
 			}
     	}
     	
-    	System.out.println("E-Books:");
-    	for (DigitalItem d : userDigitalItems) {
-    		System.out.println("Name: " + d.getName());
-    		System.out.println("Author: " + d.getAuthor());
-    		System.out.println("Item Type: " + d.getItemType() + "\n");
-		
-    	}
+    	// a variation of this should ONLY be used for students / faculty
+//    	System.out.println("E-Books:");
+//    	for (DigitalItem d : userDigitalItems) {
+//    		System.out.println("Name: " + d.getName());
+//    		System.out.println("Author: " + d.getAuthor());
+//    		System.out.println("Item Type: " + d.getItemType() + "\n");
+//		
+//    	}
 		
     	
     	System.exit(0);

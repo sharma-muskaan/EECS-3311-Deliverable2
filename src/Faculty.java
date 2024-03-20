@@ -3,47 +3,39 @@ import java.util.Date;
 
 public class Faculty extends AccountDecorator{
 	
-	protected ArrayList<String> currentCourses;
+	protected ArrayList<Course> currentCourses;
 	// courseBookHistory = faculty_digItem_data.csv
 	protected ArrayList<DigitalItem> courseBookHistory;
 	
-	public Faculty(Account account) {
+	public Faculty(Account account) throws Exception {
 		super(account);
-		currentCourses = new ArrayList<String>();
+		currentCourses = new ArrayList<Course>();
 		courseBookHistory = new ArrayList<>();
 	}
 	
-	public Faculty(Account account, ArrayList<String> currentCourses, ArrayList<DigitalItem> courseBookHistory) {
+	public Faculty(Account account, ArrayList<Course> currentCourses, ArrayList<DigitalItem> courseBookHistory) throws Exception {
 		super(account);
 		this.currentCourses = currentCourses;
 		this.courseBookHistory = courseBookHistory;
 	}
-	
-//	TODO - FIGURE OUT CONSTRUCTORS NEEDED	
-//	public Faculty(Account account, ArrayList<Originator.Memento> textbookHistory) {
-//		super(account);
-//		this.courseName = courseName;
-//		this.currentCourses = currentCourses;
-//		
-//		currentCourses = new ArrayList<String>();
-//		this.textbookHistory = textbookHistory;
-//	}
 
 	public void notifyManager() {
 		//TODO - IMPLEMENT
 	}
 	
-	public ArrayList<String> getCourses() {
+	public ArrayList<Course> getCurrentCourses() {
 		return currentCourses;
 	}
-	
-	public void addCourse(String course) {
-		currentCourses.add(course);
+
+	public void setCurrentCourses(ArrayList<Course> currentCourses) {
+		this.currentCourses = currentCourses;
 	}
-	
-	public ArrayList<DigitalItem> courseBookHistory() {
+
+	public ArrayList<DigitalItem> getCourseBookHistory() {
 		return courseBookHistory;
 	}
-	
-	
+
+	public void setCourseBookHistory(ArrayList<DigitalItem> courseBookHistory) {
+		this.courseBookHistory = courseBookHistory;
+	}
 }
