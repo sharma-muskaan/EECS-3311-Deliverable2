@@ -30,7 +30,7 @@ public class ListFactory {
 		String filePath = path;
 		
 		if(listType.equals("digItem")) {
-			fileName += "_digitalCourseBooks.csv";
+			fileName += "_digItem_data.csv";
 			filePath += fileName;
 			
 			boolean fileExists = fileCreator(filePath);
@@ -67,7 +67,7 @@ public class ListFactory {
 		String filePath = path;
 		
 		if(listType.equals("digItem")) {
-			fileName += "_courseBookHistory.csv";
+			fileName += "_digItem_data.csv";
 			filePath += fileName;
 			
 			boolean fileExists = fileCreator(filePath);

@@ -10,7 +10,7 @@ public class Student extends AccountDecorator {
 	public Student(Account account) {
 		super(account);
 		currentCourses = new ArrayList<Course>();
-		digitalCourseBooks = new ArrayList<>();
+		digitalCourseBooks = new ArrayList<DigitalItem>();
 	}
 	
 	public ArrayList<Course> getCurrentCourses() {
