@@ -268,19 +268,4 @@ public class LibraryHomePage {
         // Check if all criteria are met
         return hasUpperCase && hasLowerCase && hasNumber && hasSymbol;
     }
-    
-    
-//    public static void main(String[] args) throws Exception {
-//    	LibraryHomePage newAccount = new LibraryHomePage();
-//    	newAccount.register();
-//    }
-   
-
-	public static void main(String[] args) throws Exception {
-
-		LibraryHomePage lib = new LibraryHomePage();
-		lib.loggedOutHomePage();
-
-
-	}
 }

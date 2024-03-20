@@ -107,7 +107,7 @@ public class LibraryDatabase {
 	            dueDate = dateFormat.parse(dueDateString);
 	            System.out.println(name + " Parsed Date: " + dueDate);
 	        } catch (Exception e) {
-	            System.out.println("Error parsing date: " + e.getMessage());
+	            System.out.println(e.getMessage());
 	        }
 	        
 	        boolean rentalEnabled = Boolean.valueOf(reader.get("rentalEnabled"));
