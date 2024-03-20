@@ -23,50 +23,62 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	private static Home_GUI_VisNonFaculty instance;
-	private static LibraryHomePage homePage;
 	private static LibraryDatabase database;
+	static Account account;
 	
 	JFrame frame;
 	private JPanel contentPane;
 	private JTextField textField, textField_1;
 
-	public static Home_GUI_VisNonFaculty getInstance() {
+	public static Home_GUI_VisNonFaculty getInstance() throws Exception {
 		if (instance == null)
-			instance = new Home_GUI_VisNonFaculty();
+			instance = new Home_GUI_VisNonFaculty(account);
 
 		return instance;
 	}
 	
-	public Home_GUI_VisNonFaculty() {
+	public Home_GUI_VisNonFaculty(Account acc) throws Exception {
+		database = LibraryDatabase.getInstance();
 		getContentPane().setLayout(null);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel listPanel = new JPanel();
-		JLabel lbl1 = new JLabel("1");
-		listPanel.add(lbl1);
+		
+		loggedInHomePage(acc, listPanel);
+		
 		listPanel.setBounds(275, 0, 600, 600);
 		listPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		getContentPane().add(listPanel);
+		setSize(900, 600);
+		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	 private void loggedInHomePage(Account user) {
-		 
+	 private void loggedInHomePage(Account user, JPanel listPanel) {
+		 System.out.println("entered loggedinhomepage");
 		 ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
 		 ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
-		 JPanel[] panelBook = new JPanel[20];
-		 JLabel[] lblNameOfBook = new JLabel[20];
-		 JLabel[] lblNameOfAuthor = new JLabel[20];
-		 JLabel[] lblItemType = new JLabel[20];
-		 JLabel[] lblDueDate = new JLabel[20];
-	    	
-	    	
+		 
 		 int lengthOfPhysItem = user.getPhysicalItemList().size();
 		 int lengthOfDigItem = user.getDigitalItemList().size();
+		 
+		 for (int i = 0; i < lengthOfPhysItem; i ++) {
+			 System.out.println(userPhysicalItems.get(i).getName());
+		 }
+		 
+		 
+		 JPanel[] panelBook = new JPanel[lengthOfPhysItem + lengthOfDigItem];
+		 JLabel[] lblNameOfBook = new JLabel[lengthOfPhysItem + lengthOfDigItem];
+		 JLabel[] lblNameOfAuthor = new JLabel[lengthOfPhysItem + lengthOfDigItem];
+		 JLabel[] lblItemType = new JLabel[lengthOfPhysItem + lengthOfDigItem];
+		 JLabel[] lblDueDate = new JLabel[lengthOfPhysItem];
+	    	
+	    	
+		 
 	    	
 		 for (int i = 0; i < lengthOfPhysItem; i++) {
 			 panelBook[i] = new JPanel();
@@ -102,29 +114,16 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 			 panelBook[i].add(lblItemType[i]);
 		 }
 	    	
-		 for (int i = 0; i < 20; i ++) {
-			 add(panelBook[i]);
+		 for (int i = 0; i < lengthOfPhysItem + lengthOfDigItem; i ++) {
+			 listPanel.add(panelBook[i]);
 		 }
+		 
+		 add(listPanel);
+		 
+		 
 	    	
 		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    	
-//	    	System.out.println("Login completed!\n");
-//	    	System.out.println("Rentals:");
-//	    	for (PhysicalItem p : userPhysicalItems) {
-//	    		System.out.println("Name: " + p.getName());
-//	    		System.out.println("Author: " + p.getAuthor());
-//	    		System.out.println("Item Type: " + p.getItemType());
-//	    		System.out.println("Due Date: " + p.getDueDate() + "\n");
-//	    	}
-//	    	
-//	    	System.out.println("E-Books:");
-//	    	for (DigitalItem d : userDigitalItems) {
-//	    		System.out.println("Name: " + d.getName());
-//	    		System.out.println("Author: " + d.getAuthor());
-//	    		System.out.println("Item Type: " + d.getItemType() + "\n");
-//	    	}
-//	    	
-//	    	System.exit(0);
 	    	
 	    	// TODO
 	    	// Displays list of hard cover books that a user is renting, plus their due dates.
@@ -139,10 +138,13 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		
 	}
 	
-	public static void main(String[] args) {
-		
-		Home_GUI_VisNonFaculty exampleApp = new Home_GUI_VisNonFaculty();
+	public static void main(String[] args) throws Exception  {
+		Account account = null;
+		Home_GUI_VisNonFaculty exampleApp = new Home_GUI_VisNonFaculty(account);
 		exampleApp.setSize(900, 600);
 		exampleApp.setVisible(true);
+		database.loadDigItems(database.digItemsDB, null);
+		database.loadPhysItems(database.physItemsDB, null);
+		database.loadAccounts();
 	}
 }
