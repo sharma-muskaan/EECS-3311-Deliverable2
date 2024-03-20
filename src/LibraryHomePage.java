@@ -40,7 +40,7 @@ public class LibraryHomePage {
     	}
     }
     
-    private void loggedInHomePage(Account user) {
+    private void loggedInHomePageGeneral(Account user) {
     	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
     	ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
     	
@@ -69,6 +69,70 @@ public class LibraryHomePage {
     	// Also contains buttons for accessing common user tasks like search, rent, etc.
     }
     
+    public void managementPortal(LibraryManager manager) throws Exception {
+    	for (PhysicalItem p : LibraryDatabase.physItemsDB) {
+    		System.out.println("Name: " + p.getName());
+    		System.out.println("Author: " + p.getAuthor());
+    		System.out.println("Item Type: " + p.getItemType());
+    		System.out.println("Due Date: " + p.getDueDate() + "\n");
+    		System.out.println("[DISABLE]");
+    		//Placeholder for button on each Item panel. When clicked, changes to [ENABLE].
+    		//GUI panel would print info about Item, but ALSO hold a direct reference to it.
+    		//This means that the search below will not need to be done to retrieve the Item.
+    	}
+    	
+    	//Instead of following print statements, assume there is "Add Physical Item" and "Add Digital Item" buttons.
+    	System.out.println("AP = Add Physical Item");
+    	System.out.println("AD = Add Digital Item");
+    	System.out.println("E = Add Physical Item");
+    	System.out.println("D = Add Physical Item");
+    	String userInput = input.nextLine();
+    	
+    	if (userInput.equals("D")) {
+    		System.out.println("Select Item Type: ");
+    		String itemType =  input.nextLine();
+    		System.out.println("Select Genre: " );
+			String genre = input.nextLine();
+			System.out.println("Enter Name: ");
+			String name = input.nextLine();
+			System.out.println("Enter Author Name: ");
+			String author = input.nextLine();
+			System.out.println("Enter Edition: ");
+			String edition = input.nextLine();
+			System.out.println("Enter Publisher: ");
+			String publisherName = input.nextLine();
+			
+			DigitalItem newDigItem = new DigitalItem(itemType, genre, name, author, edition, publisherName);
+			manager.addDigitalItem(newDigItem);
+    	}
+    	else if (userInput.equals("D")) {
+    		System.out.println("Select Item Type: ");
+    		String itemType =  input.nextLine();
+			System.out.println("Enter Name: ");
+			String name = input.nextLine();
+			System.out.println("Enter Author Name: ");
+			String author = input.nextLine();
+			System.out.println("Enter Edition: ");
+			String edition = input.nextLine();
+			System.out.println("Enter Publisher: ");
+			String publisherName = input.nextLine();
+			System.out.println("Enter Item ID: " );
+			String itemID = input.nextLine();
+			System.out.println("Enter Library Location: " );
+			String libLocation = input.nextLine();
+			//it can be assumed that an item that is only offered for sale just has rentalEnabled = false
+			System.out.println("Can this item be accessed for free? (Enter true or false.) " );
+			boolean rentalEnabled = Boolean.valueOf(input.nextLine());
+			System.out.println("If for sale, enter price: " );
+			double price = Double.parseDouble(input.nextLine());
+			
+			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, 20, null, rentalEnabled, price);
+			manager.addPhysicalItem(newPhysItem);
+    	}
+    	
+    	System.exit(0);
+    }
+    
     private void register() throws Exception{
     	System.out.println("Enter email: ");
         String email = input.nextLine();
@@ -84,19 +148,22 @@ public class LibraryHomePage {
         
         if (accountExists != null) {
         	System.out.println("You already have an account. Please try logging in instead!");
-        	loggedOutHomePage();
         }
         else {
             // TODO - Add some validation method prior to account creation if not Visitor.
     		database.accountGenerator(email, password, accType, 0, 0, false);
     		database.updateAccounts();
     		System.out.println("Registration successful! Please login.");
-            loggedOutHomePage();
         }
+        
+        loggedOutHomePage();
     }
     
     private void login() throws Exception{
     	Account registeredAccount = null;
+    	
+    	String MGR_email = "MGR_ACCESS";
+    	String MGR_password = "Password";
     	
     	while (true) {
     		
@@ -106,16 +173,23 @@ public class LibraryHomePage {
             System.out.println("Enter password:");
             String password = input.nextLine();
             
-            registeredAccount = database.iterateDB(email, password);
+            if (email.equals(MGR_email) && password.equals(MGR_password)) {
+            	LibraryManager manager = new LibraryManager(email, password);
+            	managementPortal(manager);
+            }
             
-            if (registeredAccount != null) {
-            	break;
+            else {
+                registeredAccount = database.iterateDB(email, password);
+                
+                if (registeredAccount != null) {
+                	break;
+                }
             }
             
             System.out.println("Incorrect credentials, please try again!");
     	}
     	
-    	// Maybe have infoExists provided as input to load user profile to loggedInHomePage.
-    	loggedInHomePage(registeredAccount);
+    	// Maybe have infoExists provided as input to load user profile to loggedInHomePageGeneral.
+    	loggedInHomePageGeneral(registeredAccount);
     }
 }
