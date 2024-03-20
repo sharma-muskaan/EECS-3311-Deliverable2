@@ -1,4 +1,5 @@
-itemType,name,author,edition,publisherName,itemID,libLocation
-Book,Harry Potter,JK Rowling,6th,Bloomsbury,987,York Stacy
-CD,Thriller,Michael Jackson,7th,CBS,654,York Scott
-Magazine,People,Rebecca Brown,8th,Dotdash Meredith,321,York Lanes
+itemType,name,author,edition,publisherName,itemID,libLocation,copyNumber,dueDate,rentalEnabled,price
+Book,Harry Potter,JK Rowling,6th,Bloomsbury,987,York Stacy,19,04-15-2053 05:26:19,true,-1.0
+CD,Thriller,Michael Jackson,7th,CBS,654,York Scott,19,03-15-2024 09:34:14,true,-1.0
+Magazine,People,Rebecca Brown,8th,Dotdash Meredith,321,York Lanes,19,03-24-2024 09:34:14,false,8.79
+Book,Titanic,Filson Young,5th,Nimbus,420,York Scott Main Floor,20,null,false,10.16

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class LibraryHomePage {
@@ -70,12 +71,12 @@ public class LibraryHomePage {
     }
     
     public void managementPortal(LibraryManager manager) throws Exception {
-    	for (PhysicalItem p : LibraryDatabase.physItemsDB) {
+    	for (PhysicalItem p : database.physItemsDB) {
     		System.out.println("Name: " + p.getName());
     		System.out.println("Author: " + p.getAuthor());
     		System.out.println("Item Type: " + p.getItemType());
-    		System.out.println("Due Date: " + p.getDueDate() + "\n");
-    		System.out.println("[DISABLE]");
+    		System.out.println("Due Date: " + p.getDueDate());
+    		System.out.println("[DISABLE]\n");
     		//Placeholder for button on each Item panel. When clicked, changes to [ENABLE].
     		//GUI panel would print info about Item, but ALSO hold a direct reference to it.
     		//This means that the search below will not need to be done to retrieve the Item.
@@ -88,7 +89,7 @@ public class LibraryHomePage {
     	System.out.println("D = Add Physical Item");
     	String userInput = input.nextLine();
     	
-    	if (userInput.equals("D")) {
+    	if (userInput.equals("AD")) {
     		System.out.println("Select Item Type: ");
     		String itemType =  input.nextLine();
     		System.out.println("Select Genre: " );
@@ -105,7 +106,7 @@ public class LibraryHomePage {
 			DigitalItem newDigItem = new DigitalItem(itemType, genre, name, author, edition, publisherName);
 			manager.addDigitalItem(newDigItem);
     	}
-    	else if (userInput.equals("D")) {
+    	else if (userInput.equals("AP")) {
     		System.out.println("Select Item Type: ");
     		String itemType =  input.nextLine();
 			System.out.println("Enter Name: ");
@@ -126,8 +127,17 @@ public class LibraryHomePage {
 			System.out.println("If for sale, enter price: " );
 			double price = Double.parseDouble(input.nextLine());
 			
-			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, 20, null, rentalEnabled, price);
+			int copyNumber = 20;
+			Date dueDate = null;
+			
+			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 			manager.addPhysicalItem(newPhysItem);
+    	}
+    	else if (userInput.equals("E")) {
+    		System.out.println("Item: Enabled");
+    	}
+    	else if (userInput.equals("D")) {
+    		System.out.println("Item: Disabled");
     	}
     	
     	System.exit(0);
@@ -162,8 +172,8 @@ public class LibraryHomePage {
     private void login() throws Exception{
     	Account registeredAccount = null;
     	
-    	String MGR_email = "MGR_ACCESS";
-    	String MGR_password = "Password";
+    	String MGR_email = "mgr_access";
+    	String MGR_password = "password";
     	
     	while (true) {
     		

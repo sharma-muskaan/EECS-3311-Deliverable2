@@ -9,10 +9,10 @@ import com.csvreader.CsvWriter;
 
 public class LibraryDatabase {
 	private static LibraryDatabase database;
-	private static ArrayList<Account> users;
-	protected static ArrayList<DigitalItem> digItemsDB;
-	protected static ArrayList<PhysicalItem> physItemsDB;
-	protected static String path;
+	private ArrayList<Account> users;
+	protected ArrayList<DigitalItem> digItemsDB;
+	protected ArrayList<PhysicalItem> physItemsDB;
+	protected String path;
     
     private LibraryDatabase() throws Exception {
 		users = new ArrayList<Account>();
@@ -105,13 +105,13 @@ public class LibraryDatabase {
 	        Date dueDate = null;
 	        try {
 	            dueDate = dateFormat.parse(dueDateString);
-	            System.out.println(name + "Parsed Date: " + dueDate);
+	            System.out.println(name + " Parsed Date: " + dueDate);
 	        } catch (Exception e) {
 	            System.out.println("Error parsing date: " + e.getMessage());
 	        }
 	        
-	        boolean rentalEnabled = Boolean.valueOf(reader.get("libLocation"));
-	        double price = Double.parseDouble(reader.get("copyNumber"));
+	        boolean rentalEnabled = Boolean.valueOf(reader.get("rentalEnabled"));
+	        double price = Double.parseDouble(reader.get("price"));
 	        
 			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 			physItemList.add(newPhysItem);
@@ -214,12 +214,17 @@ public class LibraryDatabase {
 						csvOutput.write(p.getPublisherName());
 						csvOutput.write(p.getItemID());
 						csvOutput.write(p.getLibLocation());
+						csvOutput.write(String.valueOf(p.getCopyNumber()));
 						Date dueDate = p.getDueDate();
 				        String dueDateString = null;
 
 				        if (dueDate != null) {
 				            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
 				            dueDateString = dateFormat.format(dueDate);
+				        }
+				        
+				        else {
+				        	dueDateString = "null";
 				        }
 				        
 						csvOutput.write(dueDateString);

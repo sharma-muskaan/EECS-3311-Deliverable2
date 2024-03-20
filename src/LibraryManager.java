@@ -3,27 +3,25 @@ import java.util.ArrayList;
 public class LibraryManager {
 	protected String email;
 	protected String password;
-	protected static String path;
-	private static LibraryDatabase database;
-	protected static ArrayList<DigitalItem> digItemsDB;
-	protected static ArrayList<PhysicalItem> physItemsDB;
+	private LibraryDatabase database;
 	
-	public LibraryManager(String email, String password) {
+	public LibraryManager(String email, String password) throws Exception {
 		this.email = email;
 		this.password = password;
+		database = LibraryDatabase.getInstance();
 	}
 	
 	// Visitor Pattern could be utilized so LibraryManager visits Add class (implements a VisitorInterface)
 	public void addDigitalItem(DigitalItem digItem) throws Exception {
 		//Insert update to csv database file.
-		digItemsDB.add(digItem);
-		database.updateDigItems(digItemsDB, path);
+		database.digItemsDB.add(digItem);
+		database.updateDigItems(database.digItemsDB, (database.path + "digItem_database.csv"));
 	}
 
 	public void addPhysicalItem(PhysicalItem physItem) throws Exception {
 		//Insert update to csv database file.
-		physItemsDB.add(physItem);
-		database.updatePhysItems(physItemsDB, path);
+		database.physItemsDB.add(physItem);
+		database.updatePhysItems(database.physItemsDB, (database.path + "physItem_database.csv"));
 	}
 	
 	public void enablePhysItem(PhysicalItem physItem) {
