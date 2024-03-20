@@ -12,9 +12,11 @@ public class ConcreteAccount implements Account {
     
 	protected ArrayList<DigitalItem> digitalItemList;
 	protected ArrayList<PhysicalItem> physicalItemList;
+	
+	private static LibraryDatabase database;
 
 	public ConcreteAccount(String email, String password, String accType,
-			int itemsBorrowed, int overdueItems, boolean accountLocked) {
+			int itemsBorrowed, int overdueItems, boolean accountLocked) throws Exception {
 		this.email = email;
 		this.password = password;
 		this.accType = accType;
@@ -25,6 +27,8 @@ public class ConcreteAccount implements Account {
 		
 		digitalItemList = new ArrayList<>();
 		physicalItemList = new ArrayList<>();
+		
+		database = LibraryDatabase.getInstance();
 	}
 
 
@@ -67,7 +71,6 @@ public class ConcreteAccount implements Account {
 	@Override
 	public void returnBook(PhysicalItem physItem) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

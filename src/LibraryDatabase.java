@@ -246,7 +246,7 @@ public class LibraryDatabase {
 		Account user = null;
 		
 	    if (accType.equals("Visitor")) {
-	    	user = new Visitor(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked);
+	    	user = new Visitor(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
 	    }
 	    else if (accType.equals("Student")) {
@@ -260,7 +260,7 @@ public class LibraryDatabase {
 	    }
 	    
 	    else if (accType.equals("NonFaculty")) {
-	    	user = new NonFaculty(email, password, accType,  itemsBorrowed, itemsOverdue, accountLocked);
+	    	user = new NonFaculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
 	    }
 	    
