@@ -2,4 +2,80 @@ itemType,genre,name,author,edition,publisherName
 Textbook,Educational,Biology,John Green,3rd,Pearson
 Textbook,Self Improvement,Yoga,Robert Smirth,2nd,Neilson
 RegBook,Horror,The Shining,William Williams,1st,Vintage
-Textbook,Mathematics,9th Grade Intro Calc,Martin Matherson,6th,Martin's Mathematic Foundation
+Textbook,Educational,Chemistry,Mary Johnson,4th,Academic Press
+Textbook,Self Improvement,Mindfulness,Sarah Lee,1st,HarperCollins
+RegBook,Fantasy,The Hobbit,J.R.R. Tolkien,2nd,Allen & Unwin
+Textbook,History,World War II,Peter Davis,5th,Oxford University Press
+RegBook,Romance,Pride and Prejudice,Jane Austen,3rd,Penguin Classics
+Textbook,Science,Physics,Mark Smith,2nd,McGraw-Hill Education
+RegBook,Thriller,The Girl on the Train,Paula Hawkins,2nd,Riverhead Books
+Textbook,Computer Science,Introduction to Algorithms,Thomas Cormen,3rd,MIT Press
+RegBook,Mystery,The Da Vinci Code,Dan Brown,1st,Doubleday
+Textbook,Psychology,Introduction to Psychology,David G. Myers,12th,Worth Publishers
+Textbook,Mathematics,Linear Algebra and Its Applications,David C. Lay,5th,Pearson
+RegBook,Science Fiction,Dune,Frank Herbert,4th,Chilton Books
+Textbook,Art,History of Art,Ernst Gombrich,16th,Phaidon Press
+RegBook,Drama,Hamlet,William Shakespeare,Revised,Folio Society
+Textbook,Economics,Macroeconomics,Gregory Mankiw,9th,Cengage Learning
+RegBook,Science,The Elegant Universe,Brian Greene,Revised,Vintage Books
+Textbook,Literature,The Norton Anthology of English Literature,M.H. Abrams,10th,Norton
+RegBook,Action and Adventure,The Adventures of Sherlock Holmes,Arthur Conan Doyle,Complete,Signet Classics
+Textbook,Business,Principles of Management,Stephen P. Robbins,15th,Pearson
+RegBook,Historical Fiction,The Pillars of the Earth,Ken Follett,25th,William Morrow
+Textbook,Health,Fundamentals of Anatomy and Physiology,Frederic H. Martini,11th,Pearson
+RegBook,Biography,Steve Jobs,Walter Isaacson,Revised,Simon & Schuster
+Textbook,Engineering,Introduction to Electrical Engineering,Richard C. Dorf,1st,Wiley
+RegBook,Travel,The Alchemist,Paulo Coelho,25th,HarperOne
+Textbook,Educational,Physics II,Michael Johnson,3rd,HarperCollins
+Textbook,Self Improvement,Positive Thinking,Lisa Brown,1st,Simon & Schuster
+RegBook,Horror,Dracula,Bram Stoker,Revised,Penguin Classics
+Textbook,Educational,Anatomy,Susan White,2nd,Oxford University Press
+Textbook,Self Improvement,Meditation Guide,James Turner,4th,McGraw-Hill Education
+RegBook,Fantasy,The Lord of the Rings,J.R.R. Tolkien,Revised,Houghton Mifflin Harcourt
+Textbook,History,The Rise and Fall of the Roman Empire,Edward Gibbon,6th,Vintage
+RegBook,Romance,Romeo and Juliet,William Shakespeare,Revised,Folio Society
+Textbook,Science,Astronomy,Timothy Johnson,3rd,Pearson
+RegBook,Thriller,Gone Girl,Gillian Flynn,1st,Broadway Books
+Textbook,Computer Science,Database Systems,Thomas Connolly,7th,Pearson
+RegBook,Mystery,The Hound of the Baskervilles,Arthur Conan Doyle,Revised,Penguin Classics
+Textbook,Psychology,Social Psychology,David Myers,9th,Worth Publishers
+Textbook,Mathematics,Probability and Statistics,John Smith,8th,Cengage Learning
+RegBook,Science Fiction,1984,George Orwell,Revised,Penguin Classics
+Textbook,Art,Modern Art,John Doe,2nd,Thames & Hudson
+RegBook,Drama,Romeo and Juliet,William Shakespeare,Revised,Folio Society
+Textbook,Economics,Microeconomics,Paul Krugman,5th,Worth Publishers
+RegBook,Science,Cosmos,Carl Sagan,Revised,Ballantine Books
+Textbook,Literature,Shakespearean Plays,William Shakespeare,Complete,Norton
+RegBook,Action and Adventure,Treasure Island,Robert Louis Stevenson,Revised,Penguin Classics
+Textbook,Business,Financial Management,Eugene F. Brigham,15th,Cengage Learning
+RegBook,Historical Fiction,To Kill a Mockingbird,Harper Lee,Revised,Harper
+Textbook,Health,Nutrition and Wellness,Judith E. Brown,13th,Cengage Learning
+RegBook,Biography,Leonardo da Vinci,Walter Isaacson,Revised,Simon & Schuster
+Textbook,Engineering,Mechanical Engineering,John Smith,4th,McGraw-Hill Education
+RegBook,Travel,Into the Wild,Jon Krakauer,Revised,Anchor Books
+Textbook,Educational,Environmental Science,Daniel Chiras,12th,Jones & Bartlett Learning
+Textbook,Self Improvement,Emotional Intelligence,Daniel Goleman,10th,Bantam
+RegBook,Horror,IT,Stephen King,Revised,Scribner
+Textbook,Educational,Geology,Stanley Chernicoff,4th,Wiley
+Textbook,Self Improvement,Leadership,John C. Maxwell,7th,HarperCollins Leadership
+RegBook,Fantasy,A Game of Thrones,George R.R. Martin,Revised,Bantam Books
+Textbook,History,A People's History of the United States,Howard Zinn,Revised,Harper Perennial Modern Classics
+RegBook,Romance,Outlander,Diana Gabaldon,Revised,Dell
+Textbook,Science,Chemistry: The Central Science,Theodore L. Brown,15th,Pearson
+RegBook,Thriller,The Silence of the Lambs,Thomas Harris,Revised,St. Martin's Paperbacks
+Textbook,Computer Science,Operating System Concepts,Abraham Silberschatz,10th,Wiley
+RegBook,Mystery,The Girl with the Dragon Tattoo,Stieg Larsson,Revised,Vintage Crime/Black Lizard
+Textbook,Psychology,Cognitive Psychology,Robert J. Sternberg,7th,Cengage Learning
+Textbook,Mathematics,Discrete Mathematics and Its Applications,Kenneth H. Rosen,8th,McGraw-Hill Education
+RegBook,Science Fiction,Neuromancer,William Gibson,Revised,Ace Books
+Textbook,Art,Art History,Marilyn Stokstad,6th,Pearson
+RegBook,Drama,To Kill a Mockingbird,Harper Lee,Revised,Harper
+Textbook,Economics,Principles of Economics,N. Gregory Mankiw,8th,Cengage Learning
+RegBook,Science,Pale Blue Dot,Carl Sagan,Revised,Ballantine Books
+Textbook,Literature,Modern American Poetry,Louis Untermeyer,Revised,Simon & Schuster
+RegBook,Action and Adventure,The Adventures of Tom Sawyer,Mark Twain,Revised,Penguin Classics
+Textbook,Business,Marketing Management,Philip Kotler,15th,Pearson
+RegBook,Historical Fiction,The Book Thief,Markus Zusak,Revised,Knopf Books for Young Readers
+Textbook,Health,Essentials of Medical Physiology,K. Sembulingam,7th,Jaypee Brothers Medical Publishers
+RegBook,Biography,Malcolm X: A Life of Reinvention,Manning Marable,Revised,Penguin Books
+Textbook,Engineering,Materials Science and Engineering: An Introduction,William D. Callister Jr.,10th,Wiley

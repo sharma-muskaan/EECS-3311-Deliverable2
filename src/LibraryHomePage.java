@@ -144,11 +144,35 @@ public class LibraryHomePage {
     }
     
     private void register() throws Exception{
-    	System.out.println("Enter email: ");
-        String email = input.nextLine();
-        
-        System.out.println("Enter password: ");
-        String password = input.nextLine();
+    	LibraryHomePage newAccount = new LibraryHomePage();
+    	String email;
+    	String password;
+    	
+    	while (true) {
+    		System.out.println("Enter email: ");
+            email = input.nextLine();
+            
+            if (newAccount.isValidEmail(email)) {
+                break;
+            }
+            System.out.println("Please enter a York University email");
+    	}
+ 	
+        while (true) {          
+            System.out.println("Enter password: ");
+            password = input.nextLine();
+            
+            if (newAccount.isStrongPassword(password)) {
+                break; 
+            }
+            
+            System.out.println("Password is not strong enough. Please make a new password with the following requirements:");
+            System.out.println("- At least 8 characters long");
+            System.out.println("- At least one uppercase letter");
+            System.out.println("- At least one lowercase letter");
+            System.out.println("- At least one digit");
+            System.out.println("- At least one symbol");
+        }
         
         // This would be replaced with a button in implementation.
         System.out.println("Select Account Type: ");
@@ -169,7 +193,8 @@ public class LibraryHomePage {
         loggedOutHomePage();
     }
     
-    private void login() throws Exception{
+
+	private void login() throws Exception{
     	Account registeredAccount = null;
     	
     	String MGR_email = "mgr_access";
@@ -202,4 +227,44 @@ public class LibraryHomePage {
     	// Maybe have infoExists provided as input to load user profile to loggedInHomePageGeneral.
     	loggedInHomePageGeneral(registeredAccount);
     }
+    
+    private boolean isValidEmail(String email) {
+		return email.endsWith("yorku.ca");
+	}
+    
+    private boolean isStrongPassword(String password) {
+    	
+        if (password == null || password.length() < 8) {
+            return false; // Password should be at least 8 characters long
+        }
+        
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        boolean hasNumber = false;
+        boolean hasSymbol = false;
+        
+        // Loop through each character in the password
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowerCase = true;
+            } else if (Character.isDigit(c)) {
+                hasNumber = true;
+            } else {
+                // Assuming symbols are any characters that are not letters or digits
+                hasSymbol = true;
+            }
+        }
+        
+        // Check if all criteria are met
+        return hasUpperCase && hasLowerCase && hasNumber && hasSymbol;
+    }
+    
+    
+//    public static void main(String[] args) throws Exception {
+//    	LibraryHomePage newAccount = new LibraryHomePage();
+//    	newAccount.register();
+//    }
+   
 }

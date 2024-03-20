@@ -10,6 +10,7 @@ public class ConcreteIterator {
     public void getNext(){
 
     }
+    
     public boolean hasMore(){
         return false;
     }
