@@ -13,14 +13,16 @@ public class GUI_Menu extends JFrame implements ActionListener {
 
 	JFrame frame;
 	private JButton btnCustomerMenu,btnExit;
+	private static LibraryDatabase database;
 	
-	public GUI_Menu() {
+	public GUI_Menu() throws Exception {
+		database = LibraryDatabase.getInstance();
 		initalize();
 	}
 	
 	private void initalize() {
-
 		// set parameters for a frame
+		
 		frame = new JFrame();
 		//frame.getContentPane().setBackground(Color.DARK_GRAY);
 		frame.setBackground(Color.WHITE);
@@ -60,15 +62,20 @@ public class GUI_Menu extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
+			
 			GUI_Menu window = new GUI_Menu();// making window to new menu
+			
 			window.frame.setSize(900, 600);
 			window.frame.setVisible(true);// setting the frame as visible
+			database.loadDigItems(database.digItemsDB, null);
+			database.loadPhysItems(database.physItemsDB, null);
+			database.loadAccounts();
 		} catch (Exception e) {// catching any errors
 			e.printStackTrace();
 		}
 	}
 
-	@Override
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnCustomerMenu ) {
 
@@ -76,8 +83,8 @@ public class GUI_Menu extends JFrame implements ActionListener {
 			GUI_SignUP_Login window;
 			try {
 				window = new GUI_SignUP_Login();
-				window.setSize(900, 600);
-				setVisible(true);
+				
+				System.out.println("creating window works");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

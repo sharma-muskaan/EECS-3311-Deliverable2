@@ -29,6 +29,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	public GUI_SignUP_Login() throws Exception {
 		super("YorkU Library Management");
 		database = LibraryDatabase.getInstance();
+		System.out.println(database);
 		
 		getContentPane().setLayout(null);
 
@@ -93,20 +94,13 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 		contentPane.add(btnSignup);
 
 		// Set size and location of frame
-		setSize(450, 300);  
+		setSize(900, 600);  
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	
-	
-	
-	
-	
-	
-
 	public static void main(String[] args) throws Exception {
 		// All loaders for main DB assume that CSV files already exist
 		// This can be changed later as needed using a branch of the doesListExist method
@@ -123,9 +117,15 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnBack) {
 			setVisible(false);
-			GUI_Menu window = new GUI_Menu(); // when log out is pressed then it goes to the the transaction menu
-			window.frame.setSize(900, 600);
-			window.frame.setVisible(true); // make the frame/ window visible
+			GUI_Menu window;
+			try {
+				window = new GUI_Menu();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} // when log out is pressed then it goes to the the transaction menu
+			setSize(900, 600);
+			setVisible(true); // make the frame/ window visible
 		}
 		
 		if (e.getSource() == btnLogin) {
@@ -135,6 +135,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            	// iterating through database to find an account with specific email and password passed in. 
 	            	
 					registeredAccount = database.iterateDB(email.getText(), password.getText());
+					System.out.println("account: " + registeredAccount.getEmail() + " " +  registeredAccount.getPass());
 				} 
 	            catch (Exception e1) {
 					// TODO Auto-generated catch block
