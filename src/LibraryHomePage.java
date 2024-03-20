@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -48,10 +49,15 @@ public class LibraryHomePage {
     	System.out.println("Login completed!\n");
     	System.out.println("Rentals:");
     	for (PhysicalItem p : userPhysicalItems) {
-    		System.out.println("Name: " + p.getName());
-    		System.out.println("Author: " + p.getAuthor());
-    		System.out.println("Item Type: " + p.getItemType());
-    		System.out.println("Due Date: " + p.getDueDate() + "\n");
+			if (p.getDueDate() != null) {
+				System.out.println("Name: " + p.getName());
+				System.out.println("Author: " + p.getAuthor());
+				System.out.println("Item Type: " + p.getItemType());
+				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
+				System.out.println(p.warning(p.getDueDate()));
+				System.out.println("\n");
+
+			}
     	}
     	
     	System.out.println("E-Books:");
@@ -59,7 +65,9 @@ public class LibraryHomePage {
     		System.out.println("Name: " + d.getName());
     		System.out.println("Author: " + d.getAuthor());
     		System.out.println("Item Type: " + d.getItemType() + "\n");
+		
     	}
+		
     	
     	System.exit(0);
     	
@@ -267,4 +275,12 @@ public class LibraryHomePage {
 //    	newAccount.register();
 //    }
    
+
+	public static void main(String[] args) throws Exception {
+
+		LibraryHomePage lib = new LibraryHomePage();
+		lib.loggedOutHomePage();
+
+
+	}
 }
