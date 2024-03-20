@@ -73,7 +73,6 @@ public class LibraryDatabase {
 		}
 	}
 	
-
 	public void loadPhysItems(ArrayList<PhysicalItem> physItemList, String email) throws Exception{
 		
 		String filePath = path;
@@ -115,6 +114,48 @@ public class LibraryDatabase {
 	        
 			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 			physItemList.add(newPhysItem);
+		}
+	}
+	
+	//May have errors. Please double check
+	public void loadCourses(ArrayList<Course> courseList, String email) throws Exception{
+		
+		String filePath = path;
+		
+		if (email == null) {
+			filePath += "course_database.csv";
+		}
+		
+		else {
+			filePath += email + "_course_data.csv";
+		}
+		
+		CsvReader reader = new CsvReader(filePath);
+		reader.readHeaders();
+		
+		while(reader.readRecord()){
+			
+			String courseName = reader.get("courseName");
+			String itemType = reader.get("itemType");
+			String genre = reader.get("genre");
+			String name = reader.get("name");
+			String author = reader.get("author");
+			String edition = reader.get("edition");
+			String publisherName = reader.get("publisherName");
+			
+			String courseEndDateString = reader.get("courseEndDate");
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+	        Date courseEndDate = null;
+	        try {
+	        	courseEndDate = dateFormat.parse(courseEndDateString);
+	            System.out.println(name + " Parsed Date: " + courseEndDate);
+	        } catch (Exception e) {
+	            System.out.println(e.getMessage());
+	        }
+
+			DigitalItem newCourseBook = new DigitalItem(itemType, genre, name, author, edition, publisherName);
+			Course newCourse = new Course(courseName, newCourseBook, courseEndDate);
+			courseList.add(newCourse);
 		}
 	}
 	
@@ -244,7 +285,9 @@ public class LibraryDatabase {
 	public Account accountGenerator(String email, String password, String accType, int itemsBorrowed, int itemsOverdue, boolean accountLocked) throws Exception {
 		
 		Account user = null;
-		
+	    String[] emailSplitter = email.split("@", 2);
+	    String splitEmail = emailSplitter[0];
+	    
 	    if (accType.equals("Visitor")) {
 	    	user = new Visitor(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
@@ -252,11 +295,15 @@ public class LibraryDatabase {
 	    else if (accType.equals("Student")) {
 	    	user = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
+	    	ListFactory.getItemList(user, "digItem", path, splitEmail);
+	    	ListFactory.getList(user, "courses", path, splitEmail);
 	    }
 	    
 	    else if (accType.equals("Faculty")) {
 	    	user = new Faculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
+	    	ListFactory.getItemList(user, "digItem", path, splitEmail);
+	    	ListFactory.getList(user, "courses", path, splitEmail);
 	    }
 	    
 	    else if (accType.equals("NonFaculty")) {
@@ -268,11 +315,8 @@ public class LibraryDatabase {
 	    	throw new Exception("Invalid Account Type");
 	    }
 	    
+	    ListFactory.getItemList(user, "physItem", path, splitEmail);
 	    
-	    String[] emailSplitter = email.split("@", 2);
-	    String splitEmail = emailSplitter[0];
-	    ItemListFactory.getItemList(user, "digItem", path, splitEmail);
-	    ItemListFactory.getItemList(user, "physItem", path, splitEmail);
 		return user;
 	}
 	

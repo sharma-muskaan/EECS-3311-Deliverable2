@@ -22,7 +22,7 @@ public class ItemListFactory {
         return fileExists;
 	}
 
-	public static void getItemList(Account user, String listType, String path, String email) throws Exception {
+	public static void getList(Account user, String listType, String path, String email) throws Exception {
 
 		LibraryDatabase database = LibraryDatabase.getInstance();
 		String fileName = email;
@@ -58,5 +58,19 @@ public class ItemListFactory {
 	        }
 			
 		}
+		
+		else if(listType.equals("courses")) {
+			fileName += "_course_data.csv";
+			filePath += fileName;
+			
+			boolean fileExists = fileCreator(filePath);
+			
+			if (fileExists == true) {
+				database.updateCourses(user.getPhysicalItemList(), filePath);
+	        }
+	        
+	        else if (fileExists == false) {
+	        	database.loadCourses(user.getPhysicalItemList(), email);
+	        }
 	}
 }

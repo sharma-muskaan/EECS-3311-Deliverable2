@@ -1,1 +1,5 @@
 itemType,genre,name,author,edition,publisherName
+Textbook,Educational,Biology,John Green,3rd,Pearson
+Textbook,Science,Physics,Mark Smith,2nd,McGraw-Hill Education
+Textbook,Computer Science,Introduction to Algorithms,Thomas Cormen,3rd,MIT Press
+Textbook,Psychology,Introduction to Psychology,David G. Myers,12th,Worth Publishers

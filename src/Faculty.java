@@ -4,15 +4,19 @@ import java.util.Date;
 public class Faculty extends AccountDecorator{
 	
 	protected ArrayList<String> currentCourses;
+	// courseBookHistory = faculty_digItem_data.csv
+	protected ArrayList<DigitalItem> courseBookHistory;
 	
 	public Faculty(Account account) {
 		super(account);
 		currentCourses = new ArrayList<String>();
+		courseBookHistory = new ArrayList<>();
 	}
 	
-	public Faculty(Account account, ArrayList<String> currentCourses) {
+	public Faculty(Account account, ArrayList<String> currentCourses, ArrayList<DigitalItem> courseBookHistory) {
 		super(account);
 		this.currentCourses = currentCourses;
+		this.courseBookHistory = courseBookHistory;
 	}
 	
 //	TODO - FIGURE OUT CONSTRUCTORS NEEDED	
@@ -37,7 +41,9 @@ public class Faculty extends AccountDecorator{
 		currentCourses.add(course);
 	}
 	
-	public ArrayList<DigitalItem> textbooksUsed(Course course) {
-		return course.getCourseBooks();
+	public ArrayList<DigitalItem> courseBookHistory() {
+		return courseBookHistory;
 	}
+	
+	
 }
