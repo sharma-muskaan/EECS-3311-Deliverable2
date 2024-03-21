@@ -1,5 +1,10 @@
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ConcreteAccount implements Account {
     protected String email;
@@ -12,6 +17,8 @@ public class ConcreteAccount implements Account {
     
 	protected ArrayList<DigitalItem> digitalItemList;
 	protected ArrayList<PhysicalItem> physicalItemList;
+
+	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
 
 	public ConcreteAccount(String email, String password, String accType,
 			int itemsBorrowed, int overdueItems, boolean accountLocked) {
@@ -128,4 +135,7 @@ public class ConcreteAccount implements Account {
 	public void setAccountLocked(boolean accountLocked) {
 		this.accountLocked = accountLocked;
 	}
+
+
 }
+

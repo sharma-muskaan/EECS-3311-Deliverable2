@@ -1,15 +1,23 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
+
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 
-public class LibraryDatabase {
+public class LibraryDatabase implements IterableCollection{
 	private static LibraryDatabase database;
 	private ArrayList<Account> users;
 	protected ArrayList<DigitalItem> digItemsDB;
 	protected ArrayList<PhysicalItem> physItemsDB;
 	private String path;
+	
+	private List<DigitalItem> items;
+	
+    public LibraryDatabase(List<DigitalItem> items) {
+        this.items = items;
+    }
     
     private LibraryDatabase() throws Exception {
 		users = new ArrayList<Account>();
@@ -263,4 +271,34 @@ public class LibraryDatabase {
 		
 		return null;
 	}
+
+	@Override
+	public Iterator createIterator() {
+		return new ConcreteIterator(items);
+	}
+	
+    // Method to print similar items based on text similarity and same genres
+    public void printSimilarItems(String searchQuery, List<String> searchGenres) {
+        List<String> recommendations = getRecommendations(searchQuery, searchGenres)
+        // Print recommendations
+        if (!recommendations.isEmpty()) {
+            System.out.println("Similar items:");
+            for (String recommendation : recommendations) {
+                System.out.println(recommendation);
+            }
+        } else {
+            System.out.println("No similar items found.");
+        }
+    }
+
+    // Method to get recommendations based on text similarity and same genres
+    private List<String> getRecommendations(String searchQuery, List<String> searchGenres) {
+        List<String> recommendations = new ArrayList<>();
+        for (DigitalItem item : items) {
+            if (item.getName().equalsIgnoreCase(searchQuery) || item.getGenre().contains(searchQuery)) {
+                recommendations.add(item.getName());
+            }
+        }
+        return recommendations;
+    }
 }
