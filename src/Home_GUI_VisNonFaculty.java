@@ -66,8 +66,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		 int lengthOfPhysItem = user.getPhysicalItemList().size();
 		 int lengthOfDigItem = user.getDigitalItemList().size();
 		
-		 
-		 
+
 		 JPanel[] panelBook = new JPanel[lengthOfPhysItem + lengthOfDigItem];
 		 JLabel[] lblNameOfBook = new JLabel[lengthOfPhysItem + lengthOfDigItem];
 		 JLabel[] lblNameOfAuthor = new JLabel[lengthOfPhysItem + lengthOfDigItem];
@@ -99,11 +98,17 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 			 k++;
 		 }
 	    	
-		 for (int i = 0; i < pbLength; i++) {
+		 for (int i = 0; i < lengthOfPhysItem; i++) {
 			 panelBook[i].add(lblNameOfBook[i]);
 			 panelBook[i].add(lblNameOfAuthor[i]);
 			 panelBook[i].add(lblItemType[i]);
 			 panelBook[i].add(lblDueDate[i]);
+		 }
+		 
+		 for (int j = lengthOfPhysItem; j < pbLength; j++) {
+			 panelBook[j].add(lblNameOfBook[j]);
+			 panelBook[j].add(lblNameOfAuthor[j]);
+			 panelBook[j].add(lblItemType[j]);
 		 }
 	    	
 		 for (int i = 0; i < lengthOfPhysItem + lengthOfDigItem; i ++) {
