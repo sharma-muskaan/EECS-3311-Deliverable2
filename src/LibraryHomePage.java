@@ -34,9 +34,75 @@ public class LibraryHomePage {
     	}
     }
     
-    private void loggedInHomePageGeneral(Account user) {
+    private void loggedInHomePageFaculty(Faculty user) throws Exception {
+    	// used for testing course database updating + testing updateCourseBook in Course
+//    	DigitalItem newCourseBook = new DigitalItem("Textbook","Literature","Shakespearean Plays","William Shakespeare","Complete","Norton");
+//    	Course testCourse = user.getCurrentCourses().get(0);
+//    	testCourse.updateCourseBook(user, newCourseBook);
+    	
     	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
-    	ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
+    	ArrayList<DigitalItem> courseBookHistory = user.getCourseBookHistory();
+    	
+    	System.out.println("Login completed!\n");
+    	
+    	//used for testing rent and return
+//    	System.out.println("Trial Rental:");
+//    	for (PhysicalItem p : database.physItemsDB) {
+//    		System.out.println("Name: " + p.getName());
+//			System.out.println("Author: " + p.getAuthor());
+//			System.out.println("Item Type: " + p.getItemType());
+//			p.rentCopy(user);
+//			System.out.println("\n");
+//    	}
+//    	
+//    	System.out.println("Trial Return:");
+//    	for (PhysicalItem p : database.physItemsDB) {
+//    		System.out.println("Name: " + p.getName());
+//			System.out.println("Author: " + p.getAuthor());
+//			System.out.println("Item Type: " + p.getItemType());
+//			p.returnCopy(user);
+//			System.out.println("\n");
+//    	}
+    	
+    	for (PhysicalItem p : userPhysicalItems) {
+			if (p.getDueDate() != null) {
+				System.out.println("Name: " + p.getName());
+				System.out.println("Author: " + p.getAuthor());
+				System.out.println("Item Type: " + p.getItemType());
+				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
+				System.out.println(((PhysicalItem) p).warningString(user));
+				if (p.calculateFine() > 0.0) {
+					System.out.println("Fine: " + p.calculateFine());
+				}
+				System.out.println("\n");
+
+			}
+    	}
+    	
+    	//faculty's current courses
+    	System.out.println("Current Courses:");
+    	for (Course c : user.currentCourses) {
+    		System.out.println("Course Name: " + c.courseName);
+    		System.out.println("Course Textbook: " + c.getCurrentCourseBook().getName() + "\n");
+    	}
+    	
+    	
+    	// a variation of this should ONLY be used for students / faculty
+    	System.out.println("Previous Course Texts:");
+    	for (DigitalItem d : courseBookHistory) {
+    		System.out.println("Name: " + d.getName());
+    		System.out.println("Author: " + d.getAuthor());
+    		System.out.println("Item Type: " + d.getItemType() + "\n");
+		
+    	}
+    	
+    	System.exit(0);
+    }
+    
+    private void loggedInHomePageStudent(Student user) throws Exception {
+    	
+    	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
+    	ArrayList<DigitalItem> userDigitalItems = user.getDigitalCourseBooks();
     	
     	System.out.println("Login completed!\n");
     	System.out.println("Rentals:");
@@ -46,12 +112,27 @@ public class LibraryHomePage {
 				System.out.println("Author: " + p.getAuthor());
 				System.out.println("Item Type: " + p.getItemType());
 				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
-				//System.out.println(p.warning(p.getDueDate()));
+
+				System.out.println(((PhysicalItem) p).warningString(user));
+				if (p.calculateFine() > 0.0) {
+					System.out.println("Fine: " + p.calculateFine());
+				}
 				System.out.println("\n");
 
 			}
     	}
     	
+    	//used for testing rent and return
+//    	System.out.println("Trial Rental:");
+//    	for (PhysicalItem p : database.physItemsDB) {
+//    		System.out.println("Name: " + p.getName());
+//			System.out.println("Author: " + p.getAuthor());
+//			System.out.println("Item Type: " + p.getItemType());
+//			p.rentCopy(user);
+//			System.out.println("\n");
+//    	}
+    	
+    	// a variation of this should ONLY be used for students / faculty
     	System.out.println("E-Books:");
     	for (DigitalItem d : userDigitalItems) {
     		System.out.println("Name: " + d.getName());
@@ -59,7 +140,32 @@ public class LibraryHomePage {
     		System.out.println("Item Type: " + d.getItemType() + "\n");
 		
     	}
-		
+    	
+    	System.exit(0);
+    }
+    
+    private void loggedInHomePageGeneral(Account user) throws Exception {
+    	
+    	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
+    	//ArrayList<DigitalItem> userDigitalItems = user.getDigitalCourseBooks();
+    	//ArrayList<DigitalItem> userDigitalItems = user.getCourseBookHistory();
+    	
+    	System.out.println("Login completed!\n");
+    	System.out.println("Rentals:");
+    	for (PhysicalItem p : userPhysicalItems) {
+			if (p.getDueDate() != null) {
+				System.out.println("Name: " + p.getName());
+				System.out.println("Author: " + p.getAuthor());
+				System.out.println("Item Type: " + p.getItemType());
+				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
+				System.out.println(((PhysicalItem) p).warningString(user));
+				if (p.calculateFine() > 0.0) {
+					System.out.println("Fine: " + p.calculateFine());
+				}
+				System.out.println("\n");
+
+			}
+    	}
     	
     	System.exit(0);
     	
@@ -232,7 +338,19 @@ public class LibraryHomePage {
     	}
     	
     	// Maybe have infoExists provided as input to load user profile to loggedInHomePageGeneral.
-    	loggedInHomePageGeneral(registeredAccount);
+    	
+    	String accType = String.valueOf(registeredAccount.getClass());
+    	
+    	if (accType.equals("class Faculty")) {
+    		loggedInHomePageFaculty((Faculty) registeredAccount);
+    	}
+    	
+    	else if (accType.equals("class Student")) {
+    		loggedInHomePageStudent((Student) registeredAccount);
+    	}
+    	else {
+    		loggedInHomePageGeneral(registeredAccount);
+    	}
     }
     
     private boolean isValidEmail(String email) {

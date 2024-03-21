@@ -7,8 +7,15 @@ abstract class Item {
 	public String edition;
 	public String publisherName;
 	
+	public Item(Item item) {
+		this.itemType = item.itemType;
+		this.name = item.name;
+		this.author = item.author;
+		this.edition = item.edition;
+		this.publisherName = item.publisherName;
+	}
+	
 	public Item(String itemType, String name, String author, String edition, String publisherName) {
-		
 		this.itemType = itemType;
 		this.name = name;
 		this.author = author;
@@ -30,4 +37,6 @@ abstract class Item {
 
 	public abstract String getPublisherName();
 	public abstract void setPublisherName(String publisherName);
+	
+	public abstract Item clone();
 }

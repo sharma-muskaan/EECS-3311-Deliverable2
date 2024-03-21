@@ -4,25 +4,48 @@ import java.util.Date;
 public class Course {
 	protected String courseName;
 	protected DigitalItem currentCourseBook;
-	protected ArrayList<DigitalItem> courseBookHistory;
 	protected Date courseEndDate;
+	private static LibraryDatabase database;
 	
-	public Course(String courseName, ArrayList<DigitalItem> courseBooks, Date courseEndDate) {
+	public Course(String courseName, DigitalItem currentCourseBook, Date courseEndDate) throws Exception {
 		this.courseName = courseName;
-		this.courseBookHistory = courseBooks;
+		this.currentCourseBook = currentCourseBook;
 		this.courseEndDate = courseEndDate;
+		database = LibraryDatabase.getInstance();
 	}
 
 	public String getCourseName() {
 		return courseName;
 	}
-
-	public ArrayList<DigitalItem> getCourseBooks() {
-		return courseBookHistory;
-	}
-
-	public void setCourseBooks(ArrayList<DigitalItem> courseBooks) {
-		this.courseBookHistory = courseBooks;
+	
+	//adds original course book to course book history, sets current course book to new course book
+	public void updateCourseBook(Faculty user, DigitalItem newCourseBook) throws Exception {
+		user.courseBookHistory.add(currentCourseBook);
+		currentCourseBook = newCourseBook;
+		
+	    String path = database.path + "course_database.csv";
+		
+	    //updates main courseDB
+		database.updateCourses(database.coursesDB, path);
+		
+		//updates all use course CSVs
+		for (Account a : database.getUsers()) {
+			String[] emailSplitter = a.getEmail().split("@", 2);
+		    String splitEmail = database.path + emailSplitter[0] + "_course_data.csv";
+		    
+		    if (a.getAccType().equals("Student")) {
+		    	database.updateCourses(((Student) a).getCurrentCourses(), splitEmail);
+		    }
+		    
+		    else if (a.getAccType().equals("Faculty")) {
+		    	database.updateCourses(((Faculty) a).getCurrentCourses(), splitEmail);
+		    }
+		}
+		
+		//updates courseBookHistory of prof who updated the currentCourseBook
+		String[] emailSplitter = user.getEmail().split("@", 2);
+		String splitEmail = database.path + emailSplitter[0] + "_digItem_data.csv";
+		database.updateDigItems(user.getCourseBookHistory(), splitEmail);
 	}
 
 	public DigitalItem getCurrentCourseBook() {
@@ -33,15 +56,6 @@ public class Course {
 		this.currentCourseBook = currentCourseBook;
 	}
 	
-
-	public ArrayList<DigitalItem> getCourseBookHistory() {
-		return courseBookHistory;
-	}
-
-	public void setCourseBookHistory(ArrayList<DigitalItem> courseBookHistory) {
-		this.courseBookHistory = courseBookHistory;
-	}
-
 	public Date getCourseEndDate() {
 		return courseEndDate;
 	}
@@ -53,11 +67,4 @@ public class Course {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-
-	
-	public void addCourseBook(DigitalItem courseBook) {
-		courseBookHistory.add(courseBook);
-		this.setCurrentCourseBook(courseBook);
-	}
-	
 }

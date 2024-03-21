@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class LibraryManager {
 	protected String email;
 	protected String password;

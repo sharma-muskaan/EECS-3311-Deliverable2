@@ -40,22 +40,9 @@ public class AccountDecorator implements Account {
 
 
 	@Override
-	public Date getDueDate() {
-		return wrappee.getDueDate();
-	}
-
-
-	@Override
 	public void returnBook(PhysicalItem physItem) {
 		wrappee.returnBook(physItem);
 	}
-
-
-	@Override
-	public ArrayList<DigitalItem> getDigitalItemList() {
-		return wrappee.getDigitalItemList();
-	}
-
 
 	@Override
 	public ArrayList<PhysicalItem> getPhysicalItemList() {
