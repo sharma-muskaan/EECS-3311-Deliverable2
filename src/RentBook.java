@@ -22,22 +22,31 @@ public class RentBook extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	 private JFrame previousPage;
 	
 	JButton btnNewButton = new JButton("Back");
 	JButton btnNewButton_1 = new JButton("Rent");
+	static Account acc1 = null;
 	Account acc = null;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RentBook frame = new RentBook(acc1);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public RentBook(Account acc) {
-		
 		this.acc = acc;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
@@ -94,10 +103,9 @@ public class RentBook extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnNewButton) {
 			dispose();
-			
-			this.toBack();
 			try {
 				Home_GUI_VisNonFaculty newFrame = new Home_GUI_VisNonFaculty(acc);
+				newFrame.setVisible(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -105,8 +113,4 @@ public class RentBook extends JFrame implements ActionListener {
 		}
 		
 	}
-	
-	public void setPreviousPage(JFrame container) {
-        this.previousPage = container;
-    }
 }

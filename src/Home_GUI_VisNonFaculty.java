@@ -28,6 +28,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 	private static Home_GUI_VisNonFaculty instance;
 	private static LibraryDatabase database;
 	static Account account;
+	Account account1;
 	Date currentDate = new Date();
 	
 	RentBook rb;
@@ -57,6 +58,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 	}
 	
 	public Home_GUI_VisNonFaculty(Account acc) throws Exception {
+		this.account1 = acc;
 		database = LibraryDatabase.getInstance();
 		getContentPane().setLayout(null);
 		contentPane = new JPanel();
@@ -225,21 +227,22 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			 if (e.getSource() == btnRentABook) {
 				 setVisible(false);
-				 RentBook window = rb;
+				 RentBook window = new RentBook(account1);
+				 window.setVisible(true);
 				
 				 
 			 }
 			 
 			 else if (e.getSource() == btnReturnABook) {
 				 setVisible(false);
-				 ReturnBook window = new ReturnBook();
+				 ReturnBook window = new ReturnBook(account1);
 				 window.setVisible(true);
 				 window.setSize(900, 600); 
 			 }
 			 
 			 else if (e.getSource() == btnPurchaseItem) {
 				 setVisible(false);
-				 PurchaseItem window = new PurchaseItem();
+				 PurchaseItem window = new PurchaseItem(account1);
 				 window.setVisible(true);
 				 window.setSize(900, 600); 
 			 }

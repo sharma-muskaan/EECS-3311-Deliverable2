@@ -5,15 +5,23 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class ReturnBook extends JFrame {
+public class ReturnBook extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	Account acc;
+	static Account acc1;
+	
+	JButton btnNewButton_1 = new JButton("Return");
+	JButton btnNewButton = new JButton("Back");
 
 	/**
 	 * Launch the application.
@@ -22,7 +30,7 @@ public class ReturnBook extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ReturnBook frame = new ReturnBook();
+					ReturnBook frame = new ReturnBook(acc1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +42,8 @@ public class ReturnBook extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ReturnBook() {
+	public ReturnBook(Account acc) {
+		this.acc = acc;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
@@ -70,15 +79,29 @@ public class ReturnBook extends JFrame {
 		comboBox.setBounds(59, 197, 736, 27);
 		panel_1.add(comboBox);
 		
-		JButton btnNewButton = new JButton("Back");
+		btnNewButton.addActionListener(this);
 		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btnNewButton.setBounds(59, 374, 135, 54);
 		panel_1.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Return");
+		btnNewButton_1.addActionListener(this);
 		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btnNewButton_1.setBounds(646, 374, 149, 54);
 		panel_1.add(btnNewButton_1);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == btnNewButton) {
+			dispose();
+			try {
+				Home_GUI_VisNonFaculty newFrame = new Home_GUI_VisNonFaculty(acc);
+				newFrame.setVisible(true);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 }
