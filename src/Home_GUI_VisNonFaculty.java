@@ -65,10 +65,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		 
 		 int lengthOfPhysItem = user.getPhysicalItemList().size();
 		 int lengthOfDigItem = user.getDigitalItemList().size();
-		 
-		 for (int i = 0; i < lengthOfPhysItem; i ++) {
-			 System.out.println(userPhysicalItems.get(i).getName());
-		 }
+		
 		 
 		 
 		 JPanel[] panelBook = new JPanel[lengthOfPhysItem + lengthOfDigItem];
@@ -77,14 +74,12 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		 JLabel[] lblItemType = new JLabel[lengthOfPhysItem + lengthOfDigItem];
 		 JLabel[] lblDueDate = new JLabel[lengthOfPhysItem];
 	    	
-	    	
+	    int pbLength = panelBook.length;
+	    int lblNameLength = lblNameOfBook.length;
+	    
 		 
 	    	
-		 for (int i = 0; i < lengthOfPhysItem; i++) {
-			 panelBook[i] = new JPanel();
-		 }
-	    	
-		 for (int i = 0; i < lengthOfDigItem; i++) {
+		 for (int i = 0; i < lengthOfPhysItem + lengthOfDigItem; i++) {
 			 panelBook[i] = new JPanel();
 		 }
 	    	
@@ -95,23 +90,20 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 			 lblDueDate[i] = new JLabel(userPhysicalItems.get(i).getDueDate().toString());
 		 }
 	    	
-		 for (int i = 0; i < lengthOfDigItem; i++) {
-			 lblNameOfBook[i] = new JLabel(userDigitalItems.get(i).getName());
-			 lblNameOfAuthor[i] = new JLabel(userDigitalItems.get(i).getAuthor());
-			 lblItemType[i] = new JLabel(userDigitalItems.get(i).getItemType());
+		 int k = 0;
+		 for (int j = lengthOfPhysItem; j < pbLength; j++) {
+			 
+			 lblNameOfBook[j] = new JLabel(userDigitalItems.get(k).getName());
+			 lblNameOfAuthor[j] = new JLabel(userDigitalItems.get(k).getAuthor());
+			 lblItemType[j] = new JLabel(userDigitalItems.get(k).getItemType());
+			 k++;
 		 }
 	    	
-		 for (int i = 0; i < lengthOfPhysItem; i++) {
+		 for (int i = 0; i < pbLength; i++) {
 			 panelBook[i].add(lblNameOfBook[i]);
 			 panelBook[i].add(lblNameOfAuthor[i]);
 			 panelBook[i].add(lblItemType[i]);
 			 panelBook[i].add(lblDueDate[i]);
-		 }
-	    	
-		 for (int i = 0; i < lengthOfDigItem; i++) {
-			 panelBook[i].add(lblNameOfBook[i]);
-			 panelBook[i].add(lblNameOfAuthor[i]);
-			 panelBook[i].add(lblItemType[i]);
 		 }
 	    	
 		 for (int i = 0; i < lengthOfPhysItem + lengthOfDigItem; i ++) {
