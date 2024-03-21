@@ -111,6 +111,9 @@ public class ConcreteAccount implements Account {
 	@Override
 	public void setOverdueItems(int overdueItems) {
 		this.overdueItems = overdueItems;
+		if (overdueItems > 3) {
+			this.setAccountLocked(true);
+		}
 	}
 	@Override
 	public boolean isAccountLocked() {

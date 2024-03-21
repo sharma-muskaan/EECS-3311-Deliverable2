@@ -50,7 +50,11 @@ public abstract class PhysicalItem extends Item {
 		
 		database = LibraryDatabase.getInstance();
 		
-		if (rentalEnabled == false) {
+		if (user.isAccountLocked() == true) {
+			System.out.println("Invalid Operation. Your account has been locked.");
+		}
+		
+		else if (rentalEnabled == false) {
 			System.out.println("Invalid Operation. Rentals are currently disabled for this item.");
 		}
 		
@@ -64,7 +68,8 @@ public abstract class PhysicalItem extends Item {
 		
 		else {
 			PhysicalItem rentedCopy = this.clone();
-			rentedCopy.setCopyNumber(1);
+			//copyNumber = -1 indicates that user has taken out this copy and that it is not overdue.
+			rentedCopy.setCopyNumber(-1);
 			
 		    // Get current date
 		    Calendar calendar = Calendar.getInstance();
@@ -128,31 +133,83 @@ public abstract class PhysicalItem extends Item {
 			}
 		}
 	}
+	
+	public double calculateFine() {
+		Date curr = new Date();
+		long timeDiff = - (dueDate.getTime() - curr.getTime()); // gets the time in miliseconds
+		long timeDiffDays = timeDiff/(24*60*60*1000); // converts to days
+		double overdueFee = timeDiffDays * 0.5;
+		return overdueFee;
+	}
 
-	public String warning(Date due){
+	public String warningString(Account user) throws Exception{
 		
 		Date curr = new Date();
-
+		database = LibraryDatabase.getInstance();
 		long timeDiff = dueDate.getTime() - curr.getTime(); // gets the time in miliseconds
 		long timeDiffHrs = timeDiff/(60*60*1000); // converts to hours
 		long timeDiffDays = timeDiff/(24*60*60*1000); // converts to days
 
 		String output = "";
-
-		if ( timeDiffHrs > 0 && timeDiffHrs < 24) {  // checks if there is less than 24 hours left on the due date
-			output = String.format("The book: %s is due in %d hours", this.name, timeDiffHrs);
+		
+		//copyNumber = -3 indicates that this copy is now lost.
+		if (this.getCopyNumber() == -3) {
+			output = String.format("The book  %s is now lost.", this.name);
+			if(timeDiffDays == 1){ // checks if there is 1 day before the due date make it "Day" instead of days
+				output = String.format("%s has been lost for %d day.", this.name, timeDiffDays);
+			}
+			else  {  // makes it "days" if more than one day
+				output = String.format("%s has been lost for %d days.", this.name, timeDiffDays);
+			}
+			return output;
 		}
-		else if(timeDiffHrs < 0 ){  // checks if the book is past the due date
+		
+		else if(timeDiffHrs < 0){  // checks if the book is past the due date
+			
+			//copyNumber = -1 indicates that user has taken out this copy and that it is not overdue.
+			if (this.getCopyNumber() == -1) {
+				//copyNumber = -2 indicates that this copy is now overdue for the user but not yet lost.
+				this.setCopyNumber(-2);
+				user.setOverdueItems(user.getOverdueItems() + 1);
+			}
+			
+			if (timeDiffHrs <= -15) {
+				//copyNumber = -3 indicates that this copy is now lost.
+				this.setCopyNumber(-3);
+				
+				output = String.format("This book is has been lost for %d days.", timeDiffDays);
+				
+				String[] emailSplitter = user.getEmail().split("@", 2);
+				String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
+			    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
+			    database.updateAccounts();
+				
+				return output;
+			}
+			
+			if (user.getItemsBorrowed() >= 3) {
+				user.setAccountLocked(true);
+			}
+			
+			String[] emailSplitter = user.getEmail().split("@", 2);
+			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
+		    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
+		    database.updateAccounts();
 			output = String.format("The book: %s is OVERDUE PLEASE RETURN IT", this.name);
 		}
-	
+		
+		else if (timeDiffHrs > 0 && timeDiffHrs < 24) {  // checks if there is less than 24 hours left on the due date
+			output = String.format("The book: %s is due in %d hours", this.name, timeDiffHrs);
+		}
+		
 		else if(timeDiffDays == 1){ // checks if there is 1 day before the due date make it "Day" instead of days
 			output = String.format("%d Day till %s is due for return", timeDiffDays, this.name);
 		}
-		else  {  // makes it "days" if more than one day
+		
+		else{  // makes it "days" if more than one day
 			output = String.format("%d Days till %s is due for return", timeDiffDays, this.name);
-			
 		}
+		
 		return output;
 	}
 	
