@@ -10,6 +10,9 @@ public interface Account {
 	public void purchaseItem(Item item);
 	public Date getDueDate();
 	public void returnBook(PhysicalItem physItem);
+	public void request(DigitalItem b);
+	public void printReqs();
+	public void sort();
 	
 	public ArrayList<DigitalItem> getDigitalItemList();
 	public ArrayList<PhysicalItem> getPhysicalItemList();

@@ -1,12 +1,18 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class AccountDecorator implements Account {
 	
-	protected Account wrappee;
 	
+	protected Account wrappee;
+	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
+
 	public AccountDecorator(Account account) {
 		wrappee = account;
+		
 	}
 
 	@Override
@@ -127,4 +133,45 @@ public class AccountDecorator implements Account {
 	public void setAccountLocked(boolean accountLocked) {
 		wrappee.setAccountLocked(accountLocked);
 	}
+
+	@Override
+	public void request(DigitalItem b) {
+
+		if(b.getItemType().equals("TextBook")){
+			this.reqs.add(b);
+			System.out.println(b.getItemType() + " " + b.getName() + " " +  b.getEdition() + " has been requested");
+		}
+		else{
+			this.reqs.add(b);
+			System.out.println(b.getItemType() + " " + b.getName() + " has been requested");
+		}
+	}
+
+	@Override
+	public void sort(){
+		int index =0;
+		 for(int i =0; i<reqs.size(); i++){
+		 	if(reqs.get(i).getGenre().equals("Educational")){
+            	Collections.swap(reqs, index, i);
+				index++;
+		 	}
+		 }
+	}
+
+	@Override
+	public void printReqs(){
+
+		System.out.println("Requested Items Queue (Educational Textbooks have higher priority):");
+		int index = 0;
+		for(DigitalItem i: this.reqs){
+			index++;
+			System.out.println(index + ". " + i.getItemType() + " " + i.getName());
+		}
+	}
+
+
+
+
+
+
 }
