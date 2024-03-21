@@ -44,6 +44,26 @@ public class LibraryHomePage {
     	ArrayList<DigitalItem> courseBookHistory = user.getCourseBookHistory();
     	
     	System.out.println("Login completed!\n");
+    	
+    	//used for testing rent and return
+//    	System.out.println("Trial Rental:");
+//    	for (PhysicalItem p : database.physItemsDB) {
+//    		System.out.println("Name: " + p.getName());
+//			System.out.println("Author: " + p.getAuthor());
+//			System.out.println("Item Type: " + p.getItemType());
+//			p.rentCopy(user);
+//			System.out.println("\n");
+//    	}
+//    	
+//    	System.out.println("Trial Return:");
+//    	for (PhysicalItem p : database.physItemsDB) {
+//    		System.out.println("Name: " + p.getName());
+//			System.out.println("Author: " + p.getAuthor());
+//			System.out.println("Item Type: " + p.getItemType());
+//			p.returnCopy(user);
+//			System.out.println("\n");
+//    	}
+    	
     	System.out.println("Rentals:");
     	for (PhysicalItem p : userPhysicalItems) {
 			if (p.getDueDate() != null) {
@@ -51,7 +71,6 @@ public class LibraryHomePage {
 				System.out.println("Author: " + p.getAuthor());
 				System.out.println("Item Type: " + p.getItemType());
 				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
-				System.out.println(p.warning(p.getDueDate()));
 				System.out.println("\n");
 
 			}
@@ -73,6 +92,8 @@ public class LibraryHomePage {
     		System.out.println("Item Type: " + d.getItemType() + "\n");
 		
     	}
+    	
+    	System.exit(0);
     }
     
     private void loggedInHomePageStudent(Student user) throws Exception {
@@ -102,6 +123,8 @@ public class LibraryHomePage {
     		System.out.println("Item Type: " + d.getItemType() + "\n");
 		
     	}
+    	
+    	System.exit(0);
     }
     
     private void loggedInHomePageGeneral(Account user) throws Exception {
@@ -119,6 +142,7 @@ public class LibraryHomePage {
 				System.out.println("Item Type: " + p.getItemType());
 				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
 				System.out.println(p.warning(p.getDueDate()));
+				p.rentCopy(user);
 				System.out.println("\n");
 
 			}

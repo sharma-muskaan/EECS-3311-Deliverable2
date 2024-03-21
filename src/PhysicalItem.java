@@ -20,6 +20,12 @@ public abstract class PhysicalItem extends Item {
 	
 	public PhysicalItem(PhysicalItem physicalItem) {
 		super(physicalItem);
+		this.itemID = physicalItem.itemID;
+		this.libLocation = physicalItem.libLocation;
+		this.copyNumber = physicalItem.copyNumber;
+		this.dueDate = physicalItem.dueDate;
+		this.rentalEnabled = physicalItem.rentalEnabled;
+		this.price = physicalItem.price;
 	}
 	
 	public PhysicalItem(String itemType, String name, String author, String edition, String publisherName, String itemID, String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) throws Exception {
@@ -30,7 +36,6 @@ public abstract class PhysicalItem extends Item {
 		this.dueDate = dueDate;
 		this.rentalEnabled = rentalEnabled;
 		this.price = price;
-		database = LibraryDatabase.getInstance();
 	}
 
 	public void enable() {
@@ -43,12 +48,18 @@ public abstract class PhysicalItem extends Item {
 	
 	public void rentCopy(Account user) throws Exception {
 		
+		database = LibraryDatabase.getInstance();
+		
 		if (rentalEnabled == false) {
-			System.out.println("Rentals are currently disabled for this item.");
+			System.out.println("Invalid Operation. Rentals are currently disabled for this item.");
 		}
 		
 		else if (user.getItemsBorrowed() > 10) {
-			System.out.println("You are not allowed to take more than 10 items out at a time.");
+			System.out.println("Invalid Operation. You are not allowed to take more than 10 items out at a time.");
+		}
+		
+		else if (database.physItemsDB.size() <= 0) {
+			System.out.println("Invalid Operation. There are currently no copies of this item left in the library.");
 		}
 		
 		else {
@@ -74,7 +85,7 @@ public abstract class PhysicalItem extends Item {
 		    //Insert some procedure here that creates a clone / prototype of the item, sets the clone copyNumber to null, -1, or some other odd value, and adds to user's itemList.
 		    //Changing copyNumber of user's cloned item may not be necessary and might make returning physItems easier.
 		    
-		    System.out.println("Enjoy! Due Date: " + dueDate);
+		    System.out.println("Enjoy! Due Date: " + rentedCopy.dueDate);
 		    
 			//TODO
 			//Note - this implementation will involve cloning a copy of the book, and indicating that it is its own item.
@@ -85,21 +96,32 @@ public abstract class PhysicalItem extends Item {
 		//TODO
 		//Note - this implementation will involve "merging" the copy that the user took out back with the database.
 		
-		PhysicalItem returnedCopy = this;
+		if (rentalEnabled == false) {
+			System.out.println("Invalid Operation. Rentals for this item are currently disabled.");
+		}
 		
-		for (PhysicalItem p : database.physItemsDB) {
-			if (p.getItemID().equals(returnedCopy.getItemID())) {
-				p.setCopyNumber(p.getCopyNumber() + 1);
-				user.getPhysicalItemList().remove(returnedCopy);
-				
-				String[] emailSplitter = user.getEmail().split("@", 2);
-				String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
-			    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
-			    
-			    String databasePath = database.path + "physItem_database.csv";
-			    database.updatePhysItems(database.physItemsDB, databasePath);
-				
-				break;
+		else {
+			database = LibraryDatabase.getInstance();
+			PhysicalItem returnedCopy = this;
+			
+			for (PhysicalItem p : database.physItemsDB) {
+				if (p.getItemID().equals(returnedCopy.getItemID())) {
+					p.setCopyNumber(p.getCopyNumber() + 1);
+					
+					if (user.getPhysicalItemList().remove(returnedCopy)) {
+						System.out.println("Invalid Operation. The user has not taken out this item.");
+						break;
+					}
+					
+					String[] emailSplitter = user.getEmail().split("@", 2);
+					String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
+				    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
+				    
+				    String databasePath = database.path + "physItem_database.csv";
+				    database.updatePhysItems(database.physItemsDB, databasePath);
+					
+					break;
+				}
 			}
 		}
 	}
