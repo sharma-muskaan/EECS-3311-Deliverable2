@@ -122,14 +122,14 @@ public class LibraryHomePage {
     	}
     	
     	//used for testing rent and return
-    	System.out.println("Trial Rental:");
-    	for (PhysicalItem p : database.physItemsDB) {
-    		System.out.println("Name: " + p.getName());
-			System.out.println("Author: " + p.getAuthor());
-			System.out.println("Item Type: " + p.getItemType());
-			p.rentCopy(user);
-			System.out.println("\n");
-    	}
+//    	System.out.println("Trial Rental:");
+//    	for (PhysicalItem p : database.physItemsDB) {
+//    		System.out.println("Name: " + p.getName());
+//			System.out.println("Author: " + p.getAuthor());
+//			System.out.println("Item Type: " + p.getItemType());
+//			p.rentCopy(user);
+//			System.out.println("\n");
+//    	}
     	
     	// a variation of this should ONLY be used for students / faculty
     	System.out.println("E-Books:");

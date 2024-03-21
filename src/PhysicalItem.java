@@ -138,7 +138,16 @@ public abstract class PhysicalItem extends Item {
 		Date curr = new Date();
 		long timeDiff = - (dueDate.getTime() - curr.getTime()); // gets the time in miliseconds
 		long timeDiffDays = timeDiff/(24*60*60*1000); // converts to days
-		double overdueFee = timeDiffDays * 0.5;
+		double overdueFee;
+		
+		if (timeDiffDays >= 15) {
+			overdueFee = 0.0;
+		}
+		
+		else {
+			overdueFee = timeDiffDays * 0.5;
+		}
+		
 		return overdueFee;
 	}
 
@@ -156,10 +165,10 @@ public abstract class PhysicalItem extends Item {
 		if (this.getCopyNumber() == -3) {
 			output = String.format("The book  %s is now lost.", this.name);
 			if(timeDiffDays == 1){ // checks if there is 1 day before the due date make it "Day" instead of days
-				output = String.format("%s has been lost for %d day.", this.name, timeDiffDays);
+				output = String.format("%s has been lost for %d day.", this.name, (timeDiffDays * -1));
 			}
 			else  {  // makes it "days" if more than one day
-				output = String.format("%s has been lost for %d days.", this.name, timeDiffDays);
+				output = String.format("%s has been lost for %d days.", this.name, (timeDiffDays * -1));
 			}
 			return output;
 		}
@@ -173,11 +182,11 @@ public abstract class PhysicalItem extends Item {
 				user.setOverdueItems(user.getOverdueItems() + 1);
 			}
 			
-			if (timeDiffHrs <= -15) {
+			if (timeDiffDays <= -15) {
 				//copyNumber = -3 indicates that this copy is now lost.
 				this.setCopyNumber(-3);
 				
-				output = String.format("This book is has been lost for %d days.", timeDiffDays);
+				output = String.format("This book is has been lost for %d days.", (timeDiffDays * -1));
 				
 				String[] emailSplitter = user.getEmail().split("@", 2);
 				String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
@@ -195,7 +204,7 @@ public abstract class PhysicalItem extends Item {
 			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
 		    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
 		    database.updateAccounts();
-			output = String.format("The book: %s is OVERDUE PLEASE RETURN IT", this.name);
+			output = String.format("The book: %s is %d days OVERDUE PLEASE RETURN IT", this.name, (timeDiffDays * -1));
 		}
 		
 		else if (timeDiffHrs > 0 && timeDiffHrs < 24) {  // checks if there is less than 24 hours left on the due date
