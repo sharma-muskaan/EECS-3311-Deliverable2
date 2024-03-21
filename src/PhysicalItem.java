@@ -1,14 +1,18 @@
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.print.DocFlavor.STRING;
 
 
 // NOTE - should be an interface, however trying to make it an interface does not seem possible
 // when inhereting from an abstract class
-public abstract class PhysicalItem extends Item {
+public class PhysicalItem implements Item, PhysItemPrototype {
 	
+	public String itemType;
+	public String name;
+	public String author;
+	public String edition;
+	public String publisherName;
 	public int copyNumber;
 	public Date dueDate;
 	public String itemID;
@@ -17,8 +21,28 @@ public abstract class PhysicalItem extends Item {
 	// if price == null, then not for sale
 	public double price;
 	
+	
+	
+	public PhysicalItem(PhysicalItem physicalItem) {
+		this.itemType = physicalItem.itemType;
+		this.name = physicalItem.name;
+		this.author = physicalItem.author;
+		this.edition = physicalItem.edition;
+		this.publisherName = physicalItem.publisherName;
+		this.itemID = physicalItem.itemID;
+		this.libLocation = physicalItem.libLocation;
+		this.copyNumber = physicalItem.copyNumber;
+		this.dueDate = physicalItem.dueDate;
+		this.rentalEnabled = physicalItem.rentalEnabled;
+		this.price = physicalItem.price;
+	}
+	
 	public PhysicalItem(String itemType, String name, String author, String edition, String publisherName, String itemID, String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) {
-		super(itemType, name, author, edition, publisherName);
+		this.itemType = itemType;
+		this.name = name;
+		this.author = author;
+		this.edition = edition;
+		this.publisherName = publisherName;
 		this.itemID = itemID;
 		this.libLocation = libLocation;
 		this.copyNumber = copyNumber;
@@ -35,7 +59,7 @@ public abstract class PhysicalItem extends Item {
 		rentalEnabled = false;
 	}
 	
-	public void rentCopy() {
+	public void rentCopy(Account user) {
 		if (rentalEnabled == false) {
 			System.out.println("Rentals are currently disabled for this item.");
 		}
@@ -90,7 +114,7 @@ public abstract class PhysicalItem extends Item {
 	}
 	
 	
-	public void returnCopy(int copyNumber) {
+	public void returnCopy(Account user) {
 		//TODO
 		//Note - this implementation will involve "merging" the copy that the user took out back with the database.
 	}
@@ -183,5 +207,10 @@ public abstract class PhysicalItem extends Item {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	@Override
+	public PhysItemPrototype clone() {
+		return new PhysicalItem(this);
 	}
 }

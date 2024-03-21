@@ -55,22 +55,16 @@ public class ConcreteAccount implements Account {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void returnBook(PhysicalItem physItem) {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void purchaseItem(Item item) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Date getDueDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void returnBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
