@@ -58,6 +58,21 @@ public class ListFactory {
 	        	database.loadCourses(user.getCurrentCourses(), email);
 	        }
 		}
+		
+		else if(listType.equals("physItem")) {
+			fileName += "_physItem_data.csv";
+			filePath += fileName;
+			
+			boolean fileExists = fileCreator(filePath);
+			
+			if (fileExists == true) {
+				database.updatePhysItems(user.getPhysicalItemList(), filePath);
+	        }
+	        
+	        else if (fileExists == false) {
+	        	database.loadPhysItems(user.getPhysicalItemList(), email);
+	        }
+		}
 	}
 	
 	public static void getList(Faculty user, String listType, String path, String email) throws Exception {
@@ -93,6 +108,21 @@ public class ListFactory {
 	        
 	        else if (fileExists == false) {
 	        	database.loadCourses(user.getCurrentCourses(), email);
+	        }
+		}
+		
+		else if(listType.equals("physItem")) {
+			fileName += "_physItem_data.csv";
+			filePath += fileName;
+			
+			boolean fileExists = fileCreator(filePath);
+			
+			if (fileExists == true) {
+				database.updatePhysItems(user.getPhysicalItemList(), filePath);
+	        }
+	        
+	        else if (fileExists == false) {
+	        	database.loadPhysItems(user.getPhysicalItemList(), email);
 	        }
 		}
 	}

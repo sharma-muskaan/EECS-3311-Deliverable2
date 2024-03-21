@@ -8,6 +8,10 @@ public class DigitalItem extends Item {
 		this.genre = genre;
 	}
 	
+	public DigitalItem(DigitalItem digitalItem) {
+		super(digitalItem);
+	}
+
 	public String getItemType() {
 		return itemType;
 	}
@@ -54,5 +58,10 @@ public class DigitalItem extends Item {
 
 	public void setPublisherName(String publisherName) {
 		this.publisherName = publisherName;
+	}
+
+	@Override
+	public DigitalItem clone() {
+		return new DigitalItem(this);
 	}
 }

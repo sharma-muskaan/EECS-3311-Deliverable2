@@ -7,9 +7,8 @@ public interface Account {
 	public ArrayList<Item> search(String search);
 	public void subToNews(DigitalItem digItem);
 	public void rentBook(PhysicalItem physItem);
-	public void purchaseItem(Item item);
-	public Date getDueDate();
 	public void returnBook(PhysicalItem physItem);
+	public void purchaseItem(Item item);
 	
 	public ArrayList<PhysicalItem> getPhysicalItemList();
 
