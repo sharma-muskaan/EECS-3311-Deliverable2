@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+// TODO:  FIX THIS - DIGITALITEMS ARE NOT A THING FOR VISITOR AND NON-FACULTY
 public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -120,10 +120,21 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	private void loggedInHomePage(Account user, JPanel listPanel) {
 		
 		 ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
-		 ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
+		 ArrayList<DigitalItem> userDigitalItems = null;
+		 int lengthOfDigItem = 0;
+		 if (user.getAccType().equals("Student")) {
+			 userDigitalItems = ((Student) user).getDigitalCourseBooks();
+			 lengthOfDigItem = ((Student) user).getDigitalCourseBooks().size();
+		 }
+		 
+		 if (user.getAccType().equals("Faculty")) {
+			 userDigitalItems = ((Faculty) user).getCourseBookHistory();
+			 lengthOfDigItem = ((Faculty) user).getCourseBookHistory().size();
+		 }
+		 
 		 
 		 int lengthOfPhysItem = user.getPhysicalItemList().size();
-		 int lengthOfDigItem = user.getDigitalItemList().size();
+		 
 		
 		 JPanel[] panelBook = new JPanel[lengthOfPhysItem + lengthOfDigItem];
 		 JLabel[] lblNameOfBook = new JLabel[lengthOfPhysItem + lengthOfDigItem];
@@ -173,27 +184,30 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		 panel1.add(lblDigTitle);
 
 		 listPanel.add(panel1);
-	    	
-		 int k = 0;
-		 for (int j = lengthOfPhysItem; j < pbLength; j++) {
-			 lblNameOfBook[j] = new JLabel(userDigitalItems.get(k).getName());
-			 lblNameOfBook[j].setFont(new Font("Verdana", Font.PLAIN, 15));
-			 lblNameOfAuthor[j] = new JLabel(userDigitalItems.get(k).getAuthor());
-			 lblNameOfAuthor[j].setFont(new Font("Verdana", Font.PLAIN, 15));
-			 lblItemType[j] = new JLabel(userDigitalItems.get(k).getItemType());
-			 lblItemType[j].setFont(new Font("Verdana", Font.PLAIN, 15));
-			 k++;
+	    
+		 if (user.getAccType().equals("Faculty") || user.getAccType().equals("Student")) {
+			 int k = 0;
+			 for (int j = lengthOfPhysItem; j < pbLength; j++) {
+				 lblNameOfBook[j] = new JLabel(userDigitalItems.get(k).getName());
+				 lblNameOfBook[j].setFont(new Font("Verdana", Font.PLAIN, 15));
+				 lblNameOfAuthor[j] = new JLabel(userDigitalItems.get(k).getAuthor());
+				 lblNameOfAuthor[j].setFont(new Font("Verdana", Font.PLAIN, 15));
+				 lblItemType[j] = new JLabel(userDigitalItems.get(k).getItemType());
+				 lblItemType[j].setFont(new Font("Verdana", Font.PLAIN, 15));
+				 k++;
+			 }
+			 
+			 for (int j = lengthOfPhysItem; j < pbLength; j++) {
+				 panelBook[j].add(lblNameOfBook[j]);
+				 panelBook[j].add(lblNameOfAuthor[j]);
+				 panelBook[j].add(lblItemType[j]);
+			 }
+			 
+			 for (int j = lengthOfPhysItem; j < pbLength; j++) {
+				 listPanel.add(panelBook[j]);
+			 }
 		 }
 		 
-		 for (int j = lengthOfPhysItem; j < pbLength; j++) {
-			 panelBook[j].add(lblNameOfBook[j]);
-			 panelBook[j].add(lblNameOfAuthor[j]);
-			 panelBook[j].add(lblItemType[j]);
-		 }
-		 
-		 for (int j = lengthOfPhysItem; j < pbLength; j++) {
-			 listPanel.add(panelBook[j]);
-		 }
 		 
 //		 for (int i = 0; i < userPhysicalItems.size(); i++) {
 //			 userPhysicalItems.get(i).warning((lblDueDate[i].getText()));

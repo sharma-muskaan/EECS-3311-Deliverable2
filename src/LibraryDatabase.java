@@ -15,7 +15,7 @@ public class LibraryDatabase implements IterableCollection{
 	//IMPLEMENT COURSES
 	protected ArrayList<Course> coursesDB;
 	protected String path;
-	private String path;
+	//private String path;
 	
 	private List<DigitalItem> items;
 	
@@ -163,6 +163,7 @@ public class LibraryDatabase implements IterableCollection{
 				if (newPhysItem.rentalEnabled == true) {
 					physItemList.add(newPhysItem);
 				}
+			}
 				
 			}
 

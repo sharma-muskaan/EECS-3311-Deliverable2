@@ -204,7 +204,7 @@ public abstract class PhysicalItem extends Item {
 			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
 		    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
 		    database.updateAccounts();
-			output = String.format("The book: %s is %d days OVERDUE PLEASE RETURN IT", this.name, (timeDiffDays * -1));
+			output = String.format("The book: %s OVERDUE PLEASE RETURN IT", this.name);
 		}
 		
 		else if (timeDiffHrs > 0 && timeDiffHrs < 24) {  // checks if there is less than 24 hours left on the due date

@@ -172,8 +172,13 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 			String due = currDate.toString();
 			System.out.println(due);
 			for (PhysicalItem p : userPhysItems) {
-				if (p.warning(due).equals(String.format("The book: %s is OVERDUE PLEASE RETURN IT", p.name))) {
-					count++;
+				try {
+					if (p.warningString(acc).equals(String.format("The book: %s OVERDUE PLEASE RETURN IT", p.name))) {
+						count++;
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 			
