@@ -3,7 +3,7 @@ import java.util.Date;
 public class PhysicalItemFactory {
 	
 	public static PhysicalItem getPhysicalItem(String itemType, String name, String author, String edition, String publisherName, String itemID,
-			String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) {
+			String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) throws Exception {
 		
 		if(itemType.equals("Book")) {
 			PhysicalItem book = new Book(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);

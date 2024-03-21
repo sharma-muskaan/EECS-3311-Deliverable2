@@ -1,18 +1,14 @@
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import javax.print.DocFlavor.STRING;
 
 
 // NOTE - should be an interface, however trying to make it an interface does not seem possible
 // when inhereting from an abstract class
-public class PhysicalItem implements Item, PhysItemPrototype {
+public abstract class PhysicalItem extends Item {
 	
-	public String itemType;
-	public String name;
-	public String author;
-	public String edition;
-	public String publisherName;
 	public int copyNumber;
 	public Date dueDate;
 	public String itemID;
@@ -22,29 +18,12 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 	public double price;
 	private static LibraryDatabase database;
 	
-	
-	
-	public PhysicalItem(PhysicalItem physicalItem) throws Exception {
-		this.itemType = physicalItem.itemType;
-		this.name = physicalItem.name;
-		this.author = physicalItem.author;
-		this.edition = physicalItem.edition;
-		this.publisherName = physicalItem.publisherName;
-		this.itemID = physicalItem.itemID;
-		this.libLocation = physicalItem.libLocation;
-		this.copyNumber = physicalItem.copyNumber;
-		this.dueDate = physicalItem.dueDate;
-		this.rentalEnabled = physicalItem.rentalEnabled;
-		this.price = physicalItem.price;
-		database = LibraryDatabase.getInstance();
+	public PhysicalItem(PhysicalItem physicalItem) {
+		super(physicalItem);
 	}
 	
 	public PhysicalItem(String itemType, String name, String author, String edition, String publisherName, String itemID, String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) throws Exception {
-		this.itemType = itemType;
-		this.name = name;
-		this.author = author;
-		this.edition = edition;
-		this.publisherName = publisherName;
+		super(itemType, name, author, edition, publisherName);
 		this.itemID = itemID;
 		this.libLocation = libLocation;
 		this.copyNumber = copyNumber;
@@ -53,7 +32,7 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 		this.price = price;
 		database = LibraryDatabase.getInstance();
 	}
-	
+
 	public void enable() {
 		rentalEnabled = true;
 	}
@@ -73,7 +52,7 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 		}
 		
 		else {
-			PhysicalItem rentedCopy = (PhysicalItem) this.clone();
+			PhysicalItem rentedCopy = this.clone();
 			rentedCopy.setCopyNumber(1);
 			
 		    // Get current date
@@ -99,6 +78,29 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 		    
 			//TODO
 			//Note - this implementation will involve cloning a copy of the book, and indicating that it is its own item.
+		}
+	}
+	
+	public void returnCopy(Account user) throws Exception {
+		//TODO
+		//Note - this implementation will involve "merging" the copy that the user took out back with the database.
+		
+		PhysicalItem returnedCopy = this;
+		
+		for (PhysicalItem p : database.physItemsDB) {
+			if (p.getItemID().equals(returnedCopy.getItemID())) {
+				p.setCopyNumber(p.getCopyNumber() + 1);
+				user.getPhysicalItemList().remove(returnedCopy);
+				
+				String[] emailSplitter = user.getEmail().split("@", 2);
+				String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
+			    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
+			    
+			    String databasePath = database.path + "physItem_database.csv";
+			    database.updatePhysItems(database.physItemsDB, databasePath);
+				
+				break;
+			}
 		}
 	}
 
@@ -127,80 +129,53 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 			
 		}
 		return output;
-		
-		
 	}
 	
-	
-	public void returnCopy(Account user) throws Exception {
-		//TODO
-		//Note - this implementation will involve "merging" the copy that the user took out back with the database.
-		
-		PhysicalItem returnedCopy = this;
-		
-		for (PhysicalItem p : database.physItemsDB) {
-			if (p.getItemID().equals(returnedCopy.getItemID())) {
-				p.setCopyNumber(p.getCopyNumber() + 1);
-				user.getPhysicalItemList().remove(returnedCopy);
-				
-				String[] emailSplitter = user.getEmail().split("@", 2);
-				String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
-			    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
-			    
-			    String databasePath = database.path + "physItem_database.csv";
-			    database.updatePhysItems(database.physItemsDB, databasePath);
-				
-				break;
-			}
-		}
-	}
-	
-	@Override
 	public String getItemType() {
 		return itemType;
 	}
 
-	@Override
+	
 	public void setItemType(String itemType) {
 		this.itemType = itemType;
 	}
 	
-	@Override
+	
 	public String getName() {
 		return this.name;
 	}
 	
-	@Override
+	
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
+	
 	public String getAuthor() {
 		return author;
 	}
 
-	@Override
+	
 	public void setAuthor(String author) {
 		this.author = author;
 	}
 
-	@Override
+	
 	public String getEdition() {
 		return edition;
 	}
 
-	@Override
+	
 	public void setEdition(String edition) {
 		this.edition = edition;
 	}
 
-	@Override
+	
 	public String getPublisherName() {
 		return publisherName;
 	}
 
-	@Override
+	
 	public void setPublisherName(String publisherName) {
 		this.publisherName = publisherName;
 	}
@@ -245,8 +220,5 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 		this.price = price;
 	}
 	
-	@Override
-	public PhysItemPrototype clone() throws Exception {
-		return new PhysicalItem(this);
-	}
+	public abstract PhysicalItem clone();
 }
