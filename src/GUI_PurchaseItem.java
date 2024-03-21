@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class PurchaseItem extends JFrame implements ActionListener {
+public class GUI_PurchaseItem extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,7 +30,7 @@ public class PurchaseItem extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PurchaseItem frame = new PurchaseItem(acc1);
+					GUI_PurchaseItem frame = new GUI_PurchaseItem(acc1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +42,7 @@ public class PurchaseItem extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public PurchaseItem(Account acc) {
+	public GUI_PurchaseItem(Account acc) {
 		this.acc = acc;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
@@ -95,7 +95,7 @@ public class PurchaseItem extends JFrame implements ActionListener {
 		if(e.getSource() == btnNewButton) {
 			dispose();
 			try {
-				Home_GUI_VisNonFaculty newFrame = new Home_GUI_VisNonFaculty(acc);
+				GUI_Home_VisNonFaculty newFrame = new GUI_Home_VisNonFaculty(acc);
 				newFrame.setVisible(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block

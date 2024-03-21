@@ -22,16 +22,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
+public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
-	private static Home_GUI_VisNonFaculty instance;
+	private static GUI_Home_VisNonFaculty instance;
 	private static LibraryDatabase database;
 	static Account account;
 	Account account1;
 	Date currentDate = new Date();
 	
-	RentBook rb;
+	GUI_RentBook rb;
 	
 	
 	JFrame frame;
@@ -51,14 +51,14 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
 	
 
-	public static Home_GUI_VisNonFaculty getInstance() throws Exception {
+	public static GUI_Home_VisNonFaculty getInstance() throws Exception {
 		if (instance == null)
-			instance = new Home_GUI_VisNonFaculty(account);
+			instance = new GUI_Home_VisNonFaculty(account);
 
 		return instance;
 	}
 	
-	public Home_GUI_VisNonFaculty(Account acc) throws Exception {
+	public GUI_Home_VisNonFaculty(Account acc) throws Exception {
 		this.account1 = acc;
 		database = LibraryDatabase.getInstance();
 		getContentPane().setLayout(null);
@@ -66,7 +66,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		getContentPane().setLayout(null);
 		
-		RentBook rb = new RentBook(acc);
+		GUI_RentBook rb = new GUI_RentBook(acc);
 		
 		lblPhysTitle.setForeground(new Color(255, 0, 0, 150));
 		lblPhysTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
@@ -219,7 +219,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) throws Exception  {
 		Account account = null;
-		Home_GUI_VisNonFaculty exampleApp = new Home_GUI_VisNonFaculty(account);
+		GUI_Home_VisNonFaculty exampleApp = new GUI_Home_VisNonFaculty(account);
 		exampleApp.setSize(900, 600);
 		exampleApp.setVisible(true);
 		database.loadDigItems(database.digItemsDB, null);
@@ -233,7 +233,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			 if (e.getSource() == btnRentABook) {
 				 setVisible(false);
-				 RentBook window = new RentBook(account1);
+				 GUI_RentBook window = new GUI_RentBook(account1);
 				 window.setVisible(true);
 				
 				 
@@ -241,14 +241,14 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 			 
 			 else if (e.getSource() == btnReturnABook) {
 				 setVisible(false);
-				 ReturnBook window = new ReturnBook(account1);
+				 GUI_ReturnBook window = new GUI_ReturnBook(account1);
 				 window.setVisible(true);
 				 window.setSize(900, 600); 
 			 }
 			 
 			 else if (e.getSource() == btnPurchaseItem) {
 				 setVisible(false);
-				 PurchaseItem window = new PurchaseItem(account1);
+				 GUI_PurchaseItem window = new GUI_PurchaseItem(account1);
 				 window.setVisible(true);
 				 window.setSize(900, 600); 
 			 }

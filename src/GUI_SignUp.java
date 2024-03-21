@@ -13,7 +13,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SignUp extends JFrame {
+public class GUI_SignUp extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -27,7 +27,7 @@ public class SignUp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SignUp frame = new SignUp();
+					GUI_SignUp frame = new GUI_SignUp();
 					frame.setSize(900, 600);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -40,7 +40,7 @@ public class SignUp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SignUp() {
+	public GUI_SignUp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();

@@ -36,6 +36,9 @@ public class GUI_Subscribe_Newsletter extends JFrame implements ActionListener {
 	
 	JButton btnBack = new JButton("Back");
 	JButton btnSubscribe = new JButton("Subscribe");
+	JButton btnOpen = new JButton("Open");
+	JButton btnCancel = new JButton("Cancel Sub");
+	
 
 	/**
 	 * Launch the application.
@@ -107,6 +110,16 @@ public class GUI_Subscribe_Newsletter extends JFrame implements ActionListener {
 		btnSubscribe.addActionListener(this);
 		btnSubscribe.setBounds(674, 374, 143, 45);
 		panel_1.add(btnSubscribe);
+		
+		btnOpen.addActionListener(this);
+		btnOpen.setBounds(266, 374, 128, 45);
+		
+
+		btnCancel.addActionListener(this);
+		panel_1.add(btnOpen);
+		btnCancel.setBounds(470, 374, 128, 45);
+		
+		panel_1.add(btnCancel);
 	}
 	
 	private void openWebPage(String url) {
@@ -141,11 +154,42 @@ public class GUI_Subscribe_Newsletter extends JFrame implements ActionListener {
 		else if (e.getSource() == btnBack) {
 			dispose();
 			try {
-				Home_GUI_VisNonFaculty window = new Home_GUI_VisNonFaculty(acc);
+				GUI_Home_VisNonFaculty window = new GUI_Home_VisNonFaculty(acc);
 				window.setVisible(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			}
+		}
+		
+		else if (e.getSource() == btnOpen) {
+			String open = (String) newsList.getSelectedItem();
+			
+			if (open.equals("New York Times")) {
+				openWebPage("https://www.nytimes.com");
+			}
+			
+			else if (open.equals("The Wall Street Journal")) {
+				openWebPage("https://www.wsj.com");
+			}
+			
+			else if (open.equals("The Washington Post")) {
+				openWebPage("https://www.washingtonpost.com");
+			}
+		}
+		
+		else if (e.getSource() == btnCancel) {
+			String cancel = (String) newsList.getSelectedItem();
+			if (cancel.equals("New York Times")) {
+				openWebPage("https://help.nytimes.com/hc/en-us/articles/360003499613-Cancel-Your-Subscription");
+			}
+			
+			else if (cancel.equals("The Wall Street Journal")) {
+				openWebPage("https://sso.accounts.dowjones.com/login-page?op=localop&scope=openid%20idp_id%20roles%20email%20given_name%20family_name%20djid%20djUsername%20djStatus%20trackid%20tags%20prts%20updated_at%20createTimestamp&client_id=5hssEAdMy0mJTICnJNvC9TXEw3Va7jfO&response_type=code&redirect_uri=https%3A%2F%2Faccounts.wsj.com%2Fauth%2Fsso%2Flogin&mg=ss-ngx&url=https%3A%2F%2Fcustomercenter.wsj.com%2Fsubscriptions%3Fmod%3Dmh_sidebar&auth-zones=SELF-SERV&nonce=402fc4ef-3e54-4acd-9fcb-caf53fe13ab0&ui_locales=en-us-x-wsj-223-2&mars=-1&ns=prod%2Faccounts-wsj&state=Tv8k0RpII-o_-nYh.iLmQwK6k_Lyi4WiCffPZ5xMQR8CmXXfP3XU4qH952XaJfXpn3OrHvrPtxq7hlNvsfOD9WGXPYdwSmoVSI3-gSA&resource=https%253A%252F%252Fcustomercenter.wsj.com%252Fsubscriptions%253Fmod%253Dmh_sidebar&protocol=oauth2&client=5hssEAdMy0mJTICnJNvC9TXEw3Va7jfO#!/signin");
+			}
+			
+			else if (cancel.equals("The Washington Post")) {
+				openWebPage("https://www.washingtonpost.com/subscribe/signin/?next_url=https%253A%252F%252Fwww.washingtonpost.com%252Fmy-post%252Faccount%252Fsubscription%252F");
 			}
 		}
 		
