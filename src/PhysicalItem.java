@@ -62,7 +62,6 @@ public abstract class PhysicalItem extends Item {
 
 	public String warning(String due){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
-        Date dueDate = null;
         try {
             dueDate = dateFormat.parse(due);
             System.out.println(name + " Parsed Date: " + dueDate);

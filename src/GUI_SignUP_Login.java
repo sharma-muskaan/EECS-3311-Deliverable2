@@ -29,7 +29,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	public GUI_SignUP_Login() throws Exception {
 		super("YorkU Library Management");
 		database = LibraryDatabase.getInstance();
-		System.out.println(database);
+		
 		
 		getContentPane().setLayout(null);
 
@@ -135,7 +135,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            	// iterating through database to find an account with specific email and password passed in. 
 	            	
 					registeredAccount = database.iterateDB(email.getText(), password.getText());
-					//System.out.println("account: " + registeredAccount.getEmail() + " " +  registeredAccount.getPass());
+
 				} 
 	            catch (Exception e1) {
 					// TODO Auto-generated catch block

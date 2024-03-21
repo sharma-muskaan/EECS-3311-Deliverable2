@@ -27,8 +27,10 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private static GUI_Home_VisNonFaculty instance;
 	private static LibraryDatabase database;
+	
 	static Account account;
 	Account account1;
+	
 	Date currentDate = new Date();
 	
 	GUI_RentBook rb;
@@ -60,13 +62,14 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	
 	public GUI_Home_VisNonFaculty(Account acc) throws Exception {
 		this.account1 = acc;
+		
 		database = LibraryDatabase.getInstance();
 		getContentPane().setLayout(null);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		getContentPane().setLayout(null);
 		
-		GUI_RentBook rb = new GUI_RentBook(acc);
+		
 		
 		lblPhysTitle.setForeground(new Color(255, 0, 0, 150));
 		lblPhysTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
@@ -113,7 +116,9 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	
 	private void loggedInHomePage(Account user, JPanel listPanel) {
+		
 		 ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
 		 ArrayList<DigitalItem> userDigitalItems = user.getDigitalItemList();
 		 
@@ -209,12 +214,6 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	    	// Prompts DIFF warning if book is past due date.
 	    	// Also contains buttons for accessing common user tasks like search, rent, etc.
 	    }
-
-	public boolean dateDifference(Date date) {
-		long dateDiff = currentDate.getTime() - date.getTime();
-		System.out.println(dateDiff);
-		return false;
-	}
 	
 	
 	public static void main(String[] args) throws Exception  {
@@ -231,11 +230,21 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	
 	 @Override
 		public void actionPerformed(ActionEvent e) {
+		 
 			 if (e.getSource() == btnRentABook) {
-				 setVisible(false);
-				 GUI_RentBook window = new GUI_RentBook(account1);
-				 window.setVisible(true);
-				
+				 
+				 
+				try {
+					super.dispose();
+					GUI_RentBook window = new GUI_RentBook(account1);
+					
+					
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					
+					 e1.printStackTrace();
+				}
 				 
 			 }
 			 
