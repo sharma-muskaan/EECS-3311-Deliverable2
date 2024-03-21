@@ -279,7 +279,7 @@ public class LibraryDatabase implements IterableCollection{
 	
     // Method to print similar items based on text similarity and same genres
     public void printSimilarItems(String searchQuery, List<String> searchGenres) {
-        List<String> recommendations = getRecommendations(searchQuery, searchGenres)
+        List<String> recommendations = getRecommendations(searchQuery, searchGenres);
         // Print recommendations
         if (!recommendations.isEmpty()) {
             System.out.println("Similar items:");
