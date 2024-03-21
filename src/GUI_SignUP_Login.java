@@ -29,7 +29,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	public GUI_SignUP_Login() throws Exception {
 		super("YorkU Library Management");
 		database = LibraryDatabase.getInstance();
-		System.out.println(database);
+		
 		
 		getContentPane().setLayout(null);
 
@@ -135,7 +135,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            	// iterating through database to find an account with specific email and password passed in. 
 	            	
 					registeredAccount = database.iterateDB(email.getText(), password.getText());
-					System.out.println("account: " + registeredAccount.getEmail() + " " +  registeredAccount.getPass());
+
 				} 
 	            catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -146,9 +146,12 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            if (registeredAccount != null) {
 	            	if (registeredAccount.getAccType().equals("Visitor") || registeredAccount.getAccType().equals("NonFaculty")) {
 	            		setVisible(false);
-		            	Home_GUI_VisNonFaculty window  = new Home_GUI_VisNonFaculty();
-		    			window.setSize(900, 600);
-		    			window.setVisible(true);
+		            	try {
+							GUI_Home_VisNonFaculty window  = new GUI_Home_VisNonFaculty(registeredAccount);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 		            	break;
 	            	}
 	            	else if(registeredAccount.getAccType().equals("Student")) {

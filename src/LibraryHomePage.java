@@ -112,6 +112,7 @@ public class LibraryHomePage {
 				System.out.println("Author: " + p.getAuthor());
 				System.out.println("Item Type: " + p.getItemType());
 				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
+
 				System.out.println(((PhysicalItem) p).warningString(user));
 				if (p.calculateFine() > 0.0) {
 					System.out.println("Fine: " + p.calculateFine());

@@ -97,7 +97,6 @@ public abstract class PhysicalItem extends Item {
 			//Note - this implementation will involve cloning a copy of the book, and indicating that it is its own item.
 		}
 	}
-	
 	public void returnCopy(Account user) throws Exception {
 		//TODO
 		//Note - this implementation will involve "merging" the copy that the user took out back with the database.
@@ -135,6 +134,7 @@ public abstract class PhysicalItem extends Item {
 	}
 	
 	public double calculateFine() {
+
 		Date curr = new Date();
 		long timeDiff = - (dueDate.getTime() - curr.getTime()); // gets the time in miliseconds
 		long timeDiffDays = timeDiff/(24*60*60*1000); // converts to days
