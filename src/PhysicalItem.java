@@ -20,10 +20,11 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 	public boolean rentalEnabled;
 	// if price == null, then not for sale
 	public double price;
+	private static LibraryDatabase database;
 	
 	
 	
-	public PhysicalItem(PhysicalItem physicalItem) {
+	public PhysicalItem(PhysicalItem physicalItem) throws Exception {
 		this.itemType = physicalItem.itemType;
 		this.name = physicalItem.name;
 		this.author = physicalItem.author;
@@ -35,9 +36,10 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 		this.dueDate = physicalItem.dueDate;
 		this.rentalEnabled = physicalItem.rentalEnabled;
 		this.price = physicalItem.price;
+		database = LibraryDatabase.getInstance();
 	}
 	
-	public PhysicalItem(String itemType, String name, String author, String edition, String publisherName, String itemID, String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) {
+	public PhysicalItem(String itemType, String name, String author, String edition, String publisherName, String itemID, String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) throws Exception {
 		this.itemType = itemType;
 		this.name = name;
 		this.author = author;
@@ -49,6 +51,7 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 		this.dueDate = dueDate;
 		this.rentalEnabled = rentalEnabled;
 		this.price = price;
+		database = LibraryDatabase.getInstance();
 	}
 	
 	public void enable() {
@@ -59,23 +62,38 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 		rentalEnabled = false;
 	}
 	
-	public void rentCopy(Account user) {
+	public void rentCopy(Account user) throws Exception {
+		
 		if (rentalEnabled == false) {
 			System.out.println("Rentals are currently disabled for this item.");
 		}
 		
+		else if (user.getItemsBorrowed() > 10) {
+			System.out.println("You are not allowed to take more than 10 items out at a time.");
+		}
+		
 		else {
-
+			PhysicalItem rentedCopy = (PhysicalItem) this.clone();
+			rentedCopy.setCopyNumber(1);
+			
 		    // Get current date
 		    Calendar calendar = Calendar.getInstance();
 		    // Add one month to the current date
 		    calendar.add(Calendar.MONTH, 1);
-		    dueDate = calendar.getTime();
+		    rentedCopy.dueDate = calendar.getTime();
+		    user.getPhysicalItemList().add(rentedCopy);
+		    
+		    String[] emailSplitter = user.getEmail().split("@", 2);
+			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
+		    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
+		    
+		    copyNumber -= 1;
+		    
+		    String databasePath = database.path + "physItem_database.csv";
+		    database.updatePhysItems(database.physItemsDB, databasePath);
 		    
 		    //Insert some procedure here that creates a clone / prototype of the item, sets the clone copyNumber to null, -1, or some other odd value, and adds to user's itemList.
 		    //Changing copyNumber of user's cloned item may not be necessary and might make returning physItems easier.
-		    
-		    copyNumber -= 1;
 		    
 		    System.out.println("Enjoy! Due Date: " + dueDate);
 		    
@@ -114,9 +132,27 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 	}
 	
 	
-	public void returnCopy(Account user) {
+	public void returnCopy(Account user) throws Exception {
 		//TODO
 		//Note - this implementation will involve "merging" the copy that the user took out back with the database.
+		
+		PhysicalItem returnedCopy = this;
+		
+		for (PhysicalItem p : database.physItemsDB) {
+			if (p.getItemID().equals(returnedCopy.getItemID())) {
+				p.setCopyNumber(p.getCopyNumber() + 1);
+				user.getPhysicalItemList().remove(returnedCopy);
+				
+				String[] emailSplitter = user.getEmail().split("@", 2);
+				String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
+			    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
+			    
+			    String databasePath = database.path + "physItem_database.csv";
+			    database.updatePhysItems(database.physItemsDB, databasePath);
+				
+				break;
+			}
+		}
 	}
 	
 	@Override
@@ -210,7 +246,7 @@ public class PhysicalItem implements Item, PhysItemPrototype {
 	}
 	
 	@Override
-	public PhysItemPrototype clone() {
+	public PhysItemPrototype clone() throws Exception {
 		return new PhysicalItem(this);
 	}
 }

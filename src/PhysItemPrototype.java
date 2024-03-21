@@ -1,3 +1,3 @@
 public interface PhysItemPrototype extends Cloneable {
-    PhysItemPrototype clone();
+    PhysItemPrototype clone() throws Exception;
 }
