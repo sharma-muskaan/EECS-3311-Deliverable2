@@ -144,7 +144,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            
 	            // if it finds it, break the iteration. 
 	            if (registeredAccount != null) {
-	            	if (registeredAccount.getAccType().equals("Visitor") || registeredAccount.getAccType().equals("NonFaculty")) {
+	            	if (registeredAccount.getAccType().equals("Student") || registeredAccount.getAccType().equals("NonFaculty") || registeredAccount.getAccType().equals("Faculty") || registeredAccount.getAccType().equals("Visitor")) {
 	            		setVisible(false);
 		            	try {
 							GUI_Home_VisNonFaculty window  = new GUI_Home_VisNonFaculty(registeredAccount);
@@ -153,13 +153,6 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 							e1.printStackTrace();
 						}
 		            	break;
-	            	}
-	            	else if(registeredAccount.getAccType().equals("Student")) {
-	            		// create student page
-	            	}
-	            	
-	            	else if (registeredAccount.getAccType().equals("Faculty")) {
-	            		// create faculty page
 	            	}
 	            	
 	            	else if (email.getText().equals("mgr_access") && password.getText().equals("password")) {
