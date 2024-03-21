@@ -72,6 +72,7 @@ public abstract class PhysicalItem extends Item {
 		    calendar.add(Calendar.MONTH, 1);
 		    rentedCopy.dueDate = calendar.getTime();
 		    user.getPhysicalItemList().add(rentedCopy);
+		    user.setItemsBorrowed(user.getItemsBorrowed() + 1);
 		    
 		    String[] emailSplitter = user.getEmail().split("@", 2);
 			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
@@ -106,12 +107,14 @@ public abstract class PhysicalItem extends Item {
 			
 			for (PhysicalItem p : database.physItemsDB) {
 				if (p.getItemID().equals(returnedCopy.getItemID())) {
-					p.setCopyNumber(p.getCopyNumber() + 1);
 					
 					if (user.getPhysicalItemList().remove(returnedCopy)) {
 						System.out.println("Invalid Operation. The user has not taken out this item.");
 						break;
 					}
+					
+					p.setCopyNumber(p.getCopyNumber() + 1);
+					user.setItemsBorrowed(user.getItemsBorrowed() + 1);
 					
 					String[] emailSplitter = user.getEmail().split("@", 2);
 					String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
