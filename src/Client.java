@@ -6,6 +6,7 @@ public class Client {
 		// This can be changed later as needed using a branch of the doesListExist method
 		database.loadDigItems(database.digItemsDB, null);
 		database.loadPhysItems(database.physItemsDB, null);
+		database.loadCourses(database.coursesDB, null);
 		database.loadAccounts();
 		//database.loadBankData();
 		homePage.loggedOutHomePage();

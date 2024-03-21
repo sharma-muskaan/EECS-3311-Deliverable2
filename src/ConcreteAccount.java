@@ -74,11 +74,6 @@ public class ConcreteAccount implements Account {
 	}
 
 	@Override
-	public ArrayList<DigitalItem> getDigitalItemList() {
-		return digitalItemList;
-	}
-
-	@Override
 	public ArrayList<PhysicalItem> getPhysicalItemList() {
 		return physicalItemList;
 	}

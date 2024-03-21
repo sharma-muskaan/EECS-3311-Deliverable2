@@ -50,13 +50,6 @@ public class AccountDecorator implements Account {
 		wrappee.returnBook(physItem);
 	}
 
-
-	@Override
-	public ArrayList<DigitalItem> getDigitalItemList() {
-		return wrappee.getDigitalItemList();
-	}
-
-
 	@Override
 	public ArrayList<PhysicalItem> getPhysicalItemList() {
 		return wrappee.getPhysicalItemList();

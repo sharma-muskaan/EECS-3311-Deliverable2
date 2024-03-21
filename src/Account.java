@@ -11,7 +11,6 @@ public interface Account {
 	public Date getDueDate();
 	public void returnBook(PhysicalItem physItem);
 	
-	public ArrayList<DigitalItem> getDigitalItemList();
 	public ArrayList<PhysicalItem> getPhysicalItemList();
 
 	public String getEmail();
