@@ -20,10 +20,17 @@ public class Course {
 	
 	//adds original course book to course book history, sets current course book to new course book
 	public void updateCourseBook(Faculty user, DigitalItem newCourseBook) throws Exception {
-		user.courseBookHistory.add(newCourseBook);
+		user.courseBookHistory.add(currentCourseBook);
 		currentCourseBook = newCourseBook;
-		database.updateCourses(database.coursesDB, courseName);
-		database.updateDigItems(user.getCourseBookHistory(), courseName);
+		
+	    String path = database.path + "course_database.csv";
+		
+	    //does not work properly, as faculty's course object is not connected to
+		database.updateCourses(database.coursesDB, path);
+		
+		String[] emailSplitter = user.getEmail().split("@", 2);
+		String splitEmail = database.path + emailSplitter[0] + "_digItem_data.csv";
+		database.updateDigItems(user.getCourseBookHistory(), splitEmail);
 	}
 
 	public DigitalItem getCurrentCourseBook() {

@@ -154,7 +154,8 @@ public class LibraryDatabase {
 	        } catch (Exception e) {
 	            System.out.println(e.getMessage());
 	        }
-
+	        
+	        //make so that every list is using the same course object
 			DigitalItem newCourseBook = new DigitalItem(itemType, genre, name, author, edition, publisherName);
 			Course newCourse = new Course(courseName, newCourseBook, courseEndDate);
 			courseList.add(newCourse);

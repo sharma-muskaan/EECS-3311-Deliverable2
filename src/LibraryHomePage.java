@@ -34,7 +34,70 @@ public class LibraryHomePage {
     	}
     }
     
-    private void loggedInHomePageGeneral(Account user) {
+    private void loggedInHomePageFaculty(Faculty user) throws Exception {
+    	// for testing course database updating
+    	DigitalItem newCourseBook = new DigitalItem("Textbook","Literature","Shakespearean Plays","William Shakespeare","Complete","Norton");
+    	Course testCourse = user.getCurrentCourses().get(0);
+    	testCourse.updateCourseBook(user, newCourseBook);
+    	
+    	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
+    	ArrayList<DigitalItem> userDigitalItems = user.getCourseBookHistory();
+    	
+    	System.out.println("Login completed!\n");
+    	System.out.println("Rentals:");
+    	for (PhysicalItem p : userPhysicalItems) {
+			if (p.getDueDate() != null) {
+				System.out.println("Name: " + p.getName());
+				System.out.println("Author: " + p.getAuthor());
+				System.out.println("Item Type: " + p.getItemType());
+				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
+				System.out.println(p.warning(p.getDueDate()));
+				System.out.println("\n");
+
+			}
+    	}
+    	
+    	// a variation of this should ONLY be used for students / faculty
+    	System.out.println("E-Books:");
+    	for (DigitalItem d : userDigitalItems) {
+    		System.out.println("Name: " + d.getName());
+    		System.out.println("Author: " + d.getAuthor());
+    		System.out.println("Item Type: " + d.getItemType() + "\n");
+		
+    	}
+    }
+    
+    private void loggedInHomePageStudent(Student user) throws Exception {
+    	
+    	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
+    	ArrayList<DigitalItem> userDigitalItems = user.getDigitalCourseBooks();
+    	
+    	System.out.println("Login completed!\n");
+    	System.out.println("Rentals:");
+    	for (PhysicalItem p : userPhysicalItems) {
+			if (p.getDueDate() != null) {
+				System.out.println("Name: " + p.getName());
+				System.out.println("Author: " + p.getAuthor());
+				System.out.println("Item Type: " + p.getItemType());
+				System.out.println("Due Date: " + new SimpleDateFormat("MM-dd-yy HH:mm:ss").format(p.getDueDate()));
+				System.out.println(p.warning(p.getDueDate()));
+				System.out.println("\n");
+
+			}
+    	}
+    	
+    	// a variation of this should ONLY be used for students / faculty
+    	System.out.println("E-Books:");
+    	for (DigitalItem d : userDigitalItems) {
+    		System.out.println("Name: " + d.getName());
+    		System.out.println("Author: " + d.getAuthor());
+    		System.out.println("Item Type: " + d.getItemType() + "\n");
+		
+    	}
+    }
+    
+    private void loggedInHomePageGeneral(Account user) throws Exception {
+    	
     	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
     	//ArrayList<DigitalItem> userDigitalItems = user.getDigitalCourseBooks();
     	//ArrayList<DigitalItem> userDigitalItems = user.getCourseBookHistory();
@@ -52,16 +115,6 @@ public class LibraryHomePage {
 
 			}
     	}
-    	
-    	// a variation of this should ONLY be used for students / faculty
-//    	System.out.println("E-Books:");
-//    	for (DigitalItem d : userDigitalItems) {
-//    		System.out.println("Name: " + d.getName());
-//    		System.out.println("Author: " + d.getAuthor());
-//    		System.out.println("Item Type: " + d.getItemType() + "\n");
-//		
-//    	}
-		
     	
     	System.exit(0);
     	
