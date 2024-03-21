@@ -35,7 +35,7 @@ public class LibraryHomePage {
     }
     
     private void loggedInHomePageFaculty(Faculty user) throws Exception {
-    	// for testing course database updating
+    	// for testing course database updating + testing updateCourseBook in Course
     	DigitalItem newCourseBook = new DigitalItem("Textbook","Literature","Shakespearean Plays","William Shakespeare","Complete","Norton");
     	Course testCourse = user.getCurrentCourses().get(0);
     	testCourse.updateCourseBook(user, newCourseBook);
@@ -287,7 +287,19 @@ public class LibraryHomePage {
     	}
     	
     	// Maybe have infoExists provided as input to load user profile to loggedInHomePageGeneral.
-    	loggedInHomePageGeneral(registeredAccount);
+    	
+    	String accType = String.valueOf(registeredAccount.getClass());
+    	
+    	if (accType.equals("class Faculty")) {
+    		loggedInHomePageFaculty((Faculty) registeredAccount);
+    	}
+    	
+    	else if (accType.equals("class Student")) {
+    		loggedInHomePageStudent((Student) registeredAccount);
+    	}
+    	else {
+    		loggedInHomePageGeneral(registeredAccount);
+    	}
     }
     
     private boolean isValidEmail(String email) {

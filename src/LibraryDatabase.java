@@ -155,10 +155,25 @@ public class LibraryDatabase {
 	            System.out.println(e.getMessage());
 	        }
 	        
-	        //make so that every list is using the same course object
-			DigitalItem newCourseBook = new DigitalItem(itemType, genre, name, author, edition, publisherName);
-			Course newCourse = new Course(courseName, newCourseBook, courseEndDate);
-			courseList.add(newCourse);
+	        if (email != null)
+	        {
+	        	int i = 0;
+	        	for (Course c : database.coursesDB) {
+		        	Course databaseCourse = coursesDB.get(i);
+		        	if (databaseCourse.getCourseName().equals(courseName)) {
+		        		courseList.add(databaseCourse);
+		        	}
+		        	
+		        	i++;
+		        }
+	        }
+	        
+	        else {
+	        	//make so that every list is using the same course object
+				DigitalItem newCourseBook = new DigitalItem(itemType, genre, name, author, edition, publisherName);
+				Course newCourse = new Course(courseName, newCourseBook, courseEndDate);
+				courseList.add(newCourse);
+	        }
 		}
 	}
 	
@@ -348,8 +363,8 @@ public class LibraryDatabase {
 	    else if (accType.equals("Student")) {
 	    	Student userStudent = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userStudent);
-	    	ListFactory.getList(userStudent, "digItem", path, splitEmail);
 	    	ListFactory.getList(userStudent, "courses", path, splitEmail);
+	    	ListFactory.getList(userStudent, "digItem", path, splitEmail);
 	    	ListFactory.getList(userStudent, "physItem", path, splitEmail);
 	    	return userStudent;
 	    }
@@ -357,8 +372,8 @@ public class LibraryDatabase {
 	    else if (accType.equals("Faculty")) {
 	    	Faculty userFaculty = new Faculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userFaculty);
-	    	ListFactory.getList(userFaculty, "digItem", path, splitEmail);
 	    	ListFactory.getList(userFaculty, "courses", path, splitEmail);
+	    	ListFactory.getList(userFaculty, "digItem", path, splitEmail);
 	    	ListFactory.getList(userFaculty, "physItem", path, splitEmail);
 	    	return userFaculty;
 	    }
