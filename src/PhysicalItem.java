@@ -60,8 +60,16 @@ public abstract class PhysicalItem extends Item {
 		}
 	}
 
-	public String warning(Date due){
-		
+	public String warning(String due){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+        Date dueDate = null;
+        try {
+            dueDate = dateFormat.parse(due);
+            System.out.println(name + " Parsed Date: " + dueDate);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
 		Date curr = new Date();
 
 		long timeDiff = dueDate.getTime() - curr.getTime(); // gets the time in miliseconds
