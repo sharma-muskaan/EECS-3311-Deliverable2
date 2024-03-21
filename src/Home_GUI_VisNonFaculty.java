@@ -48,6 +48,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnRentABook = new JButton("Rent a Book");
 	public JButton btnReturnABook = new JButton("Return a Book");
 	public JButton btnPurchaseItem = new JButton("Purchase Item");
+	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
 	
 
 	public static Home_GUI_VisNonFaculty getInstance() throws Exception {
@@ -63,7 +64,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		getContentPane().setLayout(null);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
-		setLayout(null);
+		getContentPane().setLayout(null);
 		
 		RentBook rb = new RentBook(acc);
 		
@@ -84,6 +85,7 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		btnRentABook.addActionListener(this);
 		btnReturnABook.addActionListener(this);
 		btnPurchaseItem.addActionListener(this);
+		btnSubscribe.addActionListener(this);
 		
 		panelRentBook.setBounds(13, 255, 128, 39);
 		panelReturnBook.setBounds(13, 183, 141, 39);
@@ -100,6 +102,10 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 		//add(buttonPanel);
 		getContentPane().add(listPanel);
 		getContentPane().add(buttonPanel);
+		
+		btnSubscribe.setBounds(13, 404, 196, 29);
+		buttonPanel.add(btnSubscribe);
+		
 		setSize(900, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -243,6 +249,13 @@ public class Home_GUI_VisNonFaculty extends JFrame implements ActionListener {
 			 else if (e.getSource() == btnPurchaseItem) {
 				 setVisible(false);
 				 PurchaseItem window = new PurchaseItem(account1);
+				 window.setVisible(true);
+				 window.setSize(900, 600); 
+			 }
+			 
+			 else if (e.getSource() == btnSubscribe) {
+				 setVisible(false);
+				 GUI_Subscribe_Newsletter window = new GUI_Subscribe_Newsletter(account1);
 				 window.setVisible(true);
 				 window.setSize(900, 600); 
 			 }
