@@ -25,9 +25,24 @@ public class Course {
 		
 	    String path = database.path + "course_database.csv";
 		
-	    //does not work properly, as faculty's course object is not connected to
+	    //updates main courseDB
 		database.updateCourses(database.coursesDB, path);
 		
+		//updates all use course CSVs
+		for (Account a : database.getUsers()) {
+			String[] emailSplitter = a.getEmail().split("@", 2);
+		    String splitEmail = database.path + emailSplitter[0] + "_course_data.csv";
+		    
+		    if (a.getAccType().equals("Student")) {
+		    	database.updateCourses(((Student) a).getCurrentCourses(), splitEmail);
+		    }
+		    
+		    else if (a.getAccType().equals("Faculty")) {
+		    	database.updateCourses(((Faculty) a).getCurrentCourses(), splitEmail);
+		    }
+		}
+		
+		//updates courseBookHistory of prof who updated the currentCourseBook
 		String[] emailSplitter = user.getEmail().split("@", 2);
 		String splitEmail = database.path + emailSplitter[0] + "_digItem_data.csv";
 		database.updateDigItems(user.getCourseBookHistory(), splitEmail);

@@ -415,4 +415,8 @@ public class LibraryDatabase {
 		
 		return null;
 	}
+	
+	protected ArrayList<Account> getUsers() {
+		return users;
+	}
 }

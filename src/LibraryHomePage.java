@@ -35,13 +35,13 @@ public class LibraryHomePage {
     }
     
     private void loggedInHomePageFaculty(Faculty user) throws Exception {
-    	// for testing course database updating + testing updateCourseBook in Course
-    	DigitalItem newCourseBook = new DigitalItem("Textbook","Literature","Shakespearean Plays","William Shakespeare","Complete","Norton");
-    	Course testCourse = user.getCurrentCourses().get(0);
-    	testCourse.updateCourseBook(user, newCourseBook);
+    	// used for testing course database updating + testing updateCourseBook in Course
+//    	DigitalItem newCourseBook = new DigitalItem("Textbook","Literature","Shakespearean Plays","William Shakespeare","Complete","Norton");
+//    	Course testCourse = user.getCurrentCourses().get(0);
+//    	testCourse.updateCourseBook(user, newCourseBook);
     	
     	ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
-    	ArrayList<DigitalItem> userDigitalItems = user.getCourseBookHistory();
+    	ArrayList<DigitalItem> courseBookHistory = user.getCourseBookHistory();
     	
     	System.out.println("Login completed!\n");
     	System.out.println("Rentals:");
@@ -57,9 +57,17 @@ public class LibraryHomePage {
 			}
     	}
     	
+    	//faculty's current courses
+    	System.out.println("Current Courses:");
+    	for (Course c : user.currentCourses) {
+    		System.out.println("Course Name: " + c.courseName);
+    		System.out.println("Course Textbook: " + c.getCurrentCourseBook().getName() + "\n");
+    	}
+    	
+    	
     	// a variation of this should ONLY be used for students / faculty
-    	System.out.println("E-Books:");
-    	for (DigitalItem d : userDigitalItems) {
+    	System.out.println("Previous Course Texts:");
+    	for (DigitalItem d : courseBookHistory) {
     		System.out.println("Name: " + d.getName());
     		System.out.println("Author: " + d.getAuthor());
     		System.out.println("Item Type: " + d.getItemType() + "\n");
