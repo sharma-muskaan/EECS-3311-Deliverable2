@@ -475,33 +475,33 @@ public class LibraryDatabase implements IterableCollection{
 	    if (accType.equals("Visitor")) {
 	    	user = new Visitor(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
-	    	ListFactory.getList(user, "physItem", path, splitEmail);
+	    	ListGenerator.getList(user, "physItem", path, splitEmail);
 	    	return user;
 	    }
 	    else if (accType.equals("Student")) {
 	    	Student userStudent = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userStudent);
-	    	ListFactory.getList(userStudent, "courses", path, splitEmail);
+	    	ListGenerator.getList(userStudent, "courses", path, splitEmail);
 	    	
 	    	ArrayList<DigitalItem> digitalItems = new ArrayList<DigitalItem>();
-	    	ListFactory.getList(userStudent, "digItem", path, splitEmail);
-	    	ListFactory.getList(userStudent, "physItem", path, splitEmail);
+	    	ListGenerator.getList(userStudent, "digItem", path, splitEmail);
+	    	ListGenerator.getList(userStudent, "physItem", path, splitEmail);
 	    	return userStudent;
 	    }
 	    
 	    else if (accType.equals("Faculty")) {
 	    	Faculty userFaculty = new Faculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userFaculty);
-	    	ListFactory.getList(userFaculty, "courses", path, splitEmail);
-	    	ListFactory.getList(userFaculty, "digItem", path, splitEmail);
-	    	ListFactory.getList(userFaculty, "physItem", path, splitEmail);
+	    	ListGenerator.getList(userFaculty, "courses", path, splitEmail);
+	    	ListGenerator.getList(userFaculty, "digItem", path, splitEmail);
+	    	ListGenerator.getList(userFaculty, "physItem", path, splitEmail);
 	    	return userFaculty;
 	    }
 	    
 	    else if (accType.equals("NonFaculty")) {
 	    	user = new NonFaculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
-	    	ListFactory.getList(user, "physItem", path, splitEmail);
+	    	ListGenerator.getList(user, "physItem", path, splitEmail);
 	    	return user;
 	    }
 	    
