@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ListFactory {
+public class ListGenerator {
 	
 	private static boolean fileCreator(String filePath) throws IOException {
 		File file = new File(filePath);

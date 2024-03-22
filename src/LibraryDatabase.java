@@ -135,7 +135,7 @@ public class LibraryDatabase implements IterableCollection{
 	        boolean rentalEnabled = Boolean.valueOf(reader.get("rentalEnabled"));
 	        double price = Double.parseDouble(reader.get("price"));
 	        
-			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+			PhysicalItem newPhysItem = physicalItemGenerator(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 			physItemList.add(newPhysItem);
 		}
 	}
@@ -171,8 +171,9 @@ public class LibraryDatabase implements IterableCollection{
 	        
 				boolean rentalEnabled = Boolean.valueOf(reader.get("rentalEnabled"));
 				double price = Double.parseDouble(reader.get("price"));
-	        
-				PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+				
+				PhysicalItem newPhysItem = physicalItemGenerator(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+				
 				if (newPhysItem.rentalEnabled == true) {
 					physItemList.add(newPhysItem);
 				}
@@ -211,7 +212,7 @@ public class LibraryDatabase implements IterableCollection{
 			boolean rentalEnabled = Boolean.valueOf(reader.get("rentalEnabled"));
 			double price = Double.parseDouble(reader.get("price"));
         
-			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+			PhysicalItem newPhysItem = physicalItemGenerator(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 			if (newPhysItem.price > 0) {
 				physItemList.add(newPhysItem);
 			}
@@ -475,33 +476,33 @@ public class LibraryDatabase implements IterableCollection{
 	    if (accType.equals("Visitor")) {
 	    	user = new Visitor(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
-	    	ListFactory.getList(user, "physItem", path, splitEmail);
+	    	ListGenerator.getList(user, "physItem", path, splitEmail);
 	    	return user;
 	    }
 	    else if (accType.equals("Student")) {
 	    	Student userStudent = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userStudent);
-	    	ListFactory.getList(userStudent, "courses", path, splitEmail);
+	    	ListGenerator.getList(userStudent, "courses", path, splitEmail);
 	    	
 	    	ArrayList<DigitalItem> digitalItems = new ArrayList<DigitalItem>();
-	    	ListFactory.getList(userStudent, "digItem", path, splitEmail);
-	    	ListFactory.getList(userStudent, "physItem", path, splitEmail);
+	    	ListGenerator.getList(userStudent, "digItem", path, splitEmail);
+	    	ListGenerator.getList(userStudent, "physItem", path, splitEmail);
 	    	return userStudent;
 	    }
 	    
 	    else if (accType.equals("Faculty")) {
 	    	Faculty userFaculty = new Faculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userFaculty);
-	    	ListFactory.getList(userFaculty, "courses", path, splitEmail);
-	    	ListFactory.getList(userFaculty, "digItem", path, splitEmail);
-	    	ListFactory.getList(userFaculty, "physItem", path, splitEmail);
+	    	ListGenerator.getList(userFaculty, "courses", path, splitEmail);
+	    	ListGenerator.getList(userFaculty, "digItem", path, splitEmail);
+	    	ListGenerator.getList(userFaculty, "physItem", path, splitEmail);
 	    	return userFaculty;
 	    }
 	    
 	    else if (accType.equals("NonFaculty")) {
 	    	user = new NonFaculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
-	    	ListFactory.getList(user, "physItem", path, splitEmail);
+	    	ListGenerator.getList(user, "physItem", path, splitEmail);
 	    	return user;
 	    }
 	    
@@ -534,6 +535,38 @@ public class LibraryDatabase implements IterableCollection{
 		}
 		
 		return null;
+	}
+	
+	protected PhysicalItem physicalItemGenerator(String itemType, String name, String author, String edition, String publisherName, 
+			String itemID, String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) throws Exception {
+		
+		PhysicalItem newItem = null;
+		
+		if (itemType.equals("CD")) {
+			CDFactory cdGen = new CDFactory();
+			newItem = cdGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+		}
+		
+		else if (itemType.equals("DVD")) {
+			CDFactory cdGen = new CDFactory();
+			newItem = cdGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+		}
+		
+		else if (itemType.equals("Book")) {
+			CDFactory cdGen = new CDFactory();
+			newItem = cdGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+		}
+		
+		else if (itemType.equals("Magazine")) {
+			CDFactory cdGen = new CDFactory();
+			newItem = cdGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+		}
+		
+		else if (newItem == null) {
+		    throw new NullPointerException("newPhysItem cannot be null. There was an error with determining the item type.");
+		}
+		
+		return newItem;
 	}
 	
 	protected ArrayList<Account> getUsers() {
