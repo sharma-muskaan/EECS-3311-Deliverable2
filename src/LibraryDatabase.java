@@ -242,6 +242,8 @@ public class LibraryDatabase implements IterableCollection{
 	            System.out.println(e.getMessage());
 	        }
 	        
+	        
+	        //if student is enrolled in a course, it finds it from the already imported cours_database.csv
 	        if (email != null)
 	        {
 	        	int i = 0;
@@ -256,11 +258,26 @@ public class LibraryDatabase implements IterableCollection{
 		        }
 	        }
 	        
-	        else {
-	        	//make so that every list is using the same course object
-				DigitalItem newCourseBook = new DigitalItem(itemType, genre, name, author, edition, publisherName);
-				Course newCourse = new Course(courseName, newCourseBook, courseEndDate);
-				courseList.add(newCourse);
+	        
+	      //checks if course textbook is in database, if so uses existing textbook to make course
+	        if (email == null) {
+	        	
+	        	DigitalItem newCourseBook = new DigitalItem(itemType, genre, name, author, edition, publisherName);
+	        	
+	        	int i = 0;
+	        	for (DigitalItem c : database.digItemsDB) {
+		        	DigitalItem databaseTextbook = digItemsDB.get(i);
+		        	
+		        	//
+		        	if (databaseTextbook.isEqualTo(newCourseBook)) {
+		        		//make so that every list is using the same course object
+						Course newCourse = new Course(courseName, newCourseBook, courseEndDate);
+						courseList.add(newCourse);
+		        		break;
+		        	}
+		        	
+		        	i++;
+		        }
 	        }
 		}
 	}
@@ -452,6 +469,14 @@ public class LibraryDatabase implements IterableCollection{
 	    	Student userStudent = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userStudent);
 	    	ListFactory.getList(userStudent, "courses", path, splitEmail);
+	    	
+	    	ArrayList<DigitalItem> digitalItems = new ArrayList<DigitalItem>();
+	        
+	        for (Course c : ((Student) user).getCurrentCourses()) {
+	            DigitalItem item = c.getCurrentCourseBook();
+	            digitalItems.add(item);
+	        }
+	    	
 	    	ListFactory.getList(userStudent, "digItem", path, splitEmail);
 	    	ListFactory.getList(userStudent, "physItem", path, splitEmail);
 	    	return userStudent;
@@ -561,12 +586,15 @@ public class LibraryDatabase implements IterableCollection{
     			
     			for (Student s : allStudents) {
     				ArrayList<Course> studentCourseList = s.getCurrentCourses();
+    				ArrayList<DigitalItem> studentTextbooks = s.getDigitalCourseBooks();
     				studentCourseList.remove(course);
     				
     				String[] emailSplitter = s.getEmail().split("@", 2);
-					String studentCoursesPath = path + emailSplitter[0] + "_course_data.csv";;
+					String studentCoursesPath = path + emailSplitter[0] + "_course_data.csv";
+					String studentDigItemsPath = path + emailSplitter[0] + "_digItem_data.csv";
     				
-    				database.updateCourses(studentCourseList, path);
+    				database.updateCourses(studentCourseList, studentCoursesPath);
+    				database.updateDigItems(studentTextbooks, studentDigItemsPath);
     			}
     			
     			break;
@@ -575,5 +603,7 @@ public class LibraryDatabase implements IterableCollection{
         	i++;
         }
     }
+	
+	
 	
 }

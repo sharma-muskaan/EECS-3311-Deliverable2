@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ListFactory {
 	
@@ -8,7 +9,7 @@ public class ListFactory {
         boolean fileExists = file.createNewFile();
         
         try {
-            // Create the file
+            // Create the file, returns true if new file is made successfully
             if (fileExists) {
                 System.out.println("File created successfully.");
             } else {
