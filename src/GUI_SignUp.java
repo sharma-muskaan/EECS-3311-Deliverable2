@@ -212,11 +212,7 @@ public class GUI_SignUp extends JFrame implements ActionListener {
         	}
     		
         }
-        
-        
-        
-        
-        
+   
     }
 	
 	@Override
