@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.SwingPropertyChangeSupport;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -10,6 +11,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 import java.awt.Color;
 import javax.swing.JComboBox;
@@ -145,12 +147,21 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 		}
 		
 		else if (e.getSource() == btnShowBooks) {
+			String[] splitAcc = new String[2];
+			splitAcc = acc.getEmail().split("@");
+			try {
+				database.loadPhysItems(userPhysItems, splitAcc[0]);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			try {
 				showBorrowedBooks(acc);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+
 			
 			listBorrowedItems = new JComboBox<String>(physicalItemStrings);
 			listBorrowedItems.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
