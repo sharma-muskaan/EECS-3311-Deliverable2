@@ -7,5 +7,14 @@ public class Book extends PhysicalItem {
 		super(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 		// TODO Auto-generated constructor stub
 	}
+	private boolean available;
+	
+    public boolean isAvailable(String name) {
+        return available;
+    }
+    
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 
 }

@@ -15,7 +15,8 @@ public class LibraryDatabase implements IterableCollection{
 	//IMPLEMENT COURSES
 	protected ArrayList<Course> coursesDB;
 	protected String path;
-	private String path;
+	public ArrayList<DigitalItem> itemList;
+	
 	
 	private List<DigitalItem> items;
 	
@@ -433,10 +434,37 @@ public class LibraryDatabase implements IterableCollection{
 		return new ConcreteIterator(items);
 	}
 	
+	
+	public void loadDigitalItems(ArrayList<DigitalItem> digItemList) throws Exception {
+		
+		String filePath = path;
+		filePath += "digItem_database.csv";
+	
+		
+		CsvReader reader = new CsvReader(filePath);
+		reader.readHeaders();
+		
+		while(reader.readRecord()){
+			
+			String itemType = reader.get("itemType");
+			String genre = reader.get("genre");
+			String name = reader.get("name");
+			String author = reader.get("author");
+			String edition = reader.get("edition");
+			String publisherName = reader.get("publisherName");
+			DigitalItem newDigItem = new DigitalItem(itemType, genre, name, author, edition, publisherName);
+			digItemList.add(newDigItem);
+		}
+	}
+	
     // Method to print similar items based on text similarity and same genres
-    public void printSimilarItems(String searchQuery, List<String> searchGenres) {
+    public void printSimilarItems(String searchQuery, List<String> searchGenres) throws Exception {
         List<String> recommendations = getRecommendations(searchQuery, searchGenres);
-        // Print recommendations
+    	loadDigitalItems(itemList);
+    	
+    	for(DigitalItem item : itemList) 
+    		if(item.getGenre().equals(recommendations))
+    	
         if (!recommendations.isEmpty()) {
             System.out.println("Similar items:");
             for (String recommendation : recommendations) {
@@ -457,4 +485,5 @@ public class LibraryDatabase implements IterableCollection{
         }
         return recommendations;
     }
+
 }
