@@ -1,6 +1,6 @@
 email,password,accType,itemsBorrowed,overdueItems,accountLocked
-ferfolya23@yorku.ca,TPW,Student,3,9,true
-billy@gmail.com,BPW,Visitor,-1,25,true
+ferfolya23@yorku.ca,TPW,Student,0,0,true
+billy@gmail.com,BPW,Visitor,0,0,true
 jessica@yorku.ca,JPW,Faculty,0,0,false
 arthur@yorku.ca,APW,NonFaculty,0,0,false
 luke@yorku.ca,Luke_123,Faculty,0,0,false
