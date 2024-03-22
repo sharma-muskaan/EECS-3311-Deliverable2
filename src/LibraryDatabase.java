@@ -142,83 +142,22 @@ public class LibraryDatabase implements IterableCollection{
 	
 
 	public void loadRentableBooks(ArrayList<PhysicalItem> physItemList) throws Exception{
-		
-			String filePath = path + "physItem_database.csv";
-		
-			CsvReader reader = new CsvReader(filePath);
-			reader.readHeaders();
-		
-			while(reader.readRecord()){
-				
-				String itemType = reader.get("itemType");
-				String name = reader.get("name");
-				String author = reader.get("author");
-				String edition = reader.get("edition");
-				String publisherName = reader.get("publisherName");
-				String itemID = reader.get("itemID");
-				String libLocation = reader.get("libLocation");
-				int copyNumber = Integer.parseInt(reader.get("copyNumber"));
-			
-				String dueDateString = reader.get("dueDate");
-				SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
-				Date dueDate = null;
-				try {
-					dueDate = dateFormat.parse(dueDateString);
-					System.out.println(name + " Parsed Date: " + dueDate);
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-	        
-				boolean rentalEnabled = Boolean.valueOf(reader.get("rentalEnabled"));
-				double price = Double.parseDouble(reader.get("price"));
-				
-				PhysicalItem newPhysItem = physicalItemGenerator(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
-				
-				if (newPhysItem.rentalEnabled == true) {
-					physItemList.add(newPhysItem);
-				}
-			}	
+		for (PhysicalItem p : database.physItemsDB) {
+			if (p.rentalEnabled == true) {
+				physItemList.add(p);
+			}
 		}
+	}
 	
 	
 	public void loadPurchasableBooks(ArrayList<PhysicalItem> physItemList) throws Exception{
 		
-		String filePath = path + "physItem_database.csv";
-	
-		CsvReader reader = new CsvReader(filePath);
-		reader.readHeaders();
-	
-		while(reader.readRecord()){
-			
-			String itemType = reader.get("itemType");
-			String name = reader.get("name");
-			String author = reader.get("author");
-			String edition = reader.get("edition");
-			String publisherName = reader.get("publisherName");
-			String itemID = reader.get("itemID");
-			String libLocation = reader.get("libLocation");
-			int copyNumber = Integer.parseInt(reader.get("copyNumber"));
-		
-			String dueDateString = reader.get("dueDate");
-			SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
-			Date dueDate = null;
-			try {
-				dueDate = dateFormat.parse(dueDateString);
-				System.out.println(name + " Parsed Date: " + dueDate);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-        
-			boolean rentalEnabled = Boolean.valueOf(reader.get("rentalEnabled"));
-			double price = Double.parseDouble(reader.get("price"));
-        
-			PhysicalItem newPhysItem = physicalItemGenerator(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
-			if (newPhysItem.price > 0) {
-				physItemList.add(newPhysItem);
+		for (PhysicalItem p : database.physItemsDB) {
+			if (p.price > 0) {
+				physItemList.add(p);
 			}
 		}
-			
-		}
+	}
 
 	//May have errors. Please double check
 	public void loadCourses(ArrayList<Course> courseList, String email) throws Exception{

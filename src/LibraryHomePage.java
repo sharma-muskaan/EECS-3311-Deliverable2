@@ -228,13 +228,16 @@ public class LibraryHomePage {
 			System.out.println("Enter Library Location: " );
 			String libLocation = input.nextLine();
 			//it can be assumed that an item that is only offered for sale just has rentalEnabled = false
-			System.out.println("Can this item be accessed for free? (Enter true or false.) " );
-			boolean rentalEnabled = Boolean.valueOf(input.nextLine());
-			System.out.println("If for sale, enter price: " );
-			double price = Double.parseDouble(input.nextLine());
+//			System.out.println("Can this item be accessed for free? (Enter true or false.) " );
+//			boolean rentalEnabled = Boolean.valueOf(input.nextLine());
+//			System.out.println("If for sale, enter price: " );
+//			double price = Double.parseDouble(input.nextLine());
 			
+			//These values will be the same by default for every book created. Everything below is needed to make generation / updating CSVs work properly.
 			int copyNumber = 20;
 			Date dueDate = null;
+			boolean rentalEnabled = true;
+			double price = -1.0;
 			
 			PhysicalItem newPhysItem = database.physicalItemGenerator(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 			manager.addPhysicalItem(newPhysItem);

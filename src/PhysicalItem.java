@@ -69,23 +69,30 @@ public abstract class PhysicalItem extends Item {
 		
 		else {
 			PhysicalItem rentedCopy = this.clone();
+			PhysicalItem databaseEntry = this;
 			//copyNumber = -1 indicates that user has taken out this copy and that it is not overdue.
 			rentedCopy.setCopyNumber(-1);
+			ArrayList<PhysicalItem> physicalItemDatabase = database.physItemsDB;
 			
 		    // Get current date
 		    Calendar calendar = Calendar.getInstance();
 		    // Add one month to the current date
 		    calendar.add(Calendar.MONTH, 1);
 		    rentedCopy.dueDate = calendar.getTime();
+		    
 		    user.getPhysicalItemList().add(rentedCopy);
 		    user.setItemsBorrowed(user.getItemsBorrowed() + 1);
+		    databaseEntry.setCopyNumber(databaseEntry.getCopyNumber() - 1);
 		    
-		    String[] emailSplitter = user.getEmail().split("@", 2);
+		    //Update account info.
+		    database.updateAccounts();
+			
+		    //Update account item list.
+			String[] emailSplitter = user.getEmail().split("@", 2);
 			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
 		    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
 		    
-		    this.setCopyNumber(copyNumber - 1);
-		    
+		    //Update library info in entire database.
 		    String databasePath = database.path + "physItem_database.csv";
 		    database.updatePhysItems(database.physItemsDB, databasePath);
 		    
@@ -118,21 +125,27 @@ public abstract class PhysicalItem extends Item {
 				}
 			}
 			
-			for (PhysicalItem p : database.physItemsDB) {
-				if (p.getItemID().equals(returnedCopy.getItemID())) {
+			ArrayList<PhysicalItem> databaseList = database.physItemsDB;
+			
+			for (PhysicalItem p : databaseList) {
+				if (p.isEqualTo(returnedCopy)) {
 					
 					if (user.getPhysicalItemList().remove(returnedCopy)) {
 						System.out.println("Return success!");
 					}
 					
 					p.setCopyNumber(p.getCopyNumber() + 1);
-					user.getPhysicalItemList().remove(returnedCopy);
 					user.setItemsBorrowed(user.getItemsBorrowed() - 1);
 					
+					//Update account info.
+				    database.updateAccounts();
+					
+				    //Update account item list.
 					String[] emailSplitter = user.getEmail().split("@", 2);
 					String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
 				    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
 				    
+				    //Update library info in entire database.
 				    String databasePath = database.path + "physItem_database.csv";
 				    database.updatePhysItems(database.physItemsDB, databasePath);
 					
@@ -318,6 +331,21 @@ public abstract class PhysicalItem extends Item {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public boolean isEqualTo(PhysicalItem hardCopy) {
+		
+		boolean typeIsSame = (this.itemType).equals(hardCopy.itemType);
+		boolean nameIsSame = (this.name).equals(hardCopy.name);
+		boolean authorIsSame = (this.author).equals(hardCopy.author);
+		boolean editionIsSame = (this.edition).equals(hardCopy.edition);
+		boolean pubIsSame = (this.publisherName).equals(hardCopy.publisherName);
+		boolean sameID = (this.itemID).equals(hardCopy.itemID);
+		boolean sameLoc = (this.libLocation).equals(hardCopy.libLocation);
+		boolean samePrice = ((this.price) == (hardCopy.price));
+		boolean sameContents = typeIsSame && nameIsSame && authorIsSame && editionIsSame && pubIsSame && sameID && sameLoc && samePrice;
+		
+		return sameContents;
 	}
 	
 	public abstract PhysicalItem clone();
