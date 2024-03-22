@@ -1,5 +1,17 @@
 itemType,genre,name,author,edition,publisherName
 Textbook,Educational,Biology,John Green,3rd,Pearson
+Textbook,Science,Physics,Mark Smith,2nd,McGraw-Hill Education
+Textbook,Computer Science,Introduction to Algorithms,Thomas Cormen,3rd,MIT Press
+Textbook,Psychology,Introduction to Psychology,David G. Myers,12th,Worth Publishers
+Textbook,Mathematics,Calculus Early Transcendentals,James Stewart,8th,Cengage Learning
+Textbook,Philosophy,Philosophy: The Basics,Nigel Warburton,5th,Routledge
+Textbook,History,A People's History of the United States,Howard Zinn,Revised Edition,Harper Perennial
+Textbook,Biology,Molecular Biology of the Cell,Bruce Alberts,6th,Garland Science
+Textbook,Chemistry,Chemistry: The Central Science,Bruce E. Bursten,14th,Pearson
+Textbook,Psychology,Psychology and Life,Richard J. Gerrig,20th,Pearson
+Textbook,Literature,The Norton Anthology of English Literature,Stephen Greenblatt,10th,W. W. Norton & Company
+Textbook,Computer Science,Database System Concepts,Abraham Silberschatz,6th,McGraw-Hill
+Textbook,Educational,Biology,John Green,3rd,Pearson
 Textbook,Self Improvement,Yoga,Robert Smirth,2nd,Neilson
 RegBook,Horror,The Shining,William Williams,1st,Vintage
 Textbook,Educational,Chemistry,Mary Johnson,4th,Academic Press
