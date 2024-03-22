@@ -84,7 +84,7 @@ public abstract class PhysicalItem extends Item {
 			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
 		    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
 		    
-		    this.setCopyNumber(copyNumber - 1);
+		    copyNumber -= 1;
 		    
 		    String databasePath = database.path + "physItem_database.csv";
 		    database.updatePhysItems(database.physItemsDB, databasePath);

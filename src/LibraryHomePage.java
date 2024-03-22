@@ -25,7 +25,7 @@ public class LibraryHomePage {
             }
             
             if (nextPage.equals("R")) {
-            	//register();
+            	register();
             }
             else {
             	System.out.println("Please enter a valid input!");
@@ -249,59 +249,59 @@ public class LibraryHomePage {
     	System.exit(0);
     }
     
-    private void register(String email, String password, String accType) throws Exception{
+    private void register() throws Exception{
     	LibraryHomePage newAccount = new LibraryHomePage();
-    	
+    	String email;
+    	String password;
     	
     	while (true) {
-//    		System.out.println("Enter email: ");
-//            email = input.nextLine();
+    		System.out.println("Enter email: ");
+            email = input.nextLine();
             
             if (newAccount.isValidEmail(email)) {
                 break;
             }
-            //System.out.println("Please enter a valid email.");
+            System.out.println("Please enter a valid email.");
     	}
  	
         while (true) {          
-//            System.out.println("Enter password: ");
-//            password = input.nextLine();
+            System.out.println("Enter password: ");
+            password = input.nextLine();
             
             if (newAccount.isStrongPassword(password)) {
                 break; 
             }
             
-//            System.out.println("Password is not strong enough. Please make a new password with the following requirements:");
-//            System.out.println("- At least 8 characters long");
-//            System.out.println("- At least one uppercase letter");
-//            System.out.println("- At least one lowercase letter");
-//            System.out.println("- At least one digit");
-//            System.out.println("- At least one symbol");
+            System.out.println("Password is not strong enough. Please make a new password with the following requirements:");
+            System.out.println("- At least 8 characters long");
+            System.out.println("- At least one uppercase letter");
+            System.out.println("- At least one lowercase letter");
+            System.out.println("- At least one digit");
+            System.out.println("- At least one symbol");
         }
         
         // This would be replaced with a button in implementation.
-        //System.out.println("Select Account Type: ");
-        //String accType = input.nextLine();
+        System.out.println("Select Account Type: ");
+        String accType = input.nextLine();
         
         boolean verifiedByManager = newAccount.additionalValidation(email);
         
         if ((verifiedByManager == false) && !(accType.equals("Visitor"))) {
-        	//System.out.println("Your account could not be validated. Please try signing up as a Visitor instead.");
-            GUI_SignUp window = new GUI_SignUp();
-            
+        	System.out.println("Your account could not be validated. Please try signing up as a Visitor instead.");
+            loggedOutHomePage();
         }
         
-        //Account accountExists = database.iterateDB(email, password);
+        Account accountExists = database.iterateDB(email, password);
         
-//        if (accountExists != null) {
-//        	//System.out.println("You already have an account. Please try logging in instead!");
-//        }
-//        else {
-//            // TODO - Add some validation method prior to account creation if not Visitor.
-//    		database.accountGenerator(email, password, accType, 0, 0, false);
-//    		database.updateAccounts();
-//    		System.out.println("Registration successful! Please login.");
-//        }
+        if (accountExists != null) {
+        	System.out.println("You already have an account. Please try logging in instead!");
+        }
+        else {
+            // TODO - Add some validation method prior to account creation if not Visitor.
+    		database.accountGenerator(email, password, accType, 0, 0, false);
+    		database.updateAccounts();
+    		System.out.println("Registration successful! Please login.");
+        }
         
         loggedOutHomePage();
     }
@@ -353,15 +353,15 @@ public class LibraryHomePage {
     	}
     }
     
-    protected boolean isValidEmail(String email) {
+    private boolean isValidEmail(String email) {
 		return email.contains("@");
 	}
     
-    protected boolean additionalValidation(String email) {
+    private boolean additionalValidation(String email) {
 		return email.endsWith("yorku.ca");
 	}
     
-    protected boolean isStrongPassword(String password) {
+    private boolean isStrongPassword(String password) {
     	
         if (password == null || password.length() < 8) {
             return false; // Password should be at least 8 characters long
