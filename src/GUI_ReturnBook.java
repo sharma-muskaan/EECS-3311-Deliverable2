@@ -17,10 +17,11 @@ import javax.swing.JButton;
 public class GUI_ReturnBook extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private static LibraryDatabase database;
 	private JPanel contentPane;
 	
+	static Account acc1 = null;
 	Account acc;
-	static Account acc1;
 	
 	JButton btnNewButton_1 = new JButton("Return");
 	JButton btnNewButton = new JButton("Back");
@@ -54,9 +55,12 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public GUI_ReturnBook(Account acc) {
+	public GUI_ReturnBook(Account acc) throws Exception {
 		this.acc = acc;
+		
+		database = LibraryDatabase.getInstance();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
@@ -94,23 +98,32 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 		
 		btnNewButton.addActionListener(this);
 		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton.setBounds(59, 374, 135, 54);
+		btnNewButton.setBounds(124, 369, 154, 70);
 		panel_1.add(btnNewButton);
-		
+
+
 		btnNewButton_1.addActionListener(this);
 		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton_1.setBounds(646, 374, 149, 54);
+		btnNewButton_1.setBounds(595, 369, 154, 70);
 		panel_1.add(btnNewButton_1);
 		
 		btnShowBooks.addActionListener(this);
 		btnShowBooks.setBounds(350, 33, 197, 29);
 		panel_1.add(btnShowBooks);
 		panel_1.setBounds(109, 129, 557, 200);
+
+		
 		setVisible(true);
 	}
 	
-	public void showBorrowedBooks() throws Exception {
-		
+	public void showBorrowedBooks(Account acc) throws Exception {
+		String[] emailSplit = new String[2];
+		emailSplit = acc.getEmail().split("@");
+		database.loadPhysItems(borrowedBooks, emailSplit[0]);
+
+		for(PhysicalItem p: borrowedBooks){
+			physicalItemStrings.add(p.getName());
+		}
 	}
 
 	@Override
@@ -128,7 +141,7 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 		
 		else if (e.getSource() == btnShowBooks) {
 			try {
-				showBorrowedBooks();
+				showBorrowedBooks(acc);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

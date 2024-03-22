@@ -272,9 +272,16 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 			 
 			 else if (e.getSource() == btnReturnABook) {
 				 setVisible(false);
-				 GUI_ReturnBook window = new GUI_ReturnBook(account1);
-				 window.setVisible(true);
-				 window.setSize(900, 600); 
+				 GUI_ReturnBook window;
+				try {
+					window = new GUI_ReturnBook(account1);
+					window.setVisible(true);
+				 	window.setSize(900, 600); 
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		
 			 }
 			 
 			 else if (e.getSource() == btnPurchaseItem) {
