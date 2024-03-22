@@ -30,7 +30,7 @@ public class GUI_Search extends JFrame implements ActionListener {
 	static Account account;
 	Account acc;
 	
-	ArrayList<DigitalItem> digItemList;
+	ArrayList<Item> itemList;
 	ArrayList<String> genreList;
 	/**
 	 * Launch the application.
@@ -116,7 +116,8 @@ public class GUI_Search extends JFrame implements ActionListener {
 			
 			try {
 				
-				database.loadGenres(genreList);
+				itemList = database.getRecommendations(inSearch.getText());
+				GUI_Search_Results window = new GUI_Search_Results(itemList, acc);
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -124,15 +125,7 @@ public class GUI_Search extends JFrame implements ActionListener {
 				
 			}
 			
-			try {
-				
-				digItemList = database.printSimilarItems(inSearch.getText().toString());
-				
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				
-			}
+			
 			
 			
 		}
