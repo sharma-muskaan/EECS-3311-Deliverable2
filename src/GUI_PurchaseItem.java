@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -16,12 +18,20 @@ public class GUI_PurchaseItem extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static LibraryDatabase database;
 	
 	static Account acc1 = null;
 	Account acc = null;
 	
-	JButton btnNewButton = new JButton("Back");
-	JButton btnNewButton_1 = new JButton("Purchase");
+	ArrayList<PhysicalItem> purchasableItems = new ArrayList<>();
+	ArrayList<PhysicalItem> userPhysItems = new ArrayList<>();
+	
+	Vector<String> physicalItems = new Vector<>();
+	
+	JComboBox<String> listPurchasableItems;
+	
+	JButton btnBack = new JButton("Back");
+	JButton btnPurchase = new JButton("Purchase");
 
 	/**
 	 * Launch the application.
@@ -41,9 +51,11 @@ public class GUI_PurchaseItem extends JFrame implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public GUI_PurchaseItem(Account acc) {
+	public GUI_PurchaseItem(Account acc) throws Exception {
 		this.acc = acc;
+		database = LibraryDatabase.getInstance();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
@@ -51,6 +63,8 @@ public class GUI_PurchaseItem extends JFrame implements ActionListener {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		showPurchasableItems();
 		
 		JPanel panel = new JPanel();
 		panel.setForeground(new Color(216, 84, 86));
@@ -75,24 +89,32 @@ public class GUI_PurchaseItem extends JFrame implements ActionListener {
 		lblNewLabel_1.setBounds(32, 18, 208, 43);
 		panel_1.add(lblNewLabel_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Item1", "Item2", "Item3"}));
-		comboBox.setBounds(32, 154, 750, 27);
-		panel_1.add(comboBox);
+		listPurchasableItems = new JComboBox<String>(physicalItems);
+		listPurchasableItems.setBounds(32, 154, 750, 27);
+		panel_1.add(listPurchasableItems);
 		
-		btnNewButton.addActionListener(this);
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
-		btnNewButton.setBounds(49, 382, 136, 48);
-		panel_1.add(btnNewButton);
+		btnBack.addActionListener(this);
+		btnBack.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		btnBack.setBounds(49, 382, 136, 48);
+		panel_1.add(btnBack);
 		
-		btnNewButton_1.addActionListener(this);
-		btnNewButton_1.setBounds(626, 382, 136, 48);
-		panel_1.add(btnNewButton_1);
+		btnPurchase.addActionListener(this);
+		btnPurchase.setBounds(626, 382, 136, 48);
+		panel_1.add(btnPurchase);
+		setVisible(true);
+	}
+	
+	public void showPurchasableItems() throws Exception {
+		database.loadPurchasableBooks(purchasableItems);
+		
+		for (PhysicalItem p : purchasableItems) {
+			physicalItems.add(p.getName());
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnNewButton) {
+		if(e.getSource() == btnBack) {
 			dispose();
 			try {
 				GUI_Home_VisNonFaculty newFrame = new GUI_Home_VisNonFaculty(acc);
@@ -101,6 +123,10 @@ public class GUI_PurchaseItem extends JFrame implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+		
+		else if (e.getSource() == btnPurchase) {
+			
 		}
 		
 	}

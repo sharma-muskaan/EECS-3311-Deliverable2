@@ -71,7 +71,7 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 	public GUI_RentBook(Account acc) throws Exception {
 		
 		this.acc = acc;
-		System.out.println(this.acc.getEmail());
+		
 		database = LibraryDatabase.getInstance();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
