@@ -53,7 +53,7 @@ public class GUI_SignUp extends JFrame {
 		panel.setBounds(6, 6, 888, 64);
 		contentPane.add(panel);
 		
-		JLabel lblNewLabel = new JLabel("Sign Up");
+		JLabel lblNewLabel = new JLabel("Sign Up ");
 		lblNewLabel.setForeground(new Color(234, 77, 76));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 29));
 		panel.add(lblNewLabel);
