@@ -572,7 +572,7 @@ public class LibraryDatabase implements IterableCollection{
 
 	private boolean checkTitleSimilarity(String searchQuery, String itemName) {
 		String[] splitQuery = searchQuery.split(" ");
-		String[] splitItemName = searchQuery.split(" ");
+		String[] splitItemName = itemName.split(" ");
 		
 		int queryLength = splitQuery.length;
 		int itemNameLength = splitItemName.length;
