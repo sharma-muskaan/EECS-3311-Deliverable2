@@ -1,4 +1,5 @@
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -107,17 +108,25 @@ public abstract class PhysicalItem extends Item {
 		
 		else {
 			database = LibraryDatabase.getInstance();
+			ArrayList<PhysicalItem> userRentalsList = user.getPhysicalItemList();
 			PhysicalItem returnedCopy = this;
+			
+			for (PhysicalItem r : userRentalsList) {
+				if (r.getItemID().equals(returnedCopy.getItemID())) {
+					returnedCopy = r;
+					break;
+				}
+			}
 			
 			for (PhysicalItem p : database.physItemsDB) {
 				if (p.getItemID().equals(returnedCopy.getItemID())) {
 					
 					if (user.getPhysicalItemList().remove(returnedCopy)) {
-						System.out.println("Invalid Operation. The user has not taken out this item.");
-						break;
+						System.out.println("Return success!");
 					}
 					
 					p.setCopyNumber(p.getCopyNumber() + 1);
+					user.getPhysicalItemList().remove(returnedCopy);
 					user.setItemsBorrowed(user.getItemsBorrowed() - 1);
 					
 					String[] emailSplitter = user.getEmail().split("@", 2);
