@@ -60,6 +60,19 @@ public class DigitalItem extends Item {
 		this.publisherName = publisherName;
 	}
 
+	public boolean isEqualTo(DigitalItem courseBook) {
+		
+		boolean typeIsSame = (this.itemType).equals(courseBook.itemType);
+		boolean genreIsSame = (this.genre).equals(courseBook.genre);
+		boolean nameIsSame = (this.name).equals(courseBook.name);
+		boolean authorIsSame = (this.author).equals(courseBook.author);
+		boolean editionIsSame = (this.edition).equals(courseBook.edition);
+		boolean pubIsSame = (this.publisherName).equals(courseBook.publisherName);
+		boolean sameContents = typeIsSame && genreIsSame && nameIsSame && authorIsSame && editionIsSame && pubIsSame;
+		
+		return sameContents;
+	}
+	
 	@Override
 	public DigitalItem clone() {
 		return new DigitalItem(this);
