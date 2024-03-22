@@ -28,7 +28,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	private JTextField email, password;
 	private JButton btnLogin, btnSignup, btnBack;
 	private JLabel lblUsername,lblPassword,lblEnterYourUsername;
-
+	
 	ArrayList<PhysicalItem> userPhysicalItems = new ArrayList<>();
 
 	
@@ -210,23 +210,36 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 
 		            	break;
 	            	}
-	            	
-	            	else if (email.getText().equals("mgr_access") && password.getText().equals("password")) {
-	            		//LibraryManager manager = new LibraryManager(email, password);
-	            		// placeholder for management page
-	                    //managementPortal(manager);
+	            
+		
+	            	else if (e.getSource() == btnSignup) {
+			
+	            		setVisible(false);
+	            		GUI_SignUp frame;
+			
+	            		try {
+				
+	            			frame = new GUI_SignUp();
+	            			frame.setVisible(true);
+				
+	            		} catch (Exception e1) {
+				
+	            			e1.printStackTrace();
+	            		}
+			
 	            	}
 	            	
-	            }
-	            
-	            else {
-	            	// place the error message here
+	            	else {
+	            		
+	            	}
 	            }
 	    	}
-	    	
-			
 		}
-		
-	}
 
+	}
 }
+	            
+		
+	
+
+
