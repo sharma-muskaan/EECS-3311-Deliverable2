@@ -579,7 +579,7 @@ public class LibraryDatabase implements IterableCollection{
 		
 		for (int i = 0; i < queryLength; i++) {
 			for (int j = 0; j < itemNameLength; j++) {
-				boolean similarWordExists = splitQuery[i].equals(splitItemName[j]);
+				boolean similarWordExists = splitQuery[i].equalsIgnoreCase(splitItemName[j]);
 				if (similarWordExists) {
 					return true;
 				}
