@@ -15,7 +15,7 @@ public class Client {
 		database.loadCourses(database.coursesDB, null);
 		database.loadAccounts();
 		database.purgeFinishedCourses();
-		database.updateAccounts();
+		//database.updateAccounts();
 		//database.loadBankData();
 		homePage.loggedOutHomePage();
 	}

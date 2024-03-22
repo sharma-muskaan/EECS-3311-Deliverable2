@@ -98,7 +98,9 @@ public class LibraryDatabase implements IterableCollection{
 		        }
 	        }
 			
-			digItemList.add(newDigItem);
+	        else {
+	        	digItemList.add(newDigItem);
+	        }
 		}
 	}
 	
