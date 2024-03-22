@@ -23,8 +23,8 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 	static Account acc1 = null;
 	Account acc;
 	
-	JButton btnNewButton_1 = new JButton("Return");
-	JButton btnNewButton = new JButton("Back");
+	JButton btnReturn = new JButton("Return");
+	JButton btnBack = new JButton("Back");
 	JButton btnShowBooks = new JButton("Show Borrowed Items");
 	
 	JPanel panel_1 = new JPanel();
@@ -81,9 +81,7 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 		panel.add(lblNewLabel);
 		
 		
-		panel_1.setBounds(6, 83, 888, 483);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+		
 		
 		JLabel lblNewLabel_1 = new JLabel("Books You Have Checked Out:");
 		lblNewLabel_1.setForeground(new Color(216, 84, 86));
@@ -96,22 +94,26 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 //		comboBox.setBounds(59, 197, 736, 27);
 //		panel_1.add(comboBox);
 		
-		btnNewButton.addActionListener(this);
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton.setBounds(124, 369, 154, 70);
-		panel_1.add(btnNewButton);
+		btnBack.addActionListener(this);
+		btnBack.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		btnBack.setBounds(124, 369, 154, 70);
+		panel_1.add(btnBack);
 
 
-		btnNewButton_1.addActionListener(this);
-		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton_1.setBounds(595, 369, 154, 70);
-		panel_1.add(btnNewButton_1);
+		btnReturn.addActionListener(this);
+		btnReturn.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		btnReturn.setBounds(595, 369, 154, 70);
+		panel_1.add(btnReturn);
 		
 		btnShowBooks.addActionListener(this);
 		btnShowBooks.setBounds(350, 33, 197, 29);
 		panel_1.add(btnShowBooks);
-		panel_1.setBounds(109, 129, 557, 200);
+		
 
+		
+		panel_1.setBounds(6, 83, 888, 483);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
 		
 		setVisible(true);
 	}
@@ -128,7 +130,7 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnNewButton) {
+		if(e.getSource() == btnBack) {
 			dispose();
 			try {
 				GUI_Home_VisNonFaculty newFrame = new GUI_Home_VisNonFaculty(acc);
