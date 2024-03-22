@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -22,6 +24,17 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 	
 	JButton btnNewButton_1 = new JButton("Return");
 	JButton btnNewButton = new JButton("Back");
+	JButton btnShowBooks = new JButton("Show Borrowed Items");
+	
+	JPanel panel_1 = new JPanel();
+	JPanel panel_2 = new JPanel();
+	
+	ArrayList<PhysicalItem> borrowedBooks = new ArrayList<>();
+	ArrayList<PhysicalItem> userPhysItems = new ArrayList<>();
+	
+	Vector<String> physicalItemStrings = new Vector<>();
+	
+	JComboBox<String> listBorrowedItems;
 
 	/**
 	 * Launch the application.
@@ -63,7 +76,7 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
 		panel.add(lblNewLabel);
 		
-		JPanel panel_1 = new JPanel();
+		
 		panel_1.setBounds(6, 83, 888, 483);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -74,10 +87,10 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
 		panel_1.add(lblNewLabel_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Book1", "Book2", "Book3"}));
-		comboBox.setBounds(59, 197, 736, 27);
-		panel_1.add(comboBox);
+//		JComboBox comboBox = new JComboBox();
+//		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Book1", "Book2", "Book3"}));
+//		comboBox.setBounds(59, 197, 736, 27);
+//		panel_1.add(comboBox);
 		
 		btnNewButton.addActionListener(this);
 		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -88,6 +101,16 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btnNewButton_1.setBounds(646, 374, 149, 54);
 		panel_1.add(btnNewButton_1);
+		
+		btnShowBooks.addActionListener(this);
+		btnShowBooks.setBounds(350, 33, 197, 29);
+		panel_1.add(btnShowBooks);
+		panel_1.setBounds(109, 129, 557, 200);
+		setVisible(true);
+	}
+	
+	public void showBorrowedBooks() throws Exception {
+		
 	}
 
 	@Override
@@ -101,6 +124,21 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+		
+		else if (e.getSource() == btnShowBooks) {
+			try {
+				showBorrowedBooks();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			listBorrowedItems = new JComboBox<String>(physicalItemStrings);
+			listBorrowedItems.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+			listBorrowedItems.setBounds(68, 145, 733, 63);
+			panel_1.add(listBorrowedItems);
+			setVisible(true);
 		}
 	}
 
