@@ -17,11 +17,6 @@ public class LibraryDatabase implements IterableCollection{
 	protected String path;
 	//private String path;
 	
-	private List<DigitalItem> items;
-	
-    public LibraryDatabase(List<DigitalItem> items) {
-        this.items = items;
-    }
     
     private LibraryDatabase() throws Exception {
 		users = new ArrayList<Account>();

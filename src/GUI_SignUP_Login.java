@@ -106,9 +106,11 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 		// This can be changed later as needed using a branch of the doesListExist method
 		GUI_SignUP_Login window = new GUI_SignUP_Login();
 		window.setSize(900, 600);
-		database.loadDigItems(database.digItemsDB, null);
 		database.loadPhysItems(database.physItemsDB, null);
+		database.loadDigItems(database.digItemsDB, null);
+		database.loadCourses(database.coursesDB, null);
 		database.loadAccounts();
+		database.purgeFinishedCourses();
 		
 
 	}
