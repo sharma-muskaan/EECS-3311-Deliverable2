@@ -63,6 +63,7 @@ public class GUI_SignUp extends JFrame implements ActionListener {
 	 * @throws Exception 
 	 */
 	public GUI_SignUp() throws Exception {
+		System.out.println("sign up clicked");
 		database = LibraryDatabase.getInstance();
 		
 		
@@ -140,6 +141,12 @@ public class GUI_SignUp extends JFrame implements ActionListener {
 		btnBack.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btnBack.setBounds(701, 450, 154, 62);
 		contentPane.add(btnBack);
+		
+		setSize(900, 600);  
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	private void register(String email, String password, String accType) throws Exception{
