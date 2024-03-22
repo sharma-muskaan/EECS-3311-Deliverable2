@@ -84,7 +84,7 @@ public abstract class PhysicalItem extends Item {
 			String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
 		    database.updatePhysItems(user.getPhysicalItemList(), splitEmail);
 		    
-		    this.setCopyNumber(copyNumber - 1);
+		    copyNumber -= 1;
 		    
 		    String databasePath = database.path + "physItem_database.csv";
 		    database.updatePhysItems(database.physItemsDB, databasePath);
@@ -172,13 +172,7 @@ public abstract class PhysicalItem extends Item {
 		
 		//copyNumber = -3 indicates that this copy is now lost.
 		if (this.getCopyNumber() == -3) {
-			output = String.format("The book  %s is now lost.", this.name);
-			if(timeDiffDays == 1){ // checks if there is 1 day before the due date make it "Day" instead of days
-				output = String.format("%s has been lost for %d day.", this.name, (timeDiffDays * -1));
-			}
-			else  {  // makes it "days" if more than one day
-				output = String.format("%s has been lost for %d days.", this.name, (timeDiffDays * -1));
-			}
+			output = String.format("The book: %s is now lost.", this.name);
 			return output;
 		}
 		
@@ -194,8 +188,6 @@ public abstract class PhysicalItem extends Item {
 			if (timeDiffDays <= -15) {
 				//copyNumber = -3 indicates that this copy is now lost.
 				this.setCopyNumber(-3);
-				
-				output = String.format("This book is has been lost for %d days.", (timeDiffDays * -1));
 				
 				String[] emailSplitter = user.getEmail().split("@", 2);
 				String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";

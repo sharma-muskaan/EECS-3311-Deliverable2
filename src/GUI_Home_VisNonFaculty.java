@@ -130,6 +130,10 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		 ArrayList<PhysicalItem> userPhysicalItems = user.getPhysicalItemList();
 		 ArrayList<DigitalItem> userDigitalItems = null;
 		 int lengthOfDigItem = 0;
+
+
+
+		 
 		 if (user.getAccType().equals("Student")) {
 			 userDigitalItems = ((Student) user).getDigitalCourseBooks();
 			 lengthOfDigItem = ((Student) user).getDigitalCourseBooks().size();
