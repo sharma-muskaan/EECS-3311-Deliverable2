@@ -1,5 +1,4 @@
 itemType,name,author,edition,publisherName,itemID,libLocation,copyNumber,dueDate,rentalEnabled,price
-CD,Thriller,Michael Jackson,7th,CBS,654,York Scott,-1,03-22-2023 09:34:14,true,-1.0
-Magazine,People,Rebecca Brown,8th,Dotdash Meredith,321,York Lanes,-1,03-19-2023 02:50:57,true,-1.0
-Book,The Thrill Of Life,Jordan Young,12th,The Golden Pen,6421,York Campus,-1,01-01-2023 02:50:57,true,-1.0
-Book,Harry Potter,JK Rowling,6th,Bloomsbury,987,York Stacy,-1,04-15-2023 05:26:19,true,-1.0
+CD,Thriller,Michael Jackson,7th,CBS,654,York Scott,-1,03-22-2023 9:34:14,true,-1
+Magazine,People,Rebecca Brown,8th,Dotdash Meredith,321,York Lanes,-1,03-19-2023 02:50:57,true,-1
+Book,The Thrill Of Life,Jordan Young,12th,The Golden Pen,6421,York Campus,-1,01-01-2023 02:50:57,true,-1

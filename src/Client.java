@@ -10,9 +10,9 @@ public class Client {
 		LibraryHomePage homePage = new LibraryHomePage();
 		// All loaders for main DB assume that CSV files already exist
 		// This can be changed later as needed using a branch of the doesListExist method
-		database.loadDigItems(database.digItemsDB, null);
 		database.loadPhysItems(database.physItemsDB, null);
 		database.loadCourses(database.coursesDB, null);
+		database.loadDigItems(database.digItemsDB, null);
 		database.loadAccounts();
 		database.purgeFinishedCourses();
 		//database.loadBankData();
