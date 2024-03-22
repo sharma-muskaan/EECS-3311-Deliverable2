@@ -3,6 +3,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +29,9 @@ public class GUI_Search extends JFrame implements ActionListener {
 	
 	static Account account;
 	Account acc;
+	
+	ArrayList<DigitalItem> digItemList;
+	ArrayList<String> genreList;
 	/**
 	 * Launch the application.
 	 */
@@ -108,6 +113,27 @@ public class GUI_Search extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnSearch) {
+			
+			try {
+				
+				database.loadGenres(genreList);
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				
+			}
+			
+			try {
+				
+				digItemList = database.printSimilarItems(inSearch.getText().toString());
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				
+			}
+			
 			
 		}
 		
