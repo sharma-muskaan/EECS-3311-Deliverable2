@@ -28,8 +28,8 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 	private static LibraryDatabase database;
 	private JPanel contentPane;
 	
-	JButton btnNewButton = new JButton("Back");
-	JButton btnNewButton_1 = new JButton("Rent");
+	JButton btnBack = new JButton("Back");
+	JButton btnRent = new JButton("Rent");
 	JButton btnShowBooks = new JButton("Show Rentable Books");
 	
 	JPanel panel_1 = new JPanel();
@@ -106,16 +106,16 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 		
 		
 		
-		btnNewButton.addActionListener(this);
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton.setBounds(124, 369, 154, 70);
-		panel_1.add(btnNewButton);
+		btnBack.addActionListener(this);
+		btnBack.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		btnBack.setBounds(124, 369, 154, 70);
+		panel_1.add(btnBack);
 		
 		
-		btnNewButton_1.addActionListener(this);
-		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton_1.setBounds(595, 369, 154, 70);
-		panel_1.add(btnNewButton_1);
+		btnRent.addActionListener(this);
+		btnRent.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		btnRent.setBounds(595, 369, 154, 70);
+		panel_1.add(btnRent);
 		
 		btnShowBooks.addActionListener(this);
 		btnShowBooks.setBounds(239, 24, 197, 29);
@@ -146,7 +146,7 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 			e1.printStackTrace();
 		}
 		
-		if (e.getSource() == btnNewButton) {
+		if (e.getSource() == btnBack) {
 			dispose();
 			try {
 				GUI_Home_VisNonFaculty window = new GUI_Home_VisNonFaculty(acc);
@@ -211,7 +211,7 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 			
 		}
 		
-		else if (e.getSource() == btnNewButton_1) {
+		else if (e.getSource() == btnRent) {
 			String s = (String) listRentableItems.getSelectedItem();
 			
 			for (int i = 0; i < rentableBooks.size(); i ++) {
