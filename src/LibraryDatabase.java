@@ -16,6 +16,9 @@ public class LibraryDatabase implements IterableCollection{
 	protected ArrayList<Course> coursesDB;
 	protected String path;
 	public ArrayList<DigitalItem> itemList;
+	public ArrayList<String> genreList;
+	
+	int index;
 	
 	
 	private List<DigitalItem> items;
@@ -457,33 +460,67 @@ public class LibraryDatabase implements IterableCollection{
 		}
 	}
 	
-    // Method to print similar items based on text similarity and same genres
-    public void printSimilarItems(String searchQuery, List<String> searchGenres) throws Exception {
-        List<String> recommendations = getRecommendations(searchQuery, searchGenres);
+    public void loadGenres(ArrayList<String> genreList) throws Exception {
+    	String filePath = path;
+		filePath += "digItem_database.csv";
+	
+		
+		CsvReader reader = new CsvReader(filePath);
+		reader.readHeaders();
+		
+		while(reader.readRecord()){
+			
+			String itemType = reader.get("itemType");
+			String genre = reader.get("genre");
+			String name = reader.get("name");
+			String author = reader.get("author");
+			String edition = reader.get("edition");
+			String publisherName = reader.get("publisherName");
+			DigitalItem newDigItem = new DigitalItem(itemType, genre, name, author, edition, publisherName);
+			genreList.add(newDigItem.getGenre());
+		}
+    }
+	
+	
+	// Method to print similar items based on text similarity and same genres
+    public List<DigitalItem> printSimilarItems(String searchQuery) throws Exception {
+        //List<String> recommendations = getRecommendations(searchQuery, searchGenres);
+        List<DigitalItem> recommendedItems = new ArrayList<>();
+        
     	loadDigitalItems(itemList);
+    	loadGenres(genreList);
+    	for (int i = 0; i < itemList.size(); i++) {
+    		for (String genre : genreList) {
+    			if (itemList.get(i).getGenre().equals(genre)) {
+    				recommendedItems.add(itemList.get(i));
+    			}
+    		}
+    	}
     	
-    	for(DigitalItem item : itemList) 
-    		if(item.getGenre().equals(recommendations))
+    	return recommendedItems;
     	
-        if (!recommendations.isEmpty()) {
-            System.out.println("Similar items:");
-            for (String recommendation : recommendations) {
-                System.out.println(recommendation);
-            }
-        } else {
-            System.out.println("No similar items found.");
-        }
+//    	for(DigitalItem item : itemList) 
+//    		if(item.getGenre().equals(recommendations))
+//    	
+//        if (!recommendations.isEmpty()) {
+//            System.out.println("Similar items:");
+//            for (String recommendation : recommendations) {
+//                System.out.println(recommendation);
+//            }
+//        } else {
+//            System.out.println("No similar items found.");
+//        }
     }
 
     // Method to get recommendations based on text similarity and same genres
-    private List<String> getRecommendations(String searchQuery, List<String> searchGenres) {
-        List<String> recommendations = new ArrayList<>();
-        for (DigitalItem item : items) {
-            if (item.getName().equalsIgnoreCase(searchQuery) || item.getGenre().contains(searchQuery)) {
-                recommendations.add(item.getName());
-            }
-        }
-        return recommendations;
-    }
+//    private List<String> getRecommendations(String searchQuery, List<String> searchGenres) {
+//        List<String> recommendations = new ArrayList<>();
+//        for (DigitalItem item : items) {
+//            if (item.getName().equalsIgnoreCase(searchQuery) || item.getGenre().contains(searchQuery)) {
+//                recommendations.add(item.getName());
+//            }
+//        }
+//        return recommendations;
+//    }
 
 }
