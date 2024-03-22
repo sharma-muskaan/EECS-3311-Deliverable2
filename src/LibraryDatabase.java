@@ -472,10 +472,12 @@ public class LibraryDatabase implements IterableCollection{
 	    	
 	    	ArrayList<DigitalItem> digitalItems = new ArrayList<DigitalItem>();
 	        
-	        for (Course c : ((Student) user).getCurrentCourses()) {
+	        for (Course c : ((Student) userStudent).getCurrentCourses()) {
 	            DigitalItem item = c.getCurrentCourseBook();
 	            digitalItems.add(item);
 	        }
+	        
+	        userStudent.setDigitalCourseBooks(digitalItems);
 	    	
 	    	ListFactory.getList(userStudent, "digItem", path, splitEmail);
 	    	ListFactory.getList(userStudent, "physItem", path, splitEmail);
