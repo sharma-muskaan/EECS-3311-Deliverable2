@@ -492,15 +492,6 @@ public class LibraryDatabase implements IterableCollection{
 	    	ListFactory.getList(userStudent, "courses", path, splitEmail);
 	    	
 	    	ArrayList<DigitalItem> digitalItems = new ArrayList<DigitalItem>();
-	        
-	    	//used to create digital items list
-//	        for (Course c : ((Student) userStudent).getCurrentCourses()) {
-//	            DigitalItem item = c.getCurrentCourseBook();
-//	            digitalItems.add(item);
-//	        }
-//	        
-//	        userStudent.setDigitalCourseBooks(digitalItems);
-	    	
 	    	ListFactory.getList(userStudent, "digItem", path, splitEmail);
 	    	ListFactory.getList(userStudent, "physItem", path, splitEmail);
 	    	return userStudent;

@@ -6,11 +6,11 @@ public class ListFactory {
 	
 	private static boolean fileCreator(String filePath) throws IOException {
 		File file = new File(filePath);
-        boolean fileExists = file.createNewFile();
+        boolean fileGenerated = file.createNewFile();
         
         try {
             // Create the file, returns true if new file is made successfully
-            if (fileExists) {
+            if (fileGenerated) {
                 System.out.println("File created successfully.");
             } else {
                 System.out.println("File already exists.");
@@ -20,7 +20,7 @@ public class ListFactory {
             e.printStackTrace();
         }
 		
-        return fileExists;
+        return fileGenerated;
 	}
 
 	
@@ -34,15 +34,17 @@ public class ListFactory {
 			fileName += "_digItem_data.csv";
 			filePath += fileName;
 			
-			boolean fileExists = fileCreator(filePath);
+			boolean fileGenerated = fileCreator(filePath);
+			ArrayList<DigitalItem> digitalItems = new ArrayList<DigitalItem>();
 			
-			if (fileExists == true) {
-	        	database.updateDigItems(user.getDigitalCourseBooks(), filePath);
+	    	//used to create digital items list
+	        for (Course c : user.getCurrentCourses()) {
+	            DigitalItem item = c.getCurrentCourseBook();
+	            digitalItems.add(item);
 	        }
 	        
-	        else if (fileExists == false) {
-	        	database.loadDigItems(user.getDigitalCourseBooks(), email);
-	        }
+	        user.setDigitalCourseBooks(digitalItems);
+			database.updateDigItems(user.getDigitalCourseBooks(), filePath);
 		}
 		
 		else if(listType.equals("courses")) {

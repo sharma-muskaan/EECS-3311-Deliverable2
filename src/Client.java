@@ -9,7 +9,7 @@ public class Client {
 		LibraryDatabase database = LibraryDatabase.getInstance();
 		LibraryHomePage homePage = new LibraryHomePage();
 		// All loaders for main DB assume that CSV files already exist
-		// This can be changed later as needed using a branch of the doesListExist method
+		// DO NOT CHANGE ORDER OF THESE LOADERS! they are in this order for a reason
 		database.loadPhysItems(database.physItemsDB, null);
 		database.loadDigItems(database.digItemsDB, null);
 		database.loadCourses(database.coursesDB, null);
