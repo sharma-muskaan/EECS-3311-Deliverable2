@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -222,6 +224,10 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 			
 			try {
 				rentableBooks.get(index).rentCopy(acc);
+				JOptionPane.showMessageDialog(null, rentableBooks.get(index).getName() + " has been rented");
+				dispose();
+				GUI_Home_VisNonFaculty newFrame = new GUI_Home_VisNonFaculty(acc);
+				newFrame.setVisible(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

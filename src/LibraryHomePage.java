@@ -236,7 +236,7 @@ public class LibraryHomePage {
 			int copyNumber = 20;
 			Date dueDate = null;
 			
-			PhysicalItem newPhysItem = PhysicalItemFactory.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+			PhysicalItem newPhysItem = database.physicalItemGenerator(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 			manager.addPhysicalItem(newPhysItem);
     	}
     	else if (userInput.equals("E")) {

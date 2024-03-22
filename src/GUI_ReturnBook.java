@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -167,6 +169,10 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 			}	
 			try {
 				borrowedBooks.get(index).returnCopy(acc);
+				JOptionPane.showMessageDialog(null,"Thanks for returning " + borrowedBooks.get(index).getName());
+				dispose();
+				GUI_Home_VisNonFaculty newFrame = new GUI_Home_VisNonFaculty(acc);
+				newFrame.setVisible(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
