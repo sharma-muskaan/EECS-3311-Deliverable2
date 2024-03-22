@@ -47,6 +47,7 @@ public class Faculty extends AccountDecorator{
 		this.courseBookHistory = courseBookHistory;
 	}
 	
+	//this one is good
     public void coursesAndTextbooks(Faculty user) {
         System.out.println("Courses taught by the " + user.getEmail() + ":" );
         for (Course course : user.currentCourses) {
@@ -68,30 +69,14 @@ public class Faculty extends AccountDecorator{
 //    	
 //    	if()
 //    } 
-    public void notifyUserOfNewEditions() {
-        for (DigitalItem textbook : textbooks) {
-            for (DigitalItem historyItem : courseBookHistory) {
-                if (textbook.getName().equals(historyItem.getName()) && 
-                    Integer.parseInt(textbook.getEdition()) > Integer.parseInt(historyItem.getEdition())) {
-                    System.out.println("Notification: Newer edition of " + textbook.getName() + " available.");
-                    // now after getting new edition availability notify the user if a newer one is available
-                }
-            }
-        }
-    }
+
     
-    public void loadTextbooksFromFile(String filePath) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                String name = parts[0];
-                String edition = parts[1];
-                // Assuming other attributes of DigitalItem are also stored in the file and read here
-                DigitalItem textbook = new DigitalItem(name, edition, edition, edition, edition, edition); // Create DigitalItem object
-                textbooks.add(textbook); // Add textbook to the textbooks ArrayList
-            }
-        }
-    }
     
+    
+
+    	
+    	
+      
+    
+
 }

@@ -26,4 +26,8 @@ public interface Account {
 	public void setItemsBorrowed(int itemsBorrowed);
 	public void setOverdueItems(int overdueItems);
 	public void setAccountLocked(boolean accountLocked);
+	public boolean newerEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem);
+	public void notifyNewEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem);
+	boolean textbookAvailable(ArrayList<DigitalItem> digItemList, String searchQuery);
+	void notifyManagement(ArrayList<DigitalItem> digItemList, String searchQuery);
 }
