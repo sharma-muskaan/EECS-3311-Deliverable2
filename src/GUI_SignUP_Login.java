@@ -123,6 +123,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if (e.getSource() == btnBack) {
 			setVisible(false);
 			GUI_Menu window;
@@ -220,6 +221,23 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            }
 	    	}
 	    	
+			
+		}
+		
+		else if (e.getSource() == btnSignup) {
+			
+			setVisible(false);
+			GUI_SignUp frame;
+			
+			try {
+				
+				frame = new GUI_SignUp();
+				frame.setVisible(true);
+				
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
 			
 		}
 		

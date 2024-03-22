@@ -1,5 +1,5 @@
 itemType,name,author,edition,publisherName,itemID,libLocation,copyNumber,dueDate,rentalEnabled,price
-Book,Harry Potter,JK Rowling,6th,Bloomsbury,987,York Stacy,24,null,true,-1.0
+Book,Harry Potter,JK Rowling,6th,Bloomsbury,987,York Stacy,20,null,true,-1.0
 Book,Life of Pie,Yann Martel,6th,Bloomsbury,987,York Stacy,20,null,true,-1.0
 CD,Thriller,Michael Jackson,7th,CBS,654,York Scott,21,null,true,-1.0
 CD,Abbey Road,The Beatles,7th,CBS,654,York Scott,20,null,true,-1.0

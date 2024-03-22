@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -11,15 +13,34 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 
-public class GUI_SignUp extends JFrame {
+public class GUI_SignUp extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
 
+	private static LibraryDatabase database;
+	
+	Vector<String> accTypeNames = new Vector<String>();
+	JComboBox<String> accTypeList = new JComboBox<String>();
+	
+	JButton btnSignUp = new JButton("Sign Up");
+	JButton btnBack = new JButton("Back");
+	JButton btnSaveInfo = new JButton("Save Info");
+	
+	JTextField inPassword = new JTextField();
+	JTextField inEmail = new JTextField();
+	
+	String pass;
+	String email;
+	
+	boolean isValid = false;
+	boolean isStrongPassword = false;
+	boolean isValidAccType = false;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -39,10 +60,20 @@ public class GUI_SignUp extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public GUI_SignUp() {
+	public GUI_SignUp() throws Exception {
+		database = LibraryDatabase.getInstance();
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
+		
+		accTypeNames.add("Student");
+		accTypeNames.add("Visitor");
+		accTypeNames.add("Faculty");
+		accTypeNames.add("NonFaculty");
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -78,33 +109,149 @@ public class GUI_SignUp extends JFrame {
 		lblNewLabel_4.setBounds(16, 82, 397, 36);
 		contentPane.add(lblNewLabel_4);
 		
-		textField = new JTextField();
-		textField.setBounds(355, 191, 372, 24);
-		contentPane.add(textField);
-		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(354, 251, 373, 26);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Faculty", "Visitor", "Non-Faculty"}));
-		comboBox.setBounds(355, 322, 269, 48);
-		contentPane.add(comboBox);
+		inEmail = new JTextField();
+		inEmail.setBounds(355, 191, 372, 24);
+		contentPane.add(inEmail);
+		inEmail.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Sign Up");
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton.setBounds(30, 449, 161, 64);
-		contentPane.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Back");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		inPassword.setBounds(354, 251, 373, 26);
+		contentPane.add(inPassword);
+		inPassword.setColumns(10);
+		
+		accTypeList =  new JComboBox<String>(accTypeNames);
+		accTypeList.setBounds(355, 322, 269, 48);
+		contentPane.add(accTypeList);
+		
+		btnSaveInfo.addActionListener(this);
+		btnSaveInfo.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		btnSaveInfo.setBounds(130, 370, 100, 30);
+		contentPane.add(btnSaveInfo);
+		
+		btnSignUp.addActionListener(this);
+		btnSignUp.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		btnSignUp.setBounds(30, 449, 161, 64);
+		contentPane.add(btnSignUp);
+		
+		
+		btnBack.addActionListener(this);
+		btnBack.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		btnBack.setBounds(701, 450, 154, 62);
+		contentPane.add(btnBack);
+	}
+	
+	private void register(String email, String password, String accType) throws Exception{
+    	LibraryHomePage newAccount = new LibraryHomePage();
+    	GUI_SignUp window = new GUI_SignUp();
+    	String emailMessage = "Please enter a valid email.";
+    	String passwordMessage = "Password is not strong enough. Please make a new password with the following requirements: "
+    							+ "\n" + "- At least 8 characters long" + "\n" + "- At least one uppercase letter" 
+    							+ "\n" + "- At least one lowercase letter" + "\n" + "- At least one digit" 
+    							+ "\n" + "- At least one symbol";
+    	String validationMessage = "Your account could not be validated. Please try signing up as a Visitor instead.";
+    	String messageAccountExists = "You already have an account. Please try logging in instead!";
+    	String regSuccess = "Registration successful! Please login.";
+            
+        if (newAccount.isValidEmail(email)) {
+        	isValid = true;
+        }
+            
+        else {
+        	JOptionPane.showMessageDialog(null, emailMessage);
+        }         
+            
+        if (newAccount.isStrongPassword(password)) {
+        	isStrongPassword = true;
+        }
+        
+        else {
+        	JOptionPane.showMessageDialog(null, passwordMessage);
+        }
+                                                       
+        boolean verifiedByManager = newAccount.additionalValidation(email);
+        
+        if ((verifiedByManager == false) && !(accType.equals("Visitor"))) {
+        	JOptionPane.showMessageDialog(null, validationMessage);
+        	setVisible(false);
+            window.setVisible(true);
+            
+        }
+        
+        else if ((verifiedByManager == false) && (accType.equals("Visitor"))) {
+        	isValidAccType = true;
+        }
+        
+        else if (verifiedByManager == true) {
+        	isValidAccType = true;
+        }
+        
+        Account accountExists = database.iterateDB(email, password);
+        
+        if (accountExists != null) {
+        	JOptionPane.showMessageDialog(null, messageAccountExists);
+        }
+//        boolean isValid = false;
+//    	boolean isStrongPassword = false;
+//    	boolean isValidAccType = false;
+        else {
+        	
+            // TODO - Add some validation method prior to account creation if not Visitor.
+        	if ((isValid == true) && (isStrongPassword == true) && (isValidAccType == true)) {
+        		database.accountGenerator(email, password, accType, 0, 0, false);
+        		database.updateAccounts();
+        		dispose();
+        		GUI_SignUP_Login frame = new GUI_SignUP_Login();
+        		frame.setVisible(true);
+        	}
+        	
+        	else {
+        		JOptionPane.showMessageDialog(null, "Error in creating account. Try Again");
+        	}
+    		
+        }
+        
+        
+        
+        
+        
+    }
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnSaveInfo) {
+			email = inEmail.getText();
+			pass = inPassword.getText();
+		}
+		else if (e.getSource() == btnSignUp) {
+			try {
+				
+				
+				System.out.println("email: " + email);
+				System.out.println("password: " + pass);
+				System.out.println("acc type: " + accTypeList.getSelectedItem().toString());
+				
+				register(email, pass, accTypeList.getSelectedItem().toString());
+				
+			} catch (Exception e1) {
+
+				e1.printStackTrace();
 			}
-		});
-		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnNewButton_1.setBounds(701, 450, 154, 62);
-		contentPane.add(btnNewButton_1);
+		}
+		
+		else if (e.getSource() == btnBack) {
+			setVisible(false);
+			try {
+			
+				GUI_Menu frame1 = new GUI_Menu();
+				frame1.setVisible(true);
+				
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 }
