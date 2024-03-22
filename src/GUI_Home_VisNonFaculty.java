@@ -44,8 +44,8 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JPanel panelReturnBook = new JPanel();
 	public JPanel panelPurchase = new JPanel();
 	
-	public JLabel lblPhysTitle = new JLabel("Borrowed Physical Items");
-	public JLabel lblDigTitle = new JLabel("Borrowed Course Items");
+	public JLabel lblPhysTitle = new JLabel("Borrowed Physical Items ");
+	public JLabel lblDigTitle = new JLabel("Borrowed Course Items ");
 	
 	public JButton btnRentABook = new JButton("Rent a Book");
 	public JButton btnReturnABook = new JButton("Return a Book");

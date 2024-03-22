@@ -1,24 +1,33 @@
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 public class GUI_Search_Results extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel contentPane;
+	private static LibraryDatabase database;
+	
+	
+	
 	JPanel listPanel = new JPanel();
 	JPanel panelTitle = new JPanel();
 	
+	JButton btnBack = new JButton("Back");
+	
 	public JLabel lblSimilarItemsTitle = new JLabel("Similar Items");
+	public JLabel lblNoSimilarity = new JLabel("There are no similar items to your search");
 	
 	static Account account;
 	Account acc;
@@ -46,24 +55,28 @@ public class GUI_Search_Results extends JFrame implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public GUI_Search_Results(ArrayList<Item> itemList, Account acc) {
+	public GUI_Search_Results(ArrayList<Item> itemList, Account acc) throws Exception {
 		this.acc = acc;
 		this.itemList = itemList;
-		
+		database = LibraryDatabase.getInstance();
+		if (itemList.isEmpty()) {
+			
+		}
 		lblSimilarItemsTitle.setForeground(new Color(255, 0, 0, 150));
-		lblSimilarItemsTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
-		
-		listPanel.setBounds(100, 100, 800, 500);
+		lblSimilarItemsTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 25));
+		listPanel.setBounds(10, 50, 1000, 500);
 		panelTitle.setBounds(0, 0, 50, 500);
-		
+		btnBack.setBounds(600, 500, 89, 23);
 		panelTitle.add(lblSimilarItemsTitle);
 		
-		
-		
+		add(btnBack);
+		btnBack.addActionListener(this);
 		showSearchResults(itemList);
 		add(panelTitle);
-		setSize(900, 600);
+		
+		setSize(1000, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -115,7 +128,18 @@ public class GUI_Search_Results extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == btnBack) {
+			dispose();
+			try {
+				GUI_Search window = new GUI_Search(acc);
+				window.setVisible(true);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+		}
 		
 	}
 

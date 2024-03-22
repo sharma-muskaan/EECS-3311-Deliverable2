@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 
 public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private static LibraryDatabase database;
 	private JPanel contentPane;
 	private JTextField email, password;
