@@ -36,6 +36,7 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 	Vector<String> physicalItemStrings = new Vector<>();
 	
 	JComboBox<String> listBorrowedItems;
+	int index;
 
 	/**
 	 * Launch the application.
@@ -154,6 +155,23 @@ public class GUI_ReturnBook extends JFrame implements ActionListener {
 			listBorrowedItems.setBounds(68, 145, 733, 63);
 			panel_1.add(listBorrowedItems);
 			setVisible(true);
+		}
+
+		else if (e.getSource() == btnReturn) {
+			String s = (String) listBorrowedItems.getSelectedItem();
+			
+			for (int i = 0; i < borrowedBooks.size(); i ++) {
+				if (borrowedBooks.get(i).getName().equals(s)) {
+					index = i;
+				}
+			}	
+			try {
+				borrowedBooks.get(index).returnCopy(acc);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 		}
 	}
 
