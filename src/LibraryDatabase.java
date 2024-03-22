@@ -538,25 +538,42 @@ public class LibraryDatabase implements IterableCollection{
         return recommendations;
     }
 
-//	public void purgeFinishedCourses() {
-//		
-//		int i = 0;
-//		
-//    	for (Course c : database.coursesDB) {
-//        	Course databaseCourse = coursesDB.get(i);
-//        	Date courseEndDate = databaseCourse.getCourseEndDate();
-//        	Date curr = new Date();
-//    		long timeDiff = courseEndDate.getTime() - curr.getTime();
-//    		
-//    		if (timeDiff <= 0) {
-//    			
-//    			database.getUsers()
-//    			
-//    			break;
-//    		}
-//    		
-//        	i++;
-//        }
-//    }
+	public void purgeFinishedCourses() throws Exception {
+		
+		// creates list of students only
+		ArrayList<Student> allStudents = new ArrayList<Student>();
+		for (Account a : database.getUsers()) {
+			if (a.getAccType().equals("Student")) {
+				allStudents.add((Student) a);
+			}
+		}
+		
+		// iterates through all courses
+		int i = 0;
+    	for (Course c : database.coursesDB) {
+        	Course course = coursesDB.get(i);
+        	Date courseEndDate = course.getCourseEndDate();
+        	Date curr = new Date();
+    		long timeDiff = courseEndDate.getTime() - curr.getTime();
+    		
+    		// checks if current date is past course end date
+    		if (timeDiff <= 0) {
+    			
+    			for (Student s : allStudents) {
+    				ArrayList<Course> studentCourseList = s.getCurrentCourses();
+    				studentCourseList.remove(course);
+    				
+    				String[] emailSplitter = s.getEmail().split("@", 2);
+					String studentCoursesPath = path + emailSplitter[0] + "_course_data.csv";;
+    				
+    				database.updateCourses(studentCourseList, path);
+    			}
+    			
+    			break;
+    		}
+    		
+        	i++;
+        }
+    }
 	
 }
