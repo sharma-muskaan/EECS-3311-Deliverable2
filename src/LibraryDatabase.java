@@ -487,18 +487,18 @@ public class LibraryDatabase implements IterableCollection{
 		}
 		
 		else if (itemType.equals("DVD")) {
-			DVDFactory DVDGen = new DVDFactory();
-			newItem = DVDGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+			CDFactory cdGen = new CDFactory();
+			newItem = cdGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 		}
 		
 		else if (itemType.equals("Book")) {
-			BookFactory bookGen = new BookFactory();
-			newItem = bookGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+			CDFactory cdGen = new CDFactory();
+			newItem = cdGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 		}
 		
 		else if (itemType.equals("Magazine")) {
-			MagazineFactory magGen = new MagazineFactory();
-			newItem = magGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+			CDFactory cdGen = new CDFactory();
+			newItem = cdGen.getPhysicalItem(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
 		}
 		
 		else if (newItem == null) {
