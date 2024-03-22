@@ -12,11 +12,8 @@ public class LibraryDatabase implements IterableCollection{
 	private ArrayList<Account> users;
 	protected ArrayList<DigitalItem> digItemsDB;
 	protected ArrayList<PhysicalItem> physItemsDB;
-	//IMPLEMENT COURSES
 	protected ArrayList<Course> coursesDB;
 	protected String path;
-	//private String path;
-	
     
     private LibraryDatabase() throws Exception {
 		users = new ArrayList<Account>();
@@ -179,9 +176,9 @@ public class LibraryDatabase implements IterableCollection{
 				if (newPhysItem.rentalEnabled == true) {
 					physItemList.add(newPhysItem);
 				}
-			}
-				
-			}
+			}	
+		}
+	
 	
 	public void loadPurchasableBooks(ArrayList<PhysicalItem> physItemList) throws Exception{
 		
@@ -544,34 +541,53 @@ public class LibraryDatabase implements IterableCollection{
 	}
 
 	@Override
-	public Iterator createIterator() {
+	public Iterator createIterator(ArrayList<Item> items) {
 		return new ConcreteIterator(items);
 	}
-	
-    // Method to print similar items based on text similarity and same genres
-    public void printSimilarItems(String searchQuery, List<String> searchGenres) {
-        List<String> recommendations = getRecommendations(searchQuery, searchGenres);
-        // Print recommendations
-        if (!recommendations.isEmpty()) {
-            System.out.println("Similar items:");
-            for (String recommendation : recommendations) {
-                System.out.println(recommendation);
-            }
-        } else {
-            System.out.println("No similar items found.");
-        }
-    }
 
     // Method to get recommendations based on text similarity and same genres
-    private List<String> getRecommendations(String searchQuery, List<String> searchGenres) {
-        List<String> recommendations = new ArrayList<>();
-        for (DigitalItem item : items) {
-            if (item.getName().equalsIgnoreCase(searchQuery) || item.getGenre().contains(searchQuery)) {
-                recommendations.add(item.getName());
+    protected ArrayList<Item> getRecommendations(String searchQuery) {
+    	ArrayList<Item> recommendations = new ArrayList<Item>();
+    	String itemName;
+    	boolean similarTitle;
+    	
+    	for (PhysicalItem p : database.physItemsDB) {
+        	itemName = p.getName();
+        	similarTitle = checkTitleSimilarity(searchQuery, itemName);
+            if (similarTitle) {
+                recommendations.add(p);
             }
         }
+    	
+        for (DigitalItem d : database.digItemsDB) {
+        	itemName = d.getName();
+        	similarTitle = checkTitleSimilarity(searchQuery, itemName);
+            if (similarTitle) {
+                recommendations.add(d);
+            }
+        }
+        
         return recommendations;
     }
+
+	private boolean checkTitleSimilarity(String searchQuery, String itemName) {
+		String[] splitQuery = searchQuery.split(" ");
+		String[] splitItemName = searchQuery.split(" ");
+		
+		int queryLength = splitQuery.length;
+		int itemNameLength = splitItemName.length;
+		
+		for (int i = 0; i < queryLength; i++) {
+			for (int j = 0; j < itemNameLength; j++) {
+				boolean similarWordExists = splitQuery[i].equals(splitItemName[j]);
+				if (similarWordExists) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 
 	public void purgeFinishedCourses() throws Exception {
 		

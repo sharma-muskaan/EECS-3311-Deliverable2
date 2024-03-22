@@ -1,11 +1,11 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class ConcreteIterator implements Iterator {
 
 //    private LibraryDatabase collection;
 //    private String iterationState;
 	
-	private List<DigitalItem> items;
+	private ArrayList<Item> items;
     
     private int position = 0;
 
@@ -13,7 +13,7 @@ public class ConcreteIterator implements Iterator {
 //        this.collection = db;
 //    }
     
-    public ConcreteIterator(List<DigitalItem> items) {
+    public ConcreteIterator(ArrayList<Item> items) {
         this.items = items;
     }
     
