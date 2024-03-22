@@ -52,7 +52,7 @@ public class GUI_Menu extends JFrame implements ActionListener {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.pack();
+		
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setVisible(true);
 		

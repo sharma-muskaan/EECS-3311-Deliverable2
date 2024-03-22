@@ -124,13 +124,17 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 			setVisible(false);
 			GUI_Menu window;
 			try {
+				
 				window = new GUI_Menu();
+				window.setVisible(true);
+				window.setSize(900, 600);
+				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} // when log out is pressed then it goes to the the transaction menu
-			setSize(900, 600);
-			setVisible(true); // make the frame/ window visible
+			} 
+			
+			
 		}
 		
 		if (e.getSource() == btnLogin) {

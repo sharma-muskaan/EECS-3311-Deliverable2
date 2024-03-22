@@ -204,6 +204,7 @@ public class GUI_SignUp extends JFrame implements ActionListener {
         		dispose();
         		GUI_SignUP_Login frame = new GUI_SignUP_Login();
         		frame.setVisible(true);
+        		JOptionPane.showMessageDialog(null, regSuccess);
         	}
         	
         	else {
