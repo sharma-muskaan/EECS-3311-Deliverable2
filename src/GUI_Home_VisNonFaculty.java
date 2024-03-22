@@ -51,6 +51,8 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnReturnABook = new JButton("Return a Book");
 	public JButton btnPurchaseItem = new JButton("Purchase Item");
 	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
+	JPanel panel = new JPanel();
+	JButton btnSearch = new JButton("Search");
 	
 
 	public static GUI_Home_VisNonFaculty getInstance() throws Exception {
@@ -88,14 +90,14 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		btnRentABook.addActionListener(this);
 		btnReturnABook.addActionListener(this);
 		btnPurchaseItem.addActionListener(this);
+		btnSubscribe.setBounds(13, 387, 196, 29);
 		btnSubscribe.addActionListener(this);
-		
 		panelRentBook.setBounds(13, 255, 128, 39);
-		panelReturnBook.setBounds(13, 183, 141, 39);
-		panelPurchase.setBounds(13, 328, 142, 39);
 		
 		panelRentBook.add(btnRentABook);
+		panelReturnBook.setBounds(13, 183, 141, 39);
 		panelReturnBook.add(btnReturnABook);
+		panelPurchase.setBounds(13, 328, 142, 39);
 		panelPurchase.add(btnPurchaseItem);
 		buttonPanel.setLayout(null);
 		
@@ -105,9 +107,15 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		//add(buttonPanel);
 		getContentPane().add(listPanel);
 		getContentPane().add(buttonPanel);
-		
-		btnSubscribe.setBounds(13, 404, 196, 29);
 		buttonPanel.add(btnSubscribe);
+		panel.setBounds(13, 439, 141, 46);
+		
+		buttonPanel.add(panel);
+		panel.setLayout(null);
+		btnSearch.setBounds(6, 0, 117, 29);
+		btnSearch.addActionListener(this);
+		
+		panel.add(btnSearch);
 		
 		setSize(900, 600);
 		setVisible(true);
@@ -288,6 +296,18 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 				 GUI_Subscribe_Newsletter window = new GUI_Subscribe_Newsletter(account1);
 				 window.setVisible(true);
 				 window.setSize(900, 600); 
+			 }
+			 
+			 else if (e.getSource() == btnSearch) {
+				 setVisible(false);
+				 try {
+					 GUI_Search window = new GUI_Search(account1);
+					 window.setVisible(true);
+					 window.setSize(900, 600); 
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			 }
 			 
 			
