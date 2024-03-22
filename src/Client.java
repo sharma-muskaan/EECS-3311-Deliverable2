@@ -14,6 +14,8 @@ public class Client {
 		database.loadPhysItems(database.physItemsDB, null);
 		database.loadCourses(database.coursesDB, null);
 		database.loadAccounts();
+		// TODO
+//		database.purgeFinishedCourses();
 		//database.loadBankData();
 		homePage.loggedOutHomePage();
 	}

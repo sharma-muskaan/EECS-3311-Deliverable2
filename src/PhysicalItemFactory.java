@@ -20,6 +20,11 @@ public class PhysicalItemFactory {
 			return magazine;
 		}
 		
+		else if(itemType.equals("DVD")) {
+			PhysicalItem DVD = new DVD(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
+			return DVD;
+		}
+		
 		else return null;
 
 	}
