@@ -249,6 +249,7 @@ public class LibraryDatabase implements IterableCollection{
 		        	Course databaseCourse = coursesDB.get(i);
 		        	if (databaseCourse.getCourseName().equals(courseName)) {
 		        		courseList.add(databaseCourse);
+		        		break;
 		        	}
 		        	
 		        	i++;
@@ -536,4 +537,26 @@ public class LibraryDatabase implements IterableCollection{
         }
         return recommendations;
     }
+
+//	public void purgeFinishedCourses() {
+//		
+//		int i = 0;
+//		
+//    	for (Course c : database.coursesDB) {
+//        	Course databaseCourse = coursesDB.get(i);
+//        	Date courseEndDate = databaseCourse.getCourseEndDate();
+//        	Date curr = new Date();
+//    		long timeDiff = courseEndDate.getTime() - curr.getTime();
+//    		
+//    		if (timeDiff <= 0) {
+//    			
+//    			database.getUsers()
+//    			
+//    			break;
+//    		}
+//    		
+//        	i++;
+//        }
+//    }
+	
 }
