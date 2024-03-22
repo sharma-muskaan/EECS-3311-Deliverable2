@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -12,8 +13,12 @@ import javax.swing.border.EmptyBorder;
 public class GUI_Search_Results extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	JPanel listPanel = new JPanel();
+	JPanel panelTitle = new JPanel();
+	
+	public JLabel lblSimilarItemsTitle = new JLabel("Similar Items");
 	
 	static Account account;
 	Account acc;
@@ -46,9 +51,18 @@ public class GUI_Search_Results extends JFrame implements ActionListener {
 		this.acc = acc;
 		this.itemList = itemList;
 		
+		lblSimilarItemsTitle.setForeground(new Color(255, 0, 0, 150));
+		lblSimilarItemsTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		
+		listPanel.setBounds(100, 100, 800, 500);
+		panelTitle.setBounds(0, 0, 50, 500);
+		
+		panelTitle.add(lblSimilarItemsTitle);
+		
 		
 		
 		showSearchResults(itemList);
+		add(panelTitle);
 		setSize(900, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -68,8 +82,6 @@ public class GUI_Search_Results extends JFrame implements ActionListener {
 		JLabel[] lblItemName = new JLabel[lengthOfItemList];
 		JLabel[] lblItemAuthor = new JLabel[lengthOfItemList];
 		JLabel[] lblItemEdition = new JLabel[lengthOfItemList];
-		
-		int piLength = panelItem.length;
 		
 		for (int i = 0; i < lengthOfItemList; i++) {
 			panelItem[i] = new JPanel();

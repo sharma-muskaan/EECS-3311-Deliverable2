@@ -117,6 +117,7 @@ public class GUI_Search extends JFrame implements ActionListener {
 			try {
 				
 				itemList = database.getRecommendations(inSearch.getText());
+				setVisible(false);
 				GUI_Search_Results window = new GUI_Search_Results(itemList, acc);
 				
 			} catch (Exception e1) {
