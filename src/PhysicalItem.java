@@ -118,7 +118,7 @@ public abstract class PhysicalItem extends Item {
 					}
 					
 					p.setCopyNumber(p.getCopyNumber() + 1);
-					user.setItemsBorrowed(user.getItemsBorrowed() + 1);
+					user.setItemsBorrowed(user.getItemsBorrowed() - 1);
 					
 					String[] emailSplitter = user.getEmail().split("@", 2);
 					String splitEmail = database.path + emailSplitter[0] + "_physItem_data.csv";
