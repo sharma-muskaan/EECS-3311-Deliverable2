@@ -33,7 +33,7 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 	JButton btnShowBooks = new JButton("Show Rentable Books");
 	
 	JPanel panel_1 = new JPanel();
-	
+	int index;
 	
 	
 	static Account acc1 = null;
@@ -42,7 +42,7 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 	ArrayList<PhysicalItem> rentableBooks = new ArrayList<>();
 	ArrayList<PhysicalItem> userPhysItems = new ArrayList<>();
 	
-	Vector<String> physicalItems = new Vector<>();
+	Vector<String> physicalItemStrings = new Vector<>();
 	
 	JComboBox<String> listRentableItems;
 	JPanel panel_2 = new JPanel();
@@ -131,7 +131,7 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 		database.loadRentableBooks(rentableBooks);
 		
 		for (PhysicalItem p : rentableBooks) {
-			physicalItems.add(p.getName());
+			physicalItemStrings.add(p.getName());
 		}
 		
 	}
@@ -191,7 +191,7 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 					e1.printStackTrace();
 				}
 				
-				listRentableItems = new JComboBox<String>(physicalItems);
+				listRentableItems = new JComboBox<String>(physicalItemStrings);
 				listRentableItems.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 				listRentableItems.setBounds(68, 145, 733, 63);
 				panel_1.add(listRentableItems);
@@ -209,6 +209,23 @@ public class GUI_RentBook extends JFrame implements ActionListener {
 				setVisible(true);
 			}
 			
+		}
+		
+		else if (e.getSource() == btnNewButton_1) {
+			String s = (String) listRentableItems.getSelectedItem();
+			
+			for (int i = 0; i < rentableBooks.size(); i ++) {
+				if (rentableBooks.get(i).getName().equals(s)) {
+					index = i;
+				}
+			}
+			
+			try {
+				rentableBooks.get(index).rentCopy(acc);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 	}
