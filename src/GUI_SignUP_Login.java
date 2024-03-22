@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +28,8 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	private JTextField email, password;
 	private JButton btnLogin, btnSignup, btnBack;
 	private JLabel lblUsername,lblPassword,lblEnterYourUsername;
+	
+	ArrayList<PhysicalItem> userPhysicalItems = new ArrayList<>();
 
 	
 	public GUI_SignUP_Login() throws Exception {
@@ -161,42 +165,81 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+						 String[] splitAcc = new String[2];
+						splitAcc = registeredAccount.getEmail().split("@");
+						
+						try {
+							database.loadPhysItems(userPhysicalItems, splitAcc[0]);
+						} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+						Date currDate = new Date();
+						String due = currDate.toString();
+				
+						System.out.println(due);
+						for (PhysicalItem p : userPhysicalItems) {
+							long timeDiff = p.getDueDate().getTime() - currDate.getTime(); // gets the time in miliseconds
+							long timeDiffHrs = timeDiff/(60*60*1000); // converts to hours
+
+							try {
+								System.out.println(p.warningString(registeredAccount));
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							try {
+								if (p.warningString(registeredAccount).equals(String.format("The book: %s is now lost.", p.name))){
+									JOptionPane.showMessageDialog(null,"The book: " + p.name + " IS NOW LOST");
+								}
+								else if (p.warningString(registeredAccount).equals(String.format("The book: %s is due in %d hours", p.name,timeDiffHrs ))){
+									JOptionPane.showMessageDialog(null,"The book: " + p.name + " IS DUE IN " + timeDiffHrs + " HOURS :(");
+								}
+
+								else if (p.warningString(registeredAccount).equals(String.format("The book: %s OVERDUE PLEASE RETURN IT", p.name))) {
+									JOptionPane.showMessageDialog(null,"The book: " + p.name + " OVERDUE PLEASE RETURN IT");
+									
+								}
+								
+			
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+
 		            	break;
 	            	}
-	            	
-	            	else if (email.getText().equals("mgr_access") && password.getText().equals("password")) {
-	            		//LibraryManager manager = new LibraryManager(email, password);
-	            		// placeholder for management page
-	                    //managementPortal(manager);
+	            
+		
+	            	else if (e.getSource() == btnSignup) {
+			
+	            		setVisible(false);
+	            		GUI_SignUp frame;
+			
+	            		try {
+				
+	            			frame = new GUI_SignUp();
+	            			frame.setVisible(true);
+				
+	            		} catch (Exception e1) {
+				
+	            			e1.printStackTrace();
+	            		}
+			
 	            	}
 	            	
-	            }
-	            
-	            else {
-	            	// place the error message here
+	            	else {
+	            		
+	            	}
 	            }
 	    	}
-	    	
-			
 		}
-		
-		else if (e.getSource() == btnSignup) {
-			
-			setVisible(false);
-			GUI_SignUp frame;
-			
-			try {
-				
-				frame = new GUI_SignUp();
-				frame.setVisible(true);
-				
-			} catch (Exception e1) {
-				
-				e1.printStackTrace();
-			}
-			
-		}
-		
 	}
-
 }
+	            
+		
+	
+
+
