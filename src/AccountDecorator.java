@@ -137,7 +137,7 @@ public class AccountDecorator implements Account {
 	@Override
 	public void request(DigitalItem b) {
 
-		if(b.getItemType().equals("TextBook")){
+		if(b.getItemType().equals("Textbook")){
 			this.reqs.add(b);
 			System.out.println(b.getItemType() + " " + b.getName() + " " +  b.getEdition() + " has been requested");
 		}
