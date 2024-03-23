@@ -52,8 +52,11 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JPanel listPanel = new JPanel();
 	
 	public JLabel lblPhysTitle = new JLabel("Borrowed Physical Items ");
+
 	public JLabel lblDigTitle = new JLabel("Digital Course Items ");
 	public JLabel lblcurrentCourseTitle = new JLabel("List of Current Courses ");
+
+	public JLabel lblSideBar = new JLabel("Menu");
 	
 	public JButton btnRentABook = new JButton("Rent a Book");
 	public JButton btnReturnABook = new JButton("Return a Book");
@@ -90,6 +93,8 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		
 		lblPhysTitle.setForeground(new Color(255, 0, 0, 150));
 		lblPhysTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		lblSideBar.setForeground(new Color(255, 0, 0, 150));
+		
 		
 		
 		JPanel buttonPanel = new JPanel();
@@ -125,15 +130,15 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		buttonPanel.add(btnSubscribe);
 		panel.setBounds(13, 439, 141, 46);
 		
+		lblSideBar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		buttonPanel.add(lblSideBar);
+		lblSideBar.setBounds(90, 13, 117, 29);
+
+		
 		buttonPanel.add(panel);
 		panel.setLayout(null);
 		btnSearch.setBounds(6, 0, 117, 29);
 		btnSearch.addActionListener(this);
-
-		panelFine.setBounds(13, 120, 141, 39);
-		buttonPanel.add(panelFine);
-		panelFine.add(btnFine);
-		btnFine.addActionListener(this);
 		
 		panel.add(btnSearch);
 		panel_1.setBounds(13, 68, 141, 39);
@@ -421,19 +426,6 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 					e1.printStackTrace();
 				}
 			 }
-
-			 else if(e.getSource()==btnFine){
-				setVisible(false);
-				GUI_Payment f;
-				try {
-					f = new GUI_Payment(account1);
-					f.setVisible(true);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	
-			}
 			 
 			 else if (e.getSource() == btnOLB) {
 				 
