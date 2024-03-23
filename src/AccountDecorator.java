@@ -46,22 +46,9 @@ public class AccountDecorator implements Account {
 
 
 	@Override
-	public Date getDueDate() {
-		return wrappee.getDueDate();
-	}
-
-
-	@Override
 	public void returnBook(PhysicalItem physItem) {
 		wrappee.returnBook(physItem);
 	}
-
-
-	@Override
-	public ArrayList<DigitalItem> getDigitalItemList() {
-		return wrappee.getDigitalItemList();
-	}
-
 
 	@Override
 	public ArrayList<PhysicalItem> getPhysicalItemList() {
@@ -136,42 +123,35 @@ public class AccountDecorator implements Account {
 
 	@Override
 	public void request(DigitalItem b) {
-
-		if(b.getItemType().equals("Textbook")){
-			this.reqs.add(b);
-			System.out.println(b.getItemType() + " " + b.getName() + " " +  b.getEdition() + " has been requested");
-		}
-		else{
-			this.reqs.add(b);
-			System.out.println(b.getItemType() + " " + b.getName() + " has been requested");
-		}
+		wrappee.request(b);
 	}
 
 	@Override
 	public void sort(){
-		int index =0;
-		 for(int i =0; i<reqs.size(); i++){
-		 	if(reqs.get(i).getGenre().equals("Educational")){
-            	Collections.swap(reqs, index, i);
-				index++;
-		 	}
-		 }
+		wrappee.sort();
 	}
 
 	@Override
 	public void printReqs(){
-
-		System.out.println("Requested Items Queue (Educational Textbooks have higher priority):");
-		int index = 0;
-		for(DigitalItem i: this.reqs){
-			index++;
-			System.out.println(index + ". " + i.getItemType() + " " + i.getName());
-		}
+		wrappee.printReq();
 	}
 
+    public boolean newerEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
+        wrappee.newerEdition(digItemList, selectedItem);
+    }
 
+	@Override
+    public void notifyNewEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
+        wrappee.notifyNewEdition(digItemList, selectedItem);
+    }
 
+	@Override
+	public boolean textbookAvailable(ArrayList<DigitalItem> digItemList, String searchQuery) {
+        return wrappee.textbookAvailable(digItemList, searchQuery);
+	}
 
-
-
+	@Override
+	public void notifyManagement(ArrayList<DigitalItem> digItemList, String searchQuery) {
+		wrappee.notifyManagement(digItemList,searchQuery);
+	}
 }

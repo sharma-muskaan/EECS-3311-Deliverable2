@@ -1,5 +1,7 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -15,21 +17,27 @@ public class ConcreteAccount implements Account {
     
 	protected ArrayList<DigitalItem> digitalItemList;
 	protected ArrayList<PhysicalItem> physicalItemList;
+	
+	private static LibraryDatabase database;
+
+	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
 
 	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
 
 	public ConcreteAccount(String email, String password, String accType,
-			int itemsBorrowed, int overdueItems, boolean accountLocked) {
+			int itemsBorrowed, int overdueItems, boolean accountLocked) throws Exception {
 		this.email = email;
 		this.password = password;
 		this.accType = accType;
 		
-		this.accountLocked  = accountLocked;
+		this.itemsBorrowed  = itemsBorrowed;
 		this.overdueItems = overdueItems;
 		this.accountLocked = accountLocked;
 		
 		digitalItemList = new ArrayList<>();
 		physicalItemList = new ArrayList<>();
+		
+		database = LibraryDatabase.getInstance();
 	}
 
 
@@ -56,28 +64,16 @@ public class ConcreteAccount implements Account {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void returnBook(PhysicalItem physItem) {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void purchaseItem(Item item) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Date getDueDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void returnBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public ArrayList<DigitalItem> getDigitalItemList() {
-		return digitalItemList;
 	}
 
 	@Override
@@ -124,6 +120,9 @@ public class ConcreteAccount implements Account {
 	@Override
 	public void setOverdueItems(int overdueItems) {
 		this.overdueItems = overdueItems;
+		if (overdueItems > 3) {
+			this.setAccountLocked(true);
+		}
 	}
 	@Override
 	public boolean isAccountLocked() {
@@ -165,6 +164,45 @@ public class ConcreteAccount implements Account {
 		for(DigitalItem i: this.reqs){
 			index++;
 			System.out.println(index + ". " + i.getItemType() + " " + i.getName());
+		}
+	}
+
+    public boolean newerEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
+        String selectedItemEditionStr = selectedItem.getEdition().replaceAll("[^\\d.]", ""); // Remove non-numeric characters
+        int selectedItemEdition = Integer.parseInt(selectedItemEditionStr); // Parse edition number to integer
+
+        for (DigitalItem item : digItemList) {
+            String itemEditionStr = item.getEdition().replaceAll("[^\\d.]", ""); // Remove non-numeric characters
+            int itemEdition = Integer.parseInt(itemEditionStr); // Parse edition number to integer
+
+            if (itemEdition > selectedItemEdition) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+	@Override
+    public void notifyNewEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
+        if (newerEdition(digItemList, selectedItem)) {
+            System.out.println("New edition available!");
+        }
+    }
+	
+	@Override
+	public boolean textbookAvailable(ArrayList<DigitalItem> digItemList, String searchQuery) {
+        for (DigitalItem item : digItemList) {
+            if (item.getName().equalsIgnoreCase(searchQuery)) {
+                return true;
+            }
+        }
+        return false;
+	}
+	
+	@Override
+	public void notifyManagement(ArrayList<DigitalItem> digItemList, String searchQuery) {
+		if(!textbookAvailable(digItemList, searchQuery)) {
+			System.out.println("Management notfication: textbook not available!");
 		}
 	}
 }

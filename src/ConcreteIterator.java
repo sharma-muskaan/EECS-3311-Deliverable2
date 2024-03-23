@@ -1,17 +1,34 @@
-public class ConcreteIterator {
+import java.util.ArrayList;
 
-    private LibraryDatabase collection;
-    private String iterationState;
+public class ConcreteIterator implements Iterator {
 
-    public ConcreteIterator(LibraryDatabase db){
-        this.collection = db;
+//    private LibraryDatabase collection;
+//    private String iterationState;
+	
+	private ArrayList<Item> items;
+    
+    private int position = 0;
+
+//    public ConcreteIterator(LibraryDatabase db){
+//        this.collection = db;
+//    }
+    
+    public ConcreteIterator(ArrayList<Item> items) {
+        this.items = items;
     }
-
-    public void getNext(){
-
+    
+    @Override
+    public Item getNext(){
+        if (hasNext()) {
+            return items.get(position++);
+        }
+        return null;
     }
-    public boolean hasMore(){
-        return false;
-    }
+   
+
+	@Override
+	public boolean hasNext() {
+		return position < items.size();
+	}
 
 }

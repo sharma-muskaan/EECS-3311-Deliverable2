@@ -1,72 +1,82 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Faculty extends AccountDecorator{
 	
-	protected String courseName;
-	private Originator originator;
-	protected ArrayList<String> currentCourses;
-	private ArrayList<Originator.Memento> textbookHistory;
+	protected ArrayList<Course> currentCourses;
+	// courseBookHistory = faculty_digItem_data.csv
+	protected ArrayList<DigitalItem> courseBookHistory;
+	protected ArrayList<DigitalItem> textbooks;
 	
-	public Faculty(Account account) {
-		super(account);
-		this.courseName = courseName;
-		this.currentCourses = currentCourses;
-		
-		currentCourses = new ArrayList<String>();
-		textbookHistory = new ArrayList<Originator.Memento>();
+	private static LibraryDatabase database;
+	
+	public Faculty(Account account) throws Exception {
+	    super(account);
+	    currentCourses = new ArrayList<Course>();
+	    courseBookHistory = new ArrayList<>();
+	    textbooks = new ArrayList<>(); // Initialize textbooks ArrayList
+	    database = LibraryDatabase.getInstance();
 	}
 	
-	public Faculty(Account account, ArrayList<String> currentCourses) {
+	public Faculty(Account account, ArrayList<Course> currentCourses, ArrayList<DigitalItem> courseBookHistory) throws Exception {
 		super(account);
-		this.courseName = courseName;
 		this.currentCourses = currentCourses;
-		
-		this.currentCourses = currentCourses;
-		textbookHistory = new ArrayList<Originator.Memento>();
+		this.courseBookHistory = courseBookHistory;
 	}
 	
-//	TODO - FIGURE OUT CONSTRUCTORS NEEDED	
-//	public Faculty(Account account, ArrayList<Originator.Memento> textbookHistory) {
-//		super(account);
-//		this.courseName = courseName;
-//		this.currentCourses = currentCourses;
-//		
-//		currentCourses = new ArrayList<String>();
-//		this.textbookHistory = textbookHistory;
-//	}
-	
-	public Faculty(Account account, ArrayList<String> currentCourses, ArrayList<Originator.Memento> textbookHistory) {
-		super(account);
-		this.courseName = courseName;
-		this.currentCourses = currentCourses;
-		
-		this.currentCourses = currentCourses;
-		this.textbookHistory = textbookHistory;
-	}
+    public void notifyManager(DigitalItem requestedTextbook) {
 
-	public void notifyManager() {
-		//TODO - IMPLEMENT
-	}
+    } 
 	
-	public ArrayList<String> getCourses() {
+	public ArrayList<Course> getCurrentCourses() {
 		return currentCourses;
 	}
-	
-	public void addCourse(String course) {
-		currentCourses.add(course);
+
+	public void setCurrentCourses(ArrayList<Course> currentCourses) {
+		this.currentCourses = currentCourses;
+	}
+
+	public ArrayList<DigitalItem> getCourseBookHistory() {
+		return courseBookHistory;
+	}
+
+	public void setCourseBookHistory(ArrayList<DigitalItem> courseBookHistory) {
+		this.courseBookHistory = courseBookHistory;
 	}
 	
-	//Should this be arraylist?
-	public String textbooksUsed() {
-		return courseName;
-	}
-	
-	public void saveTextbookState() {
-		//TODO - IMPLEMENT
-	}
-	
-	public void undoTextbookState() {
-		//TODO - IMPLEMENT
-	}
+	//this one is good
+    public void coursesAndTextbooks(Faculty user) {
+        System.out.println("Courses taught by the " + user.getEmail() + ":" );
+        for (Course course : user.currentCourses) {
+            System.out.println("Course Name: " + course.getCourseName());
+            System.out.println("Textbook: " + course.getCurrentCourseBook().getName());
+            System.out.println();
+        }
+
+        System.out.println("Textbooks previously used by the " + user.getEmail() + ":");
+        for (DigitalItem textbook : user.courseBookHistory) {
+            System.out.println("Textbook Name: " + textbook.getName());
+        }
+    }
+    
+//    public void notifyNewEdition(Faculty user, DigitalItem Textbook) throws Exception {
+//    	String arr[] = new String[2];
+//    	arr = user.getEmail().split("@");
+//    	database.loadDigItems(textbooks, arr[0]);
+//    	
+//    	if()
+//    } 
+
+    
+    
+    
+
+    	
+    	
+      
+    
+
 }

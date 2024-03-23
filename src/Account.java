@@ -7,14 +7,12 @@ public interface Account {
 	public ArrayList<Item> search(String search);
 	public void subToNews(DigitalItem digItem);
 	public void rentBook(PhysicalItem physItem);
-	public void purchaseItem(Item item);
-	public Date getDueDate();
 	public void returnBook(PhysicalItem physItem);
 	public void request(DigitalItem b);
 	public void printReqs();
 	public void sort();
+	public void purchaseItem(Item item);
 	
-	public ArrayList<DigitalItem> getDigitalItemList();
 	public ArrayList<PhysicalItem> getPhysicalItemList();
 
 	public String getEmail();
@@ -30,4 +28,8 @@ public interface Account {
 	public void setItemsBorrowed(int itemsBorrowed);
 	public void setOverdueItems(int overdueItems);
 	public void setAccountLocked(boolean accountLocked);
+	public boolean newerEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem);
+	public void notifyNewEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem);
+	boolean textbookAvailable(ArrayList<DigitalItem> digItemList, String searchQuery);
+	void notifyManagement(ArrayList<DigitalItem> digItemList, String searchQuery);
 }

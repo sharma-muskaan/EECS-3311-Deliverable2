@@ -1,8 +1,7 @@
 interface Iterator {
 
+    public Item getNext();
 
-    public void getNext();
-
-    public boolean hasMore();
+    public boolean hasNext();
 
 }

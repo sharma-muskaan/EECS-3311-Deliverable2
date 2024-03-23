@@ -1,4 +1,5 @@
-interface IterableCollection {
+import java.util.ArrayList;
 
-    public Iterator createIterator();
+interface IterableCollection {
+    public Iterator createIterator(ArrayList<Item> items);
 }
