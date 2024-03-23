@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -32,7 +33,10 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	Account account1;
 	
 	Date currentDate = new Date();
+	double fine = 0.0;
 	
+	ArrayList<PhysicalItem> userPhysicalItems = new ArrayList<>();
+
 	GUI_RentBook rb;
 	
 	
@@ -43,6 +47,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JPanel panelRentBook = new JPanel();
 	public JPanel panelReturnBook = new JPanel();
 	public JPanel panelPurchase = new JPanel();
+	public JPanel panelFine = new JPanel();
 	
 	public JLabel lblPhysTitle = new JLabel("Borrowed Physical Items ");
 	public JLabel lblDigTitle = new JLabel("Borrowed Course Items ");
@@ -51,6 +56,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnReturnABook = new JButton("Return a Book");
 	public JButton btnPurchaseItem = new JButton("Purchase Item");
 	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
+	public JButton btnFine = new JButton("Check/Pay Fines");
 	JPanel panel = new JPanel();
 	JButton btnSearch = new JButton("Search");
 	
@@ -114,6 +120,11 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		panel.setLayout(null);
 		btnSearch.setBounds(6, 0, 117, 29);
 		btnSearch.addActionListener(this);
+
+		panelFine.setBounds(13, 120, 141, 39);
+		buttonPanel.add(panelFine);
+		panelFine.add(btnFine);
+		btnFine.addActionListener(this);
 		
 		panel.add(btnSearch);
 		
@@ -153,11 +164,14 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		 JLabel[] lblNameOfAuthor = new JLabel[lengthOfPhysItem + lengthOfDigItem];
 		 JLabel[] lblItemType = new JLabel[lengthOfPhysItem + lengthOfDigItem];
 		 JLabel[] lblDueDate = new JLabel[lengthOfPhysItem];
+		 JLabel[] lblFine = new JLabel[lengthOfPhysItem];
 		
 		 JLabel lblTypeItem = new JLabel("Type: ");
 		 lblTypeItem.setFont(new Font("Verdana", Font.BOLD, 15));
 		 JLabel lblDateDue = new JLabel("Due: ");
 		 lblDateDue.setFont(new Font("Verdana", Font.BOLD, 15));
+		 JLabel lblFines = new JLabel("");
+		 lblFines.setFont(new Font("Verdana", Font.BOLD, 15));
 	    	
 	    int pbLength = panelBook.length;
 	    int lblNameLength = lblNameOfBook.length;
@@ -176,6 +190,9 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 			 lblItemType[i].setFont(new Font("Verdana", Font.PLAIN, 15));
 			 lblDueDate[i] = new JLabel(userPhysicalItems.get(i).getDueDate().toString());
 			 lblDueDate[i].setFont(new Font("Verdana", Font.PLAIN, 15));
+			 lblFine[i] = new JLabel("$" + String.valueOf(userPhysicalItems.get(i).calculateFine()));
+			 lblFine[i].setFont(new Font("Verdana", Font.PLAIN, 15));
+			 lblFine[i].setForeground(Color.RED);
 		 }
 		 
 		 for (int i = 0; i < lengthOfPhysItem; i++) {
@@ -183,6 +200,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 			 panelBook[i].add(lblNameOfAuthor[i]);
 			 panelBook[i].add(lblItemType[i]);
 			 panelBook[i].add(lblDueDate[i]);
+			 panelBook[i].add(lblFine[i]);
 			 
 		 }
 		 
@@ -320,7 +338,22 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 					e1.printStackTrace();
 				}
 			 }
+
+			 else if(e.getSource()==btnFine){
+				setVisible(false);
+				GUI_Fines f;
+				try {
+					f = new GUI_Fines(account1);
+					f.setVisible(true);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	
+			}
+				
+			 }
 			 
 			
-		}
-}
+	}
+
