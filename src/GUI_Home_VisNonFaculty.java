@@ -144,7 +144,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		
 		if (account1.getAccType().equals("Faculty")) {
 			
-			database.loadDigItems(digitems, name[0]);
+			digitems = ((Faculty) account).getCourseBookHistory();
 			
 			for (DigitalItem d : digitems) {
 				if(account1.newerEdition(digitems, d) == true) {
