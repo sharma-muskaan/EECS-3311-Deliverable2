@@ -23,9 +23,6 @@ public class GUI_SignUp extends JFrame implements ActionListener {
 
 	private static LibraryDatabase database;
 	
-	Vector<String> accTypeNames = new Vector<String>();
-	JComboBox<String> accTypeList = new JComboBox<String>();
-	
 	JButton btnSignUp = new JButton("Sign Up");
 	JButton btnBack = new JButton("Back");
 	JButton btnSaveInfo = new JButton("Save Info");

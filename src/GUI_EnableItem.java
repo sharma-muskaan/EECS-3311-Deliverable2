@@ -117,7 +117,7 @@ public class GUI_EnableItem extends JFrame implements ActionListener {
 	}
 	
 	public void showDisabledItems() throws Exception {
-		database.loadDisabledBooks(enableItems);
+		database.loadDisabledItems(enableItems);
 		
 		for (PhysicalItem p : enableItems) {
 			physicalItemStrings.add(p.getName());
