@@ -1,1 +1,4 @@
-itemType,name,author,edition,publisherName,itemID,libLocation,copyNumber,dueDate,rentalEnabled,price
+itemType,name,author,edition,publisherName,itemID,libLocation
+Book,Harry Potter,JK Rowling,6th,Bloomsbury,987,York Stacy
+CD,Thriller,Michael Jackson,7th,CBS,654,York Scott
+Magazine,People,Rebecca Brown,8th,Dotdash Meredith,321,York Lanes
