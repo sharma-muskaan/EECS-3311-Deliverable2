@@ -160,6 +160,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            		setVisible(false);
 		            	try {
 							GUI_Home_VisNonFaculty window  = new GUI_Home_VisNonFaculty(registeredAccount);
+							window.setVisible(true);
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
