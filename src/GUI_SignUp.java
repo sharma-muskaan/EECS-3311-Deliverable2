@@ -248,8 +248,9 @@ public class GUI_SignUp extends JFrame implements ActionListener {
 			setVisible(false);
 			try {
 			
-				GUI_Menu frame1 = new GUI_Menu();
+				GUI_SignUP_Login frame1 = new GUI_SignUP_Login();
 				frame1.setVisible(true);
+				frame1.setSize(900, 600);
 				
 			} catch (Exception e1) {
 				
