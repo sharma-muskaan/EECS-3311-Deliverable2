@@ -57,8 +57,11 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnPurchaseItem = new JButton("Purchase Item");
 	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
 	public JButton btnFine = new JButton("Check/Pay Fines");
+	
 	JPanel panel = new JPanel();
 	JButton btnSearch = new JButton("Search");
+	
+	ArrayList<DigitalItem> digitems;
 	
 
 	public static GUI_Home_VisNonFaculty getInstance() throws Exception {
@@ -70,7 +73,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	
 	public GUI_Home_VisNonFaculty(Account acc) throws Exception {
 		this.account1 = acc;
-		
+		notifyFaculty();
 		database = LibraryDatabase.getInstance();
 		getContentPane().setLayout(null);
 		contentPane = new JPanel();
@@ -135,6 +138,21 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	public void notifyFaculty() throws Exception {
+		String[] name = new String[2];
+		name = account1.getEmail().split("@");
+		
+		if (account1.getAccType().equals("Faculty")) {
+			
+			database.loadDigItems(digitems, name[0]);
+			
+			for (DigitalItem d : digitems) {
+				if(account1.newerEdition(digitems, d) == true) {
+					JOptionPane.showMessageDialog(null, d.getName() + " has a newer edition");
+				}
+			}
+		}
+	}
 	
 	private void loggedInHomePage(Account user, JPanel listPanel) {
 		
