@@ -359,9 +359,9 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 
 			 else if(e.getSource()==btnFine){
 				setVisible(false);
-				GUI_Fines f;
+				GUI_Payment f;
 				try {
-					f = new GUI_Fines(account1);
+					f = new GUI_Payment(account1);
 					f.setVisible(true);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
