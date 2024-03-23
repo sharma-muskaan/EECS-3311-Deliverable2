@@ -166,16 +166,16 @@ public abstract class PhysicalItem extends Item {
 	public double calculateFine() {
 
 		Date curr = new Date();
-		long timeDiff = - (dueDate.getTime() - curr.getTime()); // gets the time in miliseconds
+		long timeDiff = dueDate.getTime() - curr.getTime(); // gets the time in miliseconds
 		long timeDiffDays = timeDiff/(24*60*60*1000); // converts to days
 		double overdueFee;
 		
-		if (timeDiffDays >= 15) {
+		if (timeDiffDays > 0) {
 			overdueFee = 0.0;
 		}
 		
 		else {
-			overdueFee = timeDiffDays * 0.5;
+			overdueFee = (timeDiffDays * 0.5) * (-1);
 		}
 		
 		return overdueFee;
