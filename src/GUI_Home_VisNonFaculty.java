@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-// TODO:  FIX THIS - DIGITALITEMS ARE NOT A THING FOR VISITOR AND NON-FACULTY
+
 public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -44,9 +44,6 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	public JPanel panel1 = new JPanel();
 	public JPanel userPanel = new JPanel();
-	public JPanel panelRentBook = new JPanel();
-	public JPanel panelReturnBook = new JPanel();
-	public JPanel panelPurchase = new JPanel();
 	public JPanel panelFine = new JPanel();
 	
 	public JLabel lblPhysTitle = new JLabel("Borrowed Physical Items ");
@@ -58,13 +55,11 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnPurchaseItem = new JButton("Purchase Item");
 	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
 	public JButton btnFine = new JButton("Check/Pay Fines");
-	
-	JPanel panel = new JPanel();
 	JButton btnSearch = new JButton("Search");
 	
 	ArrayList<DigitalItem> digitems;
-	private final JPanel panel_1 = new JPanel();
 	private final JButton btnOLB = new JButton("Open Online Book");
+	private final JButton btnRequestBook = new JButton("Request a Book");
 	
 
 	public static GUI_Home_VisNonFaculty getInstance() throws Exception {
@@ -100,47 +95,38 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		buttonPanel.setBounds(0, 0, 300, 600);
 		listPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
-		
-		btnRentABook.addActionListener(this);
-		btnReturnABook.addActionListener(this);
-		btnPurchaseItem.addActionListener(this);
-		btnSubscribe.setBounds(13, 387, 196, 29);
+		btnSubscribe.setBounds(44, 432, 200, 30);
 		btnSubscribe.addActionListener(this);
-		panelRentBook.setBounds(13, 255, 128, 39);
-		
-		panelRentBook.add(btnRentABook);
-		panelReturnBook.setBounds(13, 183, 141, 39);
-		panelReturnBook.add(btnReturnABook);
-		panelPurchase.setBounds(13, 328, 142, 39);
-		panelPurchase.add(btnPurchaseItem);
 		buttonPanel.setLayout(null);
-		
-		buttonPanel.add(panelRentBook);
-		buttonPanel.add(panelReturnBook);
-		buttonPanel.add(panelPurchase);
 		//add(buttonPanel);
 		getContentPane().add(listPanel);
 		getContentPane().add(buttonPanel);
 		buttonPanel.add(btnSubscribe);
-		panel.setBounds(13, 439, 141, 46);
 		
 		lblSideBar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
 		buttonPanel.add(lblSideBar);
 		lblSideBar.setBounds(90, 13, 117, 29);
-
+		btnOLB.setBounds(44, 100, 200, 30);
+		buttonPanel.add(btnOLB);
+		btnReturnABook.setBounds(44, 163, 200, 30);
+		buttonPanel.add(btnReturnABook);
+		btnRentABook.setBounds(44, 228, 200, 30);
+		buttonPanel.add(btnRentABook);
+		btnPurchaseItem.setBounds(44, 365, 200, 30);
+		buttonPanel.add(btnPurchaseItem);
+		btnSearch.setBounds(44, 499, 200, 30);
+		buttonPanel.add(btnSearch);
+		btnRequestBook.addActionListener(this);
+		btnRequestBook.setBounds(44, 296, 200, 30);
 		
-		buttonPanel.add(panel);
-		panel.setLayout(null);
-		btnSearch.setBounds(6, 0, 117, 29);
+		buttonPanel.add(btnRequestBook);
 		btnSearch.addActionListener(this);
+		btnPurchaseItem.addActionListener(this);
 		
-		panel.add(btnSearch);
-		panel_1.setBounds(13, 68, 141, 39);
-		
-		buttonPanel.add(panel_1);
+		btnRentABook.addActionListener(this);
+		btnReturnABook.addActionListener(this);
 		
 		btnOLB.addActionListener(this);
-		panel_1.add(btnOLB);
 		
 		setSize(900, 600);
 		setVisible(true);
@@ -375,6 +361,20 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 				 GUI_OpenBook window = new GUI_OpenBook(account1);
 				 
 				 window.setVisible(true);
+			 }
+			 
+			 else if (e.getSource() == btnRequestBook) {
+				 setVisible(false);
+				 
+				 try {
+					 
+					GUI_RequestBook window = new GUI_RequestBook(account1);
+					window.setVisible(true);
+					
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+				}
 			 }
 				
 		}
