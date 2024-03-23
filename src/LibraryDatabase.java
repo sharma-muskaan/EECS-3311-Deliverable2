@@ -452,13 +452,13 @@ public class LibraryDatabase implements IterableCollection{
 	    String splitEmail = emailSplitter[0];
 	    
 	    if (accType.equals("Visitor")) {
-	    	user = new Visitor(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
+	    	user = new Visitor(new ConcreteAccountDecorator(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
 	    	ListGenerator.getList(user, "physItem", path, splitEmail);
 	    	return user;
 	    }
 	    else if (accType.equals("Student")) {
-	    	Student userStudent = new Student(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
+	    	Student userStudent = new Student(new ConcreteAccountDecorator(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userStudent);
 	    	ListGenerator.getList(userStudent, "courses", path, splitEmail);
 	    	
@@ -469,7 +469,7 @@ public class LibraryDatabase implements IterableCollection{
 	    }
 	    
 	    else if (accType.equals("Faculty")) {
-	    	Faculty userFaculty = new Faculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
+	    	Faculty userFaculty = new Faculty(new ConcreteAccountDecorator(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(userFaculty);
 	    	ListGenerator.getList(userFaculty, "courses", path, splitEmail);
 	    	ListGenerator.getList(userFaculty, "digItem", path, splitEmail);
@@ -478,7 +478,7 @@ public class LibraryDatabase implements IterableCollection{
 	    }
 	    
 	    else if (accType.equals("NonFaculty")) {
-	    	user = new NonFaculty(new ConcreteAccount(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
+	    	user = new NonFaculty(new ConcreteAccountDecorator(email, password, accType, itemsBorrowed, itemsOverdue, accountLocked));
 	    	users.add(user);
 	    	ListGenerator.getList(user, "physItem", path, splitEmail);
 	    	return user;

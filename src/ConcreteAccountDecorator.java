@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ConcreteAccount implements Account {
+public class ConcreteAccountDecorator implements Account {
     protected String email;
     protected String password;
     protected String accType;
@@ -23,7 +23,7 @@ public class ConcreteAccount implements Account {
 	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
 
 
-	public ConcreteAccount(String email, String password, String accType,
+	public ConcreteAccountDecorator(String email, String password, String accType,
 			int itemsBorrowed, int overdueItems, boolean accountLocked) throws Exception {
 		this.email = email;
 		this.password = password;
