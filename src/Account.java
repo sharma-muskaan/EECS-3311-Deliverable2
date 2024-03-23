@@ -8,6 +8,9 @@ public interface Account {
 	public void subToNews(DigitalItem digItem);
 	public void rentBook(PhysicalItem physItem);
 	public void returnBook(PhysicalItem physItem);
+	public void request(DigitalItem b);
+	public void printReqs();
+	public void sort();
 	public void purchaseItem(Item item);
 	
 	public ArrayList<PhysicalItem> getPhysicalItemList();

@@ -1,12 +1,18 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class AccountDecorator implements Account {
 	
-	protected Account wrappee;
 	
+	protected Account wrappee;
+	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
+
 	public AccountDecorator(Account account) {
 		wrappee = account;
+		
 	}
 
 	@Override
@@ -116,42 +122,36 @@ public class AccountDecorator implements Account {
 	}
 
 	@Override
+	public void request(DigitalItem b) {
+		wrappee.request(b);
+	}
+
+	@Override
+	public void sort(){
+		wrappee.sort();
+	}
+
+	@Override
+	public void printReqs(){
+		 wrappee.printReqs();
+	}
+
     public boolean newerEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
-        String selectedItemEditionStr = selectedItem.getEdition().replaceAll("[^\\d.]", ""); // Remove non-numeric characters
-        int selectedItemEdition = Integer.parseInt(selectedItemEditionStr); // Parse edition number to integer
-
-        for (DigitalItem item : digItemList) {
-            String itemEditionStr = item.getEdition().replaceAll("[^\\d.]", ""); // Remove non-numeric characters
-            int itemEdition = Integer.parseInt(itemEditionStr); // Parse edition number to integer
-
-            if (itemEdition > selectedItemEdition) {
-                return true;
-            }
-        }
-        return false;
+        return wrappee.newerEdition(digItemList, selectedItem);
     }
 
 	@Override
     public void notifyNewEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
-        if (newerEdition(digItemList, selectedItem)) {
-            System.out.println("New edition available!");
-        }
+        wrappee.notifyNewEdition(digItemList, selectedItem);
     }
 
 	@Override
 	public boolean textbookAvailable(ArrayList<DigitalItem> digItemList, String searchQuery) {
-        for (DigitalItem item : digItemList) {
-            if (item.getName().equalsIgnoreCase(searchQuery)) {
-                return true;
-            }
-        }
-        return false;
+        return wrappee.textbookAvailable(digItemList, searchQuery);
 	}
 
 	@Override
 	public void notifyManagement(ArrayList<DigitalItem> digItemList, String searchQuery) {
-		if(!textbookAvailable(digItemList, searchQuery)) {
-			System.out.println("Management notfication: textbook not available!");
-		}
+		wrappee.notifyManagement(digItemList,searchQuery);
 	}
 }

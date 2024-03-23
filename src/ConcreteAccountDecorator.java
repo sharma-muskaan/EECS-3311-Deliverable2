@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ConcreteAccount implements Account {
+public class ConcreteAccountDecorator implements Account {
     protected String email;
     protected String password;
     protected String accType;
@@ -22,7 +22,8 @@ public class ConcreteAccount implements Account {
 
 	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
 
-	public ConcreteAccount(String email, String password, String accType,
+
+	public ConcreteAccountDecorator(String email, String password, String accType,
 			int itemsBorrowed, int overdueItems, boolean accountLocked) throws Exception {
 		this.email = email;
 		this.password = password;
@@ -133,6 +134,38 @@ public class ConcreteAccount implements Account {
 
 
 	@Override
+	public void request(DigitalItem b) {
+
+		if(b.getItemType().equals("Textbook")){
+			this.reqs.add(b);
+			System.out.println(b.getItemType() + " " + b.getName() + " " +  b.getEdition() + " has been requested");
+		}
+		else{
+			this.reqs.add(b);
+			System.out.println(b.getItemType() + " " + b.getName() + " has been requested");
+		}
+	}
+
+	public void sort(){
+		int index =0;
+		 for(int i =0; i<reqs.size(); i++){
+		 	if(reqs.get(i).getGenre().equals("Educational")){
+            	Collections.swap(reqs, index, i);
+				index++;
+		 	}
+		 }
+	}
+
+	public void printReqs(){
+
+		System.out.println("Requested Items Queue (Educational Textbooks have higher priority):");
+		int index = 0;
+		for(DigitalItem i: this.reqs){
+			index++;
+			System.out.println(index + ". " + i.getItemType() + " " + i.getName());
+		}
+	}
+
     public boolean newerEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
         String selectedItemEditionStr = selectedItem.getEdition().replaceAll("[^\\d.]", ""); // Remove non-numeric characters
         int selectedItemEdition = Integer.parseInt(selectedItemEditionStr); // Parse edition number to integer
@@ -171,8 +204,4 @@ public class ConcreteAccount implements Account {
 			System.out.println("Management notfication: textbook not available!");
 		}
 	}
-	
-	
-
 }
-
