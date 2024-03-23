@@ -126,7 +126,15 @@ public class GUI_PurchaseItem extends JFrame implements ActionListener {
 		}
 		
 		else if (e.getSource() == btnPurchase) {
-			
+			dispose();
+			try {
+				GUI_Payment p = new GUI_Payment(acc);
+				p.setVisible(true);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 		}
 		
 	}
