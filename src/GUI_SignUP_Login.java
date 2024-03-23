@@ -173,7 +173,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 						} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+						}
 						Date currDate = new Date();
 						String due = currDate.toString();
 				
@@ -210,6 +210,12 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 						}
 
 		            	break;
+	            	}
+	            	
+	            	else if (registeredAccount.getEmail().equals("mgr_access") && registeredAccount.getPass() == "mgr_pass") {
+	            		dispose();
+	            		GUI_LibraryManager_Home window = new GUI_LibraryManager_Home();
+	            		window.setVisible(true);
 	            	}
 	            
 	            }
