@@ -22,13 +22,13 @@ public class LibraryManager {
 		database.updatePhysItems(database.physItemsDB, (database.path + "physItem_database.csv"));
 	}
 	
-	public void enablePhysItem(PhysicalItem physItem) {
-		//Insert update to csv database file.
-		physItem.disable();
-	}
-	
-	public void disablePhysItem(PhysicalItem physItem) {
+	public void enablePhysItem(PhysicalItem physItem) throws Exception {
 		//Insert update to csv database file.
 		physItem.enable();
+	}
+	
+	public void disablePhysItem(PhysicalItem physItem) throws Exception {
+		//Insert update to csv database file.
+		physItem.disable();
 	}
 }

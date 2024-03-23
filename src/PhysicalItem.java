@@ -39,12 +39,20 @@ public abstract class PhysicalItem extends Item {
 		this.price = price;
 	}
 
-	public void enable() {
+	public void enable() throws Exception {
+		database = LibraryDatabase.getInstance();
 		rentalEnabled = true;
+	    //Update library info in entire database.
+	    String databasePath = database.path + "physItem_database.csv";
+	    database.updatePhysItems(database.physItemsDB, databasePath);
 	}
 	
-	public void disable() {
+	public void disable() throws Exception {
+		database = LibraryDatabase.getInstance();
 		rentalEnabled = false;
+		//Update library info in entire database.
+	    String databasePath = database.path + "physItem_database.csv";
+	    database.updatePhysItems(database.physItemsDB, databasePath);
 	}
 	
 	public void rentCopy(Account user) throws Exception {

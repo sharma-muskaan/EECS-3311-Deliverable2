@@ -140,7 +140,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 			
 		}
 		
-		if (e.getSource() == btnLogin) {
+		else if (e.getSource() == btnLogin) {
 			Account registeredAccount = null;
 	    	while (true) {  
 	            try {
@@ -153,6 +153,14 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+	            
+	            if (email.getText().equals("mgr_access") && password.getText().equals("mgr_pass")) {
+            		setVisible(false);
+            		GUI_LibraryManager_Home window = new GUI_LibraryManager_Home();
+            		window.setVisible(true);
+            		
+            		break;
+            	}
 	            
 	            // if it finds it, break the iteration. 
 	            if (registeredAccount != null) {
@@ -173,7 +181,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 						} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+						}
 						Date currDate = new Date();
 						String due = currDate.toString();
 				
@@ -211,36 +219,32 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 
 		            	break;
 	            	}
-	            
-		
-	            	else if (e.getSource() == btnSignup) {
-			
-	            		setVisible(false);
-	            		GUI_SignUp frame;
-			
-	            		try {
-				
-	            			frame = new GUI_SignUp();
-	            			frame.setVisible(true);
-				
-	            		} catch (Exception e1) {
-				
-	            			e1.printStackTrace();
-	            		}
-			
-	            	}
 	            	
-	            	else {
-	            		
-	            	}
+	            	
+	            
 	            }
 	    	}
 		}
+		
+		else if (e.getSource() == btnSignup) {
+			
+    		setVisible(false);
+    		GUI_SignUp frame;
 
+    		try {
+	
+    			frame = new GUI_SignUp();
+    			frame.setVisible(true);
+	
+    		} catch (Exception e1) {
+	
+    			e1.printStackTrace();
+    		}
+
+    	}
+    	
+    	else {
+    		
+    	}
 	}
 }
-	            
-		
-	
-
-
