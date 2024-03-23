@@ -90,10 +90,9 @@ public class GUI_AddDigitalItem extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		itemNames.add("Book");
-		itemNames.add("CD");
-		itemNames.add("DVD");
-		itemNames.add("Magazine");
+		itemNames.add("RegBook");
+		itemNames.add("Textbook");
+
 		
 		panel.setBounds(6, 6, 888, 84);
 		contentPane.add(panel);
