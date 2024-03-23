@@ -155,6 +155,14 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 					e1.printStackTrace();
 				}
 	            
+	            if (email.getText().equals("mgr_access") && password.getText().equals("mgr_pass")) {
+            		setVisible(false);
+            		GUI_LibraryManager_Home window = new GUI_LibraryManager_Home();
+            		window.setVisible(true);
+            		
+            		break;
+            	}
+	            
 	            // if it finds it, break the iteration. 
 	            if (registeredAccount != null) {
 	            	if (registeredAccount.getAccType().equals("Student") || registeredAccount.getAccType().equals("NonFaculty") || registeredAccount.getAccType().equals("Faculty") || registeredAccount.getAccType().equals("Visitor")) {
@@ -212,11 +220,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 		            	break;
 	            	}
 	            	
-	            	else if (registeredAccount.getEmail().equals("mgr_access") && registeredAccount.getPass() == "mgr_pass") {
-	            		dispose();
-	            		GUI_LibraryManager_Home window = new GUI_LibraryManager_Home();
-	            		window.setVisible(true);
-	            	}
+	            	
 	            
 	            }
 	    	}

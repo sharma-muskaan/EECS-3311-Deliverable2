@@ -146,11 +146,36 @@ public class GUI_LibraryManager_Home extends JFrame implements ActionListener {
 		}
 		
 		else if (e.getSource() == btnEnableItem) {
+			dispose();
+			
+			GUI_EnableItem window;
+			
+			try {
+				
+				window = new GUI_EnableItem();
+				window.setVisible(true);
+				
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
 			
 		}
 		
 		else if (e.getSource() == btnDisableItem) {
+			dispose();
 			
+			GUI_DisableItem window; 
+			
+try {
+				
+				window = new GUI_DisableItem();
+				window.setVisible(true);
+				
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
 		}
 		
 	}
