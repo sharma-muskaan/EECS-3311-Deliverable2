@@ -133,11 +133,11 @@ public class AccountDecorator implements Account {
 
 	@Override
 	public void printReqs(){
-		wrappee.printReq();
+		 wrappee.printReqs();
 	}
 
     public boolean newerEdition(ArrayList<DigitalItem> digItemList, DigitalItem selectedItem) {
-        wrappee.newerEdition(digItemList, selectedItem);
+        return wrappee.newerEdition(digItemList, selectedItem);
     }
 
 	@Override

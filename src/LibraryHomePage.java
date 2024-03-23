@@ -356,12 +356,7 @@ public class LibraryHomePage {
     	}
     }
 
-	public static void main(String[] args) throws Exception {
-
-		LibraryHomePage lib = new LibraryHomePage();
-		lib.loggedOutHomePage();
-
-    boolean isValidEmail(String email) {
+	boolean isValidEmail(String email) {
 		return email.contains("@");
 	}
     
@@ -369,7 +364,7 @@ public class LibraryHomePage {
 		return email.endsWith("yorku.ca");
 	}
     
-    boolean isStrongPassword(String password) {
+	boolean isStrongPassword(String password) {
     	
         if (password == null || password.length() < 8) {
             return false; // Password should be at least 8 characters long

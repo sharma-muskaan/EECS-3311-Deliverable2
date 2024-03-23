@@ -22,7 +22,6 @@ public class ConcreteAccount implements Account {
 
 	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
 
-	protected ArrayList<DigitalItem> reqs = new ArrayList<>();
 
 	public ConcreteAccount(String email, String password, String accType,
 			int itemsBorrowed, int overdueItems, boolean accountLocked) throws Exception {

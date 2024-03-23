@@ -337,10 +337,10 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 			 
 			 else if (e.getSource() == btnPurchaseItem) {
 				 setVisible(false);
-				 GUI_PurchaseItem window;
+				 
 				 
 				try {
-					window = new GUI_PurchaseItem(account1);
+					GUI_PurchaseItem window = new GUI_PurchaseItem(account1);
 					window.setVisible(true);
 				} catch (Exception e1) {
 					
