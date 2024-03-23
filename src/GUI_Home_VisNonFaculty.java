@@ -1,4 +1,4 @@
- import java.awt.BasicStroke;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -62,6 +62,8 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	JButton btnSearch = new JButton("Search");
 	
 	ArrayList<DigitalItem> digitems;
+	private final JPanel panel_1 = new JPanel();
+	private final JButton btnOLB = new JButton("Open Online Book");
 	
 
 	public static GUI_Home_VisNonFaculty getInstance() throws Exception {
@@ -130,6 +132,12 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		btnFine.addActionListener(this);
 		
 		panel.add(btnSearch);
+		panel_1.setBounds(13, 68, 141, 39);
+		
+		buttonPanel.add(panel_1);
+		
+		btnOLB.addActionListener(this);
+		panel_1.add(btnOLB);
 		
 		setSize(900, 600);
 		setVisible(true);
@@ -369,8 +377,17 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 				}
 	
 			}
-				
+			 
+			 else if (e.getSource() == btnOLB) {
+				 
+				 setVisible(false);
+				 
+				 GUI_OpenBook window = new GUI_OpenBook(account1);
+				 
+				 window.setVisible(true);
 			 }
+				
+		}
 			 
 			
 	}
