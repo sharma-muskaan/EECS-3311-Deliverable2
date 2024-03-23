@@ -36,8 +36,9 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	double fine = 0.0;
 	
 	ArrayList<PhysicalItem> userPhysicalItems = new ArrayList<>();
+	ArrayList<Course> currentCourses = new ArrayList<Course>();
 
-	GUI_RentBook rb;
+
 	
 	
 	JFrame frame;
@@ -45,9 +46,13 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JPanel panel1 = new JPanel();
 	public JPanel userPanel = new JPanel();
 	public JPanel panelFine = new JPanel();
+	public JPanel listPanel = new JPanel();
 	
 	public JLabel lblPhysTitle = new JLabel("Borrowed Physical Items ");
-	public JLabel lblDigTitle = new JLabel("Borrowed Course Items ");
+
+	public JLabel lblDigTitle = new JLabel("Digital Course Items ");
+	public JLabel lblcurrentCourseTitle = new JLabel("List of Current Courses ");
+
 	public JLabel lblSideBar = new JLabel("Menu");
 	
 	public JButton btnRentABook = new JButton("Rent a Book");
@@ -55,6 +60,9 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnPurchaseItem = new JButton("Purchase Item");
 	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
 	public JButton btnFine = new JButton("Check/Pay Fines");
+	
+	
+	JPanel panel = new JPanel();
 	JButton btnSearch = new JButton("Search");
 	
 	ArrayList<DigitalItem> digitems;
@@ -85,7 +93,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		lblSideBar.setForeground(new Color(255, 0, 0, 150));
 		
 		
-		JPanel listPanel = new JPanel();
+		
 		JPanel buttonPanel = new JPanel();
 		listPanel.add(lblPhysTitle);
 		
@@ -141,13 +149,56 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		
 		if (account1.getAccType().equals("Faculty")) {
 			
-			digitems = ((Faculty) account).getCourseBookHistory();
+			digitems = ((Faculty) account1).getCourseBookHistory();
 			
 			for (DigitalItem d : digitems) {
 				if(account1.newerEdition(digitems, d) == true) {
 					JOptionPane.showMessageDialog(null, d.getName() + " has a newer edition");
 				}
 			}
+		}
+	}
+	
+	public void postCurrentCourses() {
+		String[] name = new String[2];
+		name = account1.getEmail().split("@");
+		;
+		if (account1.getAccType().equals("Faculty")) {
+			
+			currentCourses = ((Faculty) account1).getCurrentCourses();
+			
+			for (Course f : currentCourses) {
+				System.out.println("COURSE" + f.courseName);
+			}
+			
+			int courseLength = currentCourses.size();
+			
+			JPanel[] panelCourse = new JPanel[courseLength];
+			JLabel[] lblCourseName = new JLabel[courseLength];
+			JLabel[] lblEndDate = new JLabel[courseLength];
+			
+			listPanel.add(lblcurrentCourseTitle);
+			
+			for (int i = 0; i < courseLength; i++) {
+				panelCourse[i] = new JPanel();
+
+			 }
+			
+			for (int i = 0; i < courseLength; i++) {
+				lblCourseName[i] = new JLabel(currentCourses.get(i).getCourseName());
+				lblCourseName[i].setFont(new Font("Verdana", Font.PLAIN, 15));
+				lblEndDate[i] = new JLabel(currentCourses.get(i).getCourseEndDate().toString());
+				lblEndDate[i].setFont(new Font("Verdana", Font.PLAIN, 15));
+			 }
+			
+			for (int i = 0; i < courseLength; i++) {
+				panelCourse[i].add(lblCourseName[i]);
+				panelCourse[i].add(lblEndDate[i]);
+			 }
+			
+			for (int i = 0; i < courseLength; i ++) {
+				 listPanel.add(panelCourse[i]);
+			 }
 		}
 	}
 	
@@ -225,6 +276,10 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		 panel1.setSize(100, 600);
 		 lblDigTitle.setForeground(new Color(255, 0, 0, 150));
 		 lblDigTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		 
+		 lblcurrentCourseTitle.setForeground(new Color(255, 0, 0, 150));
+		 lblcurrentCourseTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		 
 
 		 panel1.add(lblDigTitle);
 
@@ -251,6 +306,12 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 			 for (int j = lengthOfPhysItem; j < pbLength; j++) {
 				 listPanel.add(panelBook[j]);
 			 }
+			 
+		postCurrentCourses();
+			 
+			 
+			 
+			
 		 }
 		 
 		 
