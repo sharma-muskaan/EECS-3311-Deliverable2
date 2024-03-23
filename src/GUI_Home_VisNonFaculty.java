@@ -1,4 +1,4 @@
- import java.awt.BasicStroke;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -57,8 +57,13 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	public JButton btnPurchaseItem = new JButton("Purchase Item");
 	public JButton btnSubscribe = new JButton("Subscribe To Newsletter");
 	public JButton btnFine = new JButton("Check/Pay Fines");
+	
 	JPanel panel = new JPanel();
 	JButton btnSearch = new JButton("Search");
+	
+	ArrayList<DigitalItem> digitems;
+	private final JPanel panel_1 = new JPanel();
+	private final JButton btnOLB = new JButton("Open Online Book");
 	
 
 	public static GUI_Home_VisNonFaculty getInstance() throws Exception {
@@ -70,7 +75,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 	
 	public GUI_Home_VisNonFaculty(Account acc) throws Exception {
 		this.account1 = acc;
-		
+		notifyFaculty();
 		database = LibraryDatabase.getInstance();
 		getContentPane().setLayout(null);
 		contentPane = new JPanel();
@@ -127,6 +132,12 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		btnFine.addActionListener(this);
 		
 		panel.add(btnSearch);
+		panel_1.setBounds(13, 68, 141, 39);
+		
+		buttonPanel.add(panel_1);
+		
+		btnOLB.addActionListener(this);
+		panel_1.add(btnOLB);
 		
 		setSize(900, 600);
 		setVisible(true);
@@ -135,6 +146,21 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	public void notifyFaculty() throws Exception {
+		String[] name = new String[2];
+		name = account1.getEmail().split("@");
+		
+		if (account1.getAccType().equals("Faculty")) {
+			
+			digitems = ((Faculty) account).getCourseBookHistory();
+			
+			for (DigitalItem d : digitems) {
+				if(account1.newerEdition(digitems, d) == true) {
+					JOptionPane.showMessageDialog(null, d.getName() + " has a newer edition");
+				}
+			}
+		}
+	}
 	
 	private void loggedInHomePage(Account user, JPanel listPanel) {
 		
@@ -341,9 +367,9 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 
 			 else if(e.getSource()==btnFine){
 				setVisible(false);
-				GUI_Fines f;
+				GUI_Payment f;
 				try {
-					f = new GUI_Fines(account1);
+					f = new GUI_Payment(account1);
 					f.setVisible(true);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -351,8 +377,17 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 				}
 	
 			}
-				
+			 
+			 else if (e.getSource() == btnOLB) {
+				 
+				 setVisible(false);
+				 
+				 GUI_OpenBook window = new GUI_OpenBook(account1);
+				 
+				 window.setVisible(true);
 			 }
+				
+		}
 			 
 			
 	}
