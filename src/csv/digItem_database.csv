@@ -11,19 +11,14 @@ Textbook,Chemistry,Chemistry: The Central Science,Bruce E. Bursten,14th,Pearson
 Textbook,Psychology,Psychology and Life,Richard J. Gerrig,20th,Pearson
 Textbook,Literature,The Norton Anthology of English Literature,Stephen Greenblatt,10th,W. W. Norton & Company
 Textbook,Computer Science,Database System Concepts,Abraham Silberschatz,6th,McGraw-Hill
-Textbook,Educational,Biology,John Green,3rd,Pearson
 Textbook,Self Improvement,Yoga,Robert Smirth,2nd,Neilson
 RegBook,Horror,The Shining,William Williams,1st,Vintage
 Textbook,Educational,Chemistry,Mary Johnson,4th,Academic Press
 Textbook,Self Improvement,Mindfulness,Sarah Lee,1st,HarperCollins
 RegBook,Fantasy,The Hobbit,J.R.R. Tolkien,2nd,Allen & Unwin
-Textbook,History,World War II,Peter Davis,5th,Oxford University Press
 RegBook,Romance,Pride and Prejudice,Jane Austen,3rd,Penguin Classics
-Textbook,Science,Physics,Mark Smith,2nd,McGraw-Hill Education
 RegBook,Thriller,The Girl on the Train,Paula Hawkins,2nd,Riverhead Books
-Textbook,Computer Science,Introduction to Algorithms,Thomas Cormen,3rd,MIT Press
 RegBook,Mystery,The Da Vinci Code,Dan Brown,1st,Doubleday
-Textbook,Psychology,Introduction to Psychology,David G. Myers,12th,Worth Publishers
 Textbook,Mathematics,Linear Algebra and Its Applications,David C. Lay,5th,Pearson
 RegBook,Science Fiction,Dune,Frank Herbert,4th,Chilton Books
 Textbook,Art,History of Art,Ernst Gombrich,16th,Phaidon Press
@@ -54,7 +49,6 @@ Textbook,Psychology,Social Psychology,David Myers,9th,Worth Publishers
 Textbook,Mathematics,Probability and Statistics,John Smith,8th,Cengage Learning
 RegBook,Science Fiction,1984,George Orwell,1st,Penguin Classics
 Textbook,Art,Modern Art,John Doe,2nd,Thames & Hudson
-RegBook,Drama,Romeo and Juliet,William Shakespeare,1st,Folio Society
 Textbook,Economics,Microeconomics,Paul Krugman,5th,Worth Publishers
 RegBook,Science,Cosmos,Carl Sagan,1st,Ballantine Books
 Textbook,Literature,Shakespearean Plays,William Shakespeare,Complete,Norton
@@ -62,7 +56,6 @@ RegBook,Action and Adventure,Treasure Island,Robert Louis Stevenson,1st,Penguin 
 Textbook,Business,Financial Management,Eugene F. Brigham,15th,Cengage Learning
 RegBook,Historical Fiction,To Kill a Mockingbird,Harper Lee,1st,Harper
 Textbook,Health,Nutrition and Wellness,Judith E. Brown,13th,Cengage Learning
-RegBook,Biography,Leonardo da Vinci,Walter Isaacson,1st,Simon & Schuster
 Textbook,Engineering,Mechanical Engineering,John Smith,4th,McGraw-Hill Education
 RegBook,Travel,Into the Wild,Jon Krakauer,1st,Anchor Books
 Textbook,Educational,Environmental Science,Daniel Chiras,12th,Jones & Bartlett Learning
@@ -75,19 +68,4 @@ Textbook,History,A People's History of the United States,Howard Zinn,3rd,Harper 
 RegBook,Romance,Outlander,Diana Gabaldon,1st,Dell
 Textbook,Science,Chemistry: The Central Science,Theodore L. Brown,15th,Pearson
 RegBook,Thriller,The Silence of the Lambs,Thomas Harris,1st,St. Martin's Paperbacks
-Textbook,Computer Science,Operating System Concepts,Abraham Silberschatz,10th,Wiley
-RegBook,Mystery,The Girl with the Dragon Tattoo,Stieg Larsson,1st,Vintage Crime/Black Lizard
-Textbook,Psychology,Cognitive Psychology,Robert J. Sternberg,7th,Cengage Learning
-Textbook,Mathematics,Discrete Mathematics and Its Applications,Kenneth H. Rosen,8th,McGraw-Hill Education
-RegBook,Science Fiction,Neuromancer,William Gibson,2nd,Ace Books
-Textbook,Art,Art History,Marilyn Stokstad,6th,Pearson
-RegBook,Drama,To Kill a Mockingbird,Harper Lee,1st,Harper
-Textbook,Economics,Principles of Economics,N. Gregory Mankiw,8th,Cengage Learning
-RegBook,Science,Pale Blue Dot,Carl Sagan,1st,Ballantine Books
-Textbook,Literature,Modern American Poetry,Louis Untermeyer,2nd,Simon & Schuster
-RegBook,Action and Adventure,The Adventures of Tom Sawyer,Mark Twain,1st,Penguin Classics
-Textbook,Business,Marketing Management,Philip Kotler,15th,Pearson
-RegBook,Historical Fiction,The Book Thief,Markus Zusak,1st,Knopf Books for Young Readers
-Textbook,Health,Essentials of Medical Physiology,K. Sembulingam,7th,Jaypee Brothers Medical Publishers
-RegBook,Biography,Malcolm X: A Life of Reinvention,Manning Marable,1st,Penguin Books
-Textbook,Engineering,Materials Science and Engineering: An Introduction,William D. Callister Jr.,10th,Wiley
+Textbook,Computer Science,Operating System Concepts,Abraham Sil

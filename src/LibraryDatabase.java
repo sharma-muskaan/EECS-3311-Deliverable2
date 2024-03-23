@@ -149,6 +149,13 @@ public class LibraryDatabase implements IterableCollection{
 		}
 	}
 	
+	public void loadDisabledItems(ArrayList<PhysicalItem> physItemList) throws Exception{
+		for (PhysicalItem p : database.physItemsDB) {
+			if (p.rentalEnabled == false) {
+				physItemList.add(p);
+			}
+		}
+	}
 	
 	public void loadPurchasableBooks(ArrayList<PhysicalItem> physItemList) throws Exception{
 		
