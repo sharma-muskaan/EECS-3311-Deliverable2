@@ -228,7 +228,9 @@ public class GUI_AddDigitalItem extends JFrame implements ActionListener {
 		}
 		
 		else if (e.getSource() == btnBack) {
-			
+			dispose();
+			GUI_LibraryManager_Home window = new GUI_LibraryManager_Home();
+			window.setVisible(true);
 		}
 		
 	}
