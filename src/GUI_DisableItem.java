@@ -169,7 +169,12 @@ public class GUI_DisableItem extends JFrame implements ActionListener {
 			
 			System.out.println(item.getName());
 			
-			manager.disablePhysItem(item);
+			try {
+				manager.disablePhysItem(item);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Item has been disabled");
 			
 		}

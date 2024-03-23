@@ -1,3 +1,6 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -6,22 +9,58 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+
 public class GUI_SignUp extends JFrame implements ActionListener {
 
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-private static LibraryDatabase database;
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
 
-	JLabel lblNewLabel_4 = new JLabel();
+	private static LibraryDatabase database;
+	
+	Vector<String> accTypeNames = new Vector<String>();
+	JComboBox<String> accTypeList = new JComboBox<String>();
+	
+	JButton btnSignUp = new JButton("Sign Up");
+	JButton btnBack = new JButton("Back");
+	JButton btnSaveInfo = new JButton("Save Info");
+	
+	JTextField inPassword = new JTextField();
+	JTextField inEmail = new JTextField();
+	
+	String pass;
+	String email;
+	
+	boolean isValid = false;
+	boolean isStrongPassword = false;
+	boolean isValidAccType = false;
+	
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI_SignUp frame = new GUI_SignUp();
+					frame.setSize(900, 600);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
     Vector<String> accTypeNames = new Vector<String>();
     JComboBox<String> accTypeList = new JComboBox<String>();
+
 	/**
 	 * Create the frame.
 	 * @throws Exception 
@@ -42,42 +81,41 @@ private static LibraryDatabase database;
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-    JButton btnSignUp = new JButton("Sign Up");
-    JButton btnBack = new JButton("Back");
-    JButton btnSaveInfo = new JButton("Save Info");
-
-    JTextField inPassword = new JTextField();
-    JTextField inEmail = new JTextField();
-
-    String pass;
-    String email;
-
-    boolean isValid = false;
-    boolean isStrongPassword = false;
-    boolean isValidAccType = false;
-
-
-    /**
-     
-Launch the application.*/
-public GUI_SignUp() throws Exception {
-        database = LibraryDatabase.getInstance();
-
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 900, 600);
-
-        accTypeNames.add("Student");
-        accTypeNames.add("Visitor");
-        accTypeNames.add("Faculty");
-        accTypeNames.add("NonFaculty");
-
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        lblNewLabel_4.setBounds(16, 82, 397, 36);
-        contentPane.add(lblNewLabel_4);
-        
-        inEmail = new JTextField();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(6, 6, 888, 64);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Sign Up ");
+		lblNewLabel.setForeground(new Color(234, 77, 76));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 29));
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Email:");
+		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewLabel_1.setBounds(149, 189, 61, 23);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Password: ");
+		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(149, 249, 102, 24);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Account Type:");
+		lblNewLabel_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewLabel_3.setBounds(149, 324, 154, 36);
+		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Enter the following information:");
+		lblNewLabel_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewLabel_4.setBounds(16, 82, 397, 36);
+		contentPane.add(lblNewLabel_4);
+		
+		
+		
+		inEmail = new JTextField();
 		inEmail.setBounds(355, 191, 372, 24);
 		contentPane.add(inEmail);
 		inEmail.setColumns(10);
@@ -176,6 +214,7 @@ public GUI_SignUp() throws Exception {
         		dispose();
         		GUI_SignUP_Login frame = new GUI_SignUP_Login();
         		frame.setVisible(true);
+        		JOptionPane.showMessageDialog(null, regSuccess);
         	}
         	
         	else {
@@ -206,6 +245,11 @@ public GUI_SignUp() throws Exception {
 
 				e1.printStackTrace();
 			}
+		}
+		
+		else if (e.getSource() == btnBack) {
+			setVisible(false);
+			try {
 			
 				GUI_SignUP_Login frame1 = new GUI_SignUP_Login();
 				frame1.setVisible(true);
@@ -216,19 +260,6 @@ public GUI_SignUp() throws Exception {
 				e1.printStackTrace();
 			}
 		}
-
-        else if (e.getSource() == btnBack) {
-            setVisible(false);
-            try {
-
-                GUI_Menu frame1 = new GUI_Menu();
-                frame1.setVisible(true);
-
-            } catch (Exception e1) {
-
-                e1.printStackTrace();
-            }
-        }
-
-    }
+		
+	}
 }

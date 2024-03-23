@@ -167,6 +167,7 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
 	            	if (registeredAccount.getAccType().equals("Student") || registeredAccount.getAccType().equals("NonFaculty") || registeredAccount.getAccType().equals("Faculty") || registeredAccount.getAccType().equals("Visitor")) {
 	            		setVisible(false);
 		            	try {
+		            		
 							GUI_Home_VisNonFaculty window  = new GUI_Home_VisNonFaculty(registeredAccount);
 							window.setVisible(true);
 						} catch (Exception e1) {
@@ -248,8 +249,3 @@ public class GUI_SignUP_Login extends JFrame implements ActionListener {
     	}
 	}
 }
-	            
-		
-	
-
-

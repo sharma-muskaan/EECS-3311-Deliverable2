@@ -168,7 +168,12 @@ public class GUI_EnableItem extends JFrame implements ActionListener {
 				}
 			}
 			
-			manager.enablePhysItem(item);
+			try {
+				manager.enablePhysItem(item);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Item has been enabled");
 		}
 		
