@@ -602,7 +602,4 @@ public class LibraryDatabase implements IterableCollection{
         	i++;
         }
     }
-	
-	
-	
 }
