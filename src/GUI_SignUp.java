@@ -22,6 +22,25 @@ private static LibraryDatabase database;
 
     Vector<String> accTypeNames = new Vector<String>();
     JComboBox<String> accTypeList = new JComboBox<String>();
+	/**
+	 * Create the frame.
+	 * @throws Exception 
+	 */
+	public GUI_SignUp() throws Exception {
+		System.out.println("sign up clicked");
+		database = LibraryDatabase.getInstance();
+		
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 900, 600);
+		
+		accTypeNames.add("Student");
+		accTypeNames.add("Visitor");
+		accTypeNames.add("Faculty");
+		accTypeNames.add("NonFaculty");
+		
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
     JButton btnSignUp = new JButton("Sign Up");
     JButton btnBack = new JButton("Back");
@@ -87,6 +106,12 @@ public GUI_SignUp() throws Exception {
 		btnBack.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btnBack.setBounds(701, 450, 154, 62);
 		contentPane.add(btnBack);
+		
+		setSize(900, 600);  
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	private void register(String email, String password, String accType) throws Exception{
@@ -158,11 +183,7 @@ public GUI_SignUp() throws Exception {
         	}
     		
         }
-        
-        
-        
-        
-        
+   
     }
 	
 	@Override
@@ -186,7 +207,14 @@ public GUI_SignUp() throws Exception {
 				e1.printStackTrace();
 			}
 			
-			
+				GUI_SignUP_Login frame1 = new GUI_SignUP_Login();
+				frame1.setVisible(true);
+				frame1.setSize(900, 600);
+				
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
 		}
 
         else if (e.getSource() == btnBack) {

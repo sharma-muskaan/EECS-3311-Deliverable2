@@ -24,11 +24,11 @@ public class LibraryManager {
 	
 	public void enablePhysItem(PhysicalItem physItem) {
 		//Insert update to csv database file.
-		physItem.disable();
+		physItem.enable();
 	}
 	
 	public void disablePhysItem(PhysicalItem physItem) {
 		//Insert update to csv database file.
-		physItem.enable();
+		physItem.disable();
 	}
 }
