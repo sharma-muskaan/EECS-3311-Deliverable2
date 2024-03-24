@@ -152,6 +152,7 @@ public class GUI_Home_VisNonFaculty extends JFrame implements ActionListener {
 			digitems = ((Faculty) account1).getCourseBookHistory();
 			
 			for (DigitalItem d : digitems) {
+				
 				if(account1.newerEdition(digitems, d) == true) {
 					JOptionPane.showMessageDialog(null, d.getName() + " has a newer edition");
 				}
