@@ -14,9 +14,8 @@ public class JUnit_Testing {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void req11() throws Exception {
 		LibraryDatabase database = LibraryDatabase.getInstance();
-		LibraryHomePage homePage = new LibraryHomePage();
 		database.loadPhysItems(database.physItemsDB, null);
 		database.loadDigItems(database.digItemsDB, null);
 		database.loadCourses(database.coursesDB, null);
