@@ -6,11 +6,18 @@ import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class JUnit_Test {
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		database.loadPhysItems(database.physItemsDB, null);
+		database.loadDigItems(database.digItemsDB, null);
+		database.loadCourses(database.coursesDB, null);
+		database.loadAccounts();
+		database.purgeFinishedCourses();
 	}
 
 	@After
@@ -18,87 +25,11 @@ public class JUnit_Test {
 	}
 	
 	@Test
-	public void req11() throws Exception {
-		LibraryDatabase database = LibraryDatabase.getInstance();
-		database.loadPhysItems(database.physItemsDB, null);
-		database.loadDigItems(database.digItemsDB, null);
-		database.loadCourses(database.coursesDB, null);
-		database.loadAccounts();
-		database.purgeFinishedCourses();
-	}
-	
-	@Test
-	public void req8() throws Exception {
-		String email = "mgr@yorku.ca";
-		String pass = "mgr_access";
-		
-		LibraryManager manager = new LibraryManager(email, pass);
-		LibraryDatabase database = LibraryDatabase.getInstance();
-		
-		database.loadPhysItems(database.physItemsDB, null);
-		database.loadDigItems(database.digItemsDB, null);
-		database.loadCourses(database.coursesDB, null);
-		database.loadAccounts();
-		database.purgeFinishedCourses();
-		
-		String itemType = "Book";
-		String genre = "Young Adult";
-		String name = "The Hunger Games";
-		String author = "Suzanne Collins";
-		String edition = "4th";
-		String publisherName = "Scholastic";
-		String itemID = "34256140";
-		String libLocation = "Scott Library";
-		int copyNumber = 20;
-		Date dueDate = null;
-		boolean rentalEnabled = true;
-		double price = -1.0;
-		
-		DigitalItem newDigItem = new DigitalItem(itemType, genre, name, author, edition, publisherName);
-		Book newPhysItem = new Book(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
-		
-		manager.addDigitalItem(newDigItem);
-		assert (database.digItemsDB.contains(newDigItem));
-		database.loadPhysItems(database.physItemsDB, null);
-		assert (database.digItemsDB.contains(newDigItem));
-		
-		manager.addPhysicalItem(newPhysItem);
-		assert (database.physItemsDB.contains(newPhysItem));
-		database.loadDigItems(database.digItemsDB, null);
-		assert (database.digItemsDB.contains(newDigItem));
-		
-		manager.disablePhysItem(newPhysItem);
-		//check that newPhysItem has been updated
-		assert (newPhysItem.isRentalEnabled() == false);
-		//check that ArrayList has been updated
-		assert (database.physItemsDB.contains(newPhysItem));
-		//check that CSV has been updated
-		database.loadPhysItems(database.physItemsDB, null);
-		assert (database.physItemsDB.contains(newPhysItem));
-		
-		manager.enablePhysItem(newPhysItem);
-		//check that newPhysItem has been updated
-		assert (newPhysItem.isRentalEnabled() == true);
-		//check that ArrayList has been updated
-		assert (database.physItemsDB.contains(newPhysItem));
-		//check that CSV has been updated
-		database.loadPhysItems(database.physItemsDB, null);
-		assert (database.physItemsDB.contains(newPhysItem));
-	}
-	
-	@Test
     public void req3() throws Exception {
-		
-		LibraryDatabase database = LibraryDatabase.getInstance();
-		database.loadPhysItems(database.physItemsDB, null);
-		database.loadDigItems(database.digItemsDB, null);
-		database.loadCourses(database.coursesDB, null);
-		database.loadAccounts();
-		database.purgeFinishedCourses();
-		
         Date d = new Date();
-        Account a = new ConcreteAccountDecorator("email", "email", "Student", 0, 0, false);
-        PhysicalItem b = new Book("Book","Harry Potter","JK Rowling","6th,Bloomsbury","123,York Stacy",null, null, 20,d,true,-1.0);
+        LibraryDatabase database = LibraryDatabase.getInstance();
+        Account a = database.getUsers().get(0);
+        PhysicalItem b = new Book("Book","Harry Potter","JK Rowling","6th,Bloomsbury","123,York Stacy", null, null, 20,d,true,-1.0);
         b.setCopyNumber(-1);
         b.setDueDate(new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000)));
         String result = b.warningString(a);
@@ -112,7 +43,68 @@ public class JUnit_Test {
         b.setDueDate(new Date(System.currentTimeMillis() + (3*24 * 60 * 60 * 1000))); 
         String result4 = b.warningString(a);
         assertEquals("3 Days till " + b.getName() +" is due for return", result4);
+        assertEquals(a.getOverdueItems(), 1);
+        a.setOverdueItems(0);
+        database.updateAccounts();
     }
+	
+	@Test
+	public void req8() throws Exception {
+		//Start Up + Initialization
+		String email = "mgr@yorku.ca";
+		String pass = "mgr_access";
+		
+		LibraryManager manager = new LibraryManager(email, pass);
+		LibraryDatabase database = LibraryDatabase.getInstance();
+				
+		//Digital Item Creation Check
+		DigitalItem newDigItem = new DigitalItem("Textbook", "Education", "Introduction to Grass 101", "Lester Kibnob", "Third", "TextbookEducators Inc.");
+		manager.addDigitalItem(newDigItem);
+		assertTrue(database.digItemsDB.contains(newDigItem));
+		
+		//Book Creation Check
+		Book newBook = new Book ("Book", "Fractured", "Karin Slaughter", "Third", "MysteryBook Inc.", "33567411", "Mystery C3", 20, null, true, 24.99);
+		manager.addPhysicalItem(newBook);
+		assertTrue(database.physItemsDB.contains(newBook));
+		
+		//Magazine Creation Check
+		Magazine newZine = new Magazine ("Magazine", "Computer Now", "Stephanie Coolier", "8th", "Magazine Central Inc.", "34562", "Magazines F5", 20, null, true, 0.0);
+		manager.addPhysicalItem(newZine);
+		assertTrue(database.physItemsDB.contains(newZine));
+		
+		//Magazine Creation Check
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", "Alt Music Inc.", "87594", "CD A1", 20, null, true, 15.99);
+		manager.addPhysicalItem(newCD);
+		assertTrue(database.physItemsDB.contains(newCD));
+		
+		//Magazine Creation Check
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", "Disney Inc.", "39583", "Children's Movies B4", 20, null, true, 0.0);
+		manager.addPhysicalItem(newDVD);
+		assertTrue(database.physItemsDB.contains(newDVD));
+		
+		//Disable Item Testing
+		manager.disablePhysItem(newBook);
+		//check that newPhysItem has been updated
+		assertFalse(newBook.isRentalEnabled());
+		//check that ArrayList has been updated
+		assertTrue(database.physItemsDB.contains(newBook));
+		
+		//Enable Item Testing
+		manager.enablePhysItem(newBook);
+		//check that newBook has been updated
+		assertTrue(newBook.isRentalEnabled());
+		//check that ArrayList has been updated
+		assertTrue(database.physItemsDB.contains(newBook));
+		
+		database.digItemsDB.remove(newDigItem);
+		database.physItemsDB.remove(newBook);
+		database.physItemsDB.remove(newZine);
+		database.physItemsDB.remove(newCD);
+		database.physItemsDB.remove(newDVD);
+		
+		database.updateDigItems(database.digItemsDB, "src/csv/digItem_database.csv");
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
 	
 	@Test
     public void req9() throws Exception {
