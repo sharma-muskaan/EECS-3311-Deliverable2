@@ -134,18 +134,17 @@ public class ConcreteAccountDecorator implements Account {
 
 
 	@Override
-	public void request(DigitalItem b) {
+    public String request(DigitalItem b) {
 
-		if(b.getItemType().equals("Textbook")){
-			this.reqs.add(b);
-			System.out.println(b.getItemType() + " " + b.getName() + " " +  b.getEdition() + " has been requested");
-		}
-		else{
-			this.reqs.add(b);
-			System.out.println(b.getItemType() + " " + b.getName() + " has been requested");
-		}
-	}
-
+        if(b.getItemType().equals("Textbook")){
+            this.reqs.add(b);
+            return (b.getItemType() + " " + b.getName() + " " +  b.getEdition() + " has been requested");
+        }
+        else{
+            this.reqs.add(b);
+            return (b.getItemType() + " " + b.getName() + " has been requested");
+        }
+    }
 	public void sort(){
 		int index =0;
 		 for(int i =0; i<reqs.size(); i++){

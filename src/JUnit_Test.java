@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Date;
 
 import org.junit.After;
@@ -82,4 +85,61 @@ public class JUnit_Test {
 		database.loadPhysItems(database.physItemsDB, null);
 		assert (database.physItemsDB.contains(newPhysItem));
 	}
+	
+	@Test
+    public void req3() throws Exception {
+		
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		database.loadPhysItems(database.physItemsDB, null);
+		database.loadDigItems(database.digItemsDB, null);
+		database.loadCourses(database.coursesDB, null);
+		database.loadAccounts();
+		database.purgeFinishedCourses();
+		
+        Date d = new Date();
+        Account a = new ConcreteAccountDecorator("email", "email", "Student", 0, 0, false);
+        PhysicalItem b = new Book("Book","Harry Potter","JK Rowling","6th,Bloomsbury","123,York Stacy",null, null, 20,d,true,-1.0);
+        b.setCopyNumber(-1);
+        b.setDueDate(new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000)));
+        String result = b.warningString(a);
+        assertEquals("The book: " + b.getName() +" OVERDUE PLEASE RETURN IT", result);
+        b.setDueDate(new Date(System.currentTimeMillis() + (12 * 60 * 60 * 1000)));
+        String result2 = b.warningString(a);
+        assertEquals("The book: " + b.getName() +" is due in 12 hours", result2);
+        b.setDueDate(new Date(System.currentTimeMillis() + (24 * 60 * 60 * 1000)));
+        String result3 = b.warningString(a);
+        assertEquals("1 Day till " + b.getName() +" is due for return", result3);
+        b.setDueDate(new Date(System.currentTimeMillis() + (3*24 * 60 * 60 * 1000))); 
+        String result4 = b.warningString(a);
+        assertEquals("3 Days till " + b.getName() +" is due for return", result4);
+    }
+	
+	@Test
+    public void req9() throws Exception {
+        Account a = new ConcreteAccountDecorator("email", "email", "Student", 0, 0, false);
+        DigitalItem b = new DigitalItem("Textbook", "Educational", "Science TextBook", "K", "3rd", "York");
+        DigitalItem b2 = new DigitalItem("Textbook", "Self-Improvement", "Yoga TextBook", "K", "2nd", "York");
+        DigitalItem b3 = new DigitalItem("Book", "Horror", "The Tide", "K", "1st", "York");
+
+        assertEquals("Textbook Yoga TextBook 2nd has been requested",a.request(b2));
+        assertEquals("Book The Tide has been requested",a.request(b3));
+        assertEquals("Textbook Science TextBook 3rd has been requested",a.request(b));
+
+        
+        a.sort();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        a.printReqs();
+        System.setOut(System.out);
+
+        String printedOutput = outContent.toString();
+
+        assertTrue(printedOutput.contains("Requested Items Queue (Educational Textbooks have higher priority):"));
+        assertTrue(printedOutput.contains("1. Textbook Science TextBook"));
+        assertTrue(printedOutput.contains("2. Book The Tide"));
+        assertTrue(printedOutput.contains("3. Textbook Yoga TextBook"));
+        
+    }
 }

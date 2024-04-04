@@ -122,8 +122,8 @@ public class AccountDecorator implements Account {
 	}
 
 	@Override
-	public void request(DigitalItem b) {
-		wrappee.request(b);
+	public String request(DigitalItem b) {
+		return wrappee.request(b);
 	}
 
 	@Override
