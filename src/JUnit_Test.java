@@ -78,8 +78,6 @@ public class JUnit_Test {
                 "Textbook Name: Physics Textbook\n" +
                 "Textbook Name: Physics Textbook\n";
         assertEquals(expectedOutput, outContent.toString());
-        
-       
 	}
 	
 	@Test
