@@ -28,6 +28,5 @@ public class Client {
 		database.purgeFinishedCourses();
 		//database.updateAccounts();
 		//database.loadBankData();
-		homePage.loggedOutHomePage();
 	}
 }
