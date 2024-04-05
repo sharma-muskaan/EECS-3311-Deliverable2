@@ -1,4 +1,5 @@
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -77,7 +78,14 @@ public class JUnit_Test {
                 "Textbooks previously used by the randy@yorku.ca:\n" +
                 "Textbook Name: Physics Textbook\n" +
                 "Textbook Name: Physics Textbook\n";
-        assertEquals(expectedOutput, outContent.toString());
+        String[] expectedLines = expectedOutput.split("\r?\n");
+        String[] actualLines = outContent.toString().split("\r?\n");
+
+        assertEquals(expectedLines.length, actualLines.length, "Number of lines does not match");
+
+        for (int i = 0; i < expectedLines.length; i++) {
+            assertEquals(expectedLines[i], actualLines[i], "Mismatch at line " + (i + 1));
+        }
 	}
 	
 	@Test
@@ -106,7 +114,15 @@ public class JUnit_Test {
 
         // Verify the output
         String expectedOutput = "New edition available!\n";
-        assertEquals(expectedOutput, outContent.toString());
+        
+        String[] expectedLines = expectedOutput.split("\r?\n");
+        String[] actualLines = outContent.toString().split("\r?\n");
+
+        assertEquals(expectedLines.length, actualLines.length, "Number of lines does not match");
+
+        for (int i = 0; i < expectedLines.length; i++) {
+            assertEquals(expectedLines[i], actualLines[i], "Mismatch at line " + (i + 1));
+        }
     }
 
     @Test
@@ -159,7 +175,15 @@ public class JUnit_Test {
 
         // Verify the output
         String expectedOutput = "Management notfication: textbook not available!\n";
-        assertEquals(expectedOutput, outContent.toString());
+        
+        String[] expectedLines = expectedOutput.split("\r?\n");
+        String[] actualLines = outContent.toString().split("\r?\n");
+
+        assertEquals(expectedLines.length, actualLines.length, "Number of lines does not match");
+
+        for (int i = 0; i < expectedLines.length; i++) {
+            assertEquals(expectedLines[i], actualLines[i], "Mismatch at line " + (i + 1));
+        }
     }
 
     @Test
