@@ -29,13 +29,4 @@ public class Student extends AccountDecorator {
 	public void setDigitalCourseBooks(ArrayList<DigitalItem> digitalCourseBooks) {
 		this.digitalCourseBooks = digitalCourseBooks;
 	}
-	
-	protected void makeCopy(Item textbook) {
-		//TODO - IMPLEMENT
-	}
-	
-	protected void removeCopy(Item textbook) {
-		//TODO - IMPLEMENT
-	}
-
 }
