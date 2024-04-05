@@ -217,13 +217,22 @@ public class JUnit_Testing {
     @Test 
     public void testShowRecommendations_recommendationsShown() throws Exception {
     	LibraryDatabase database = LibraryDatabase.getInstance();
+    	ArrayList<Item> expectedItemsList = new ArrayList<Item>();
+    	ArrayList<Item> actualItemsList = new ArrayList<Item>();
     	
-    	PhysicalItem p1 = new Book("Book", "The Great Gatsby", "auth1", "2nd", "pub1", "id1", "book", 1, new Date(124, 6, 23), false, 10.67);
-    	PhysicalItem p2 = new Book("Book", "Great Expectations", "auth2", "2nd", "pub1", "id2", "book", 1, new Date(124, 6, 23), false, 13.67);
-    	PhysicalItem p3 = new Book("Book", "The Great Alone", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 16.67);
-    	PhysicalItem p4 = new Book("Book", "The Fellowship of the Ring", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
-    	PhysicalItem p5 = new Book("Book", "Catching Fire", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
-    	PhysicalItem p6 = new Book("Book", "Mockingjay", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 0);
+    	String searchQuery = "physics";
+    	
+    	Item p1 = new DigitalItem("Textbook", "Educational", "Physics", "Mark Smith", "2nd", "McGraw-Hill Education");
+    	Item p2 = new DigitalItem("Textbook", "Educational", "Physics II", "Michael Johnson", "3rd", "HarperCollins");
+    	
+    	expectedItemsList.add(p1);
+    	expectedItemsList.add(p2);
+    	
+    	actualItemsList = database.getRecommendations(searchQuery);
+    	
+    	for (int i = 0; i < actualItemsList.size(); i ++) {
+    		assertEquals(expectedItemsList.get(i).getName(), actualItemsList.get(i).getName());
+    	}
     }
     
     
