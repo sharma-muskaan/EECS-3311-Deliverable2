@@ -208,8 +208,6 @@ public class JUnit_Testing {
     	
     	database.loadPurchasableBooks(physItemList);
     	
-    	System.out.println(physItemList);
-    	
     	for (int i = 0; i < physItemList.size(); i++) {
     		assertEquals(expectedPhysItemList.get(i).getName(), physItemList.get(i).getName());
     	}
