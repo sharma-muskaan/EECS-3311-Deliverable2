@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class JUnit_Testing {
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 		LibraryDatabase database = LibraryDatabase.getInstance();
 		database.loadPhysItems(database.physItemsDB, null);
 		database.loadDigItems(database.digItemsDB, null);
@@ -192,40 +192,40 @@ public class JUnit_Testing {
     public void showPurchasableItems() throws Exception {
     	LibraryDatabase database = LibraryDatabase.getInstance();
     	
-    	PhysicalItem p1 = new CD("CD", "cd1", "auth1", "2nd", "pub1", "id1", "cd", 1, new Date(124, 6, 23), false, 10.67);
-    	PhysicalItem p2 = new DVD("DVD", "dvd1", "auth2", "2nd", "pub1", "id2", "dvd", 1, new Date(124, 6, 23), false, 13.67);
-    	PhysicalItem p3 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 16.67);
-    	PhysicalItem p4 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
-    	PhysicalItem p5 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
-    	PhysicalItem p6 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 0);
+    	PhysicalItem p1 = new Magazine("Magazine", "People", "Rebecca Brown", "8th", "Dotdash Meredith", "876", "York Lanes", 20, null, false, 8.79);
+    	PhysicalItem p2 = new Book("Book", "Titanic", "Filson Young", "5th", "Nimbus", "212", "York Scott Main Floor", 20, null, false, 10.16);
+    	PhysicalItem p3 = new Magazine("Magazine", "National Geographic", "Various", "2023", "National Geographic", "321", "York Lanes", 20, null, false, 5.99);
+    	PhysicalItem p4 = new Magazine("Magazine", "Wired", "Various", "June 2024", "Condao Nast", "678", "York Lanes", 20, null, false, 6.5);
     	
-    	ArrayList<PhysicalItem> newPhysDB = new ArrayList<PhysicalItem>();
+    
     	ArrayList<PhysicalItem> physItemList = new ArrayList<PhysicalItem>();
     	ArrayList<PhysicalItem> expectedPhysItemList = new ArrayList<PhysicalItem>();
-    	
-    	database.physItemsDB.clear();
-    	database.physItemsDB.add(p1);
-    	database.physItemsDB.add(p2);
-    	database.physItemsDB.add(p3);
-    	database.physItemsDB.add(p4);
-    	database.physItemsDB.add(p5);
-    	database.physItemsDB.add(p6);
     	
     	expectedPhysItemList.add(p1);
     	expectedPhysItemList.add(p2);
     	expectedPhysItemList.add(p3);
+    	expectedPhysItemList.add(p4);
     	
-    	for (PhysicalItem p : database.physItemsDB) {
-			if (p.price > 0) {
-				physItemList.add(p);
-			}
-		}
+    	database.loadPurchasableBooks(physItemList);
     	
+    	System.out.println(physItemList);
     	
     	for (int i = 0; i < physItemList.size(); i++) {
-    		assertEquals(expectedPhysItemList.get(i), physItemList.get(i));
+    		assertEquals(expectedPhysItemList.get(i).getName(), physItemList.get(i).getName());
     	}
         
+    }
+    
+    @Test 
+    public void testShowRecommendations_recommendationsShown() throws Exception {
+    	LibraryDatabase database = LibraryDatabase.getInstance();
+    	
+    	PhysicalItem p1 = new Book("Book", "The Great Gatsby", "auth1", "2nd", "pub1", "id1", "book", 1, new Date(124, 6, 23), false, 10.67);
+    	PhysicalItem p2 = new Book("Book", "Great Expectations", "auth2", "2nd", "pub1", "id2", "book", 1, new Date(124, 6, 23), false, 13.67);
+    	PhysicalItem p3 = new Book("Book", "The Great Alone", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 16.67);
+    	PhysicalItem p4 = new Book("Book", "The Fellowship of the Ring", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
+    	PhysicalItem p5 = new Book("Book", "Catching Fire", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
+    	PhysicalItem p6 = new Book("Book", "Mockingjay", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 0);
     }
     
     
