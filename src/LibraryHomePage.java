@@ -13,26 +13,26 @@ public class LibraryHomePage {
 		input = new Scanner(System.in);
     }
 	
-    protected void loggedOutHomePage() throws Exception {
-        
-    	while (true) {
-        	System.out.println("L = Log In");
-            System.out.println("R = Register");
-            String nextPage = input.nextLine();
-            
-            if (nextPage.equals("L")) {
-            	login();
-            }
-            
-            if (nextPage.equals("R")) {
-            	register();
-            }
-            else {
-            	System.out.println("Please enter a valid input!");
-            }
-            
-    	}
-    }
+//    protected void loggedOutHomePage() throws Exception {
+//        
+//    	while (true) {
+//        	System.out.println("L = Log In");
+//            System.out.println("R = Register");
+//            String nextPage = input.nextLine();
+//            
+//            if (nextPage.equals("L")) {
+//            	login();
+//            }
+//            
+//            if (nextPage.equals("R")) {
+//            	register();
+//            }
+//            else {
+//            	System.out.println("Please enter a valid input!");
+//            }
+//            
+//    	}
+//    }
     
     private void loggedInHomePageFaculty(Faculty user) throws Exception {
     	// used for testing course database updating + testing updateCourseBook in Course
@@ -252,62 +252,62 @@ public class LibraryHomePage {
     	System.exit(0);
     }
     
-    private void register() throws Exception{
-    	LibraryHomePage newAccount = new LibraryHomePage();
-    	String email;
-    	String password;
-    	
-    	while (true) {
-    		System.out.println("Enter email: ");
-            email = input.nextLine();
-            
-            if (newAccount.isValidEmail(email)) {
-                break;
-            }
-            System.out.println("Please enter a valid email.");
-    	}
- 	
-        while (true) {          
-            System.out.println("Enter password: ");
-            password = input.nextLine();
-            
-            if (newAccount.isStrongPassword(password)) {
-                break; 
-            }
-            
-            System.out.println("Password is not strong enough. Please make a new password with the following requirements:");
-            System.out.println("- At least 8 characters long");
-            System.out.println("- At least one uppercase letter");
-            System.out.println("- At least one lowercase letter");
-            System.out.println("- At least one digit");
-            System.out.println("- At least one symbol");
-        }
-        
-        // This would be replaced with a button in implementation.
-        System.out.println("Select Account Type: ");
-        String accType = input.nextLine();
-        
-        boolean verifiedByManager = newAccount.additionalValidation(email);
-        
-        if ((verifiedByManager == false) && !(accType.equals("Visitor"))) {
-        	System.out.println("Your account could not be validated. Please try signing up as a Visitor instead.");
-            loggedOutHomePage();
-        }
-        
-        Account accountExists = database.iterateDB(email, password);
-        
-        if (accountExists != null) {
-        	System.out.println("You already have an account. Please try logging in instead!");
-        }
-        else {
-            // TODO - Add some validation method prior to account creation if not Visitor.
-    		database.accountGenerator(email, password, accType, 0, 0, false);
-    		database.updateAccounts();
-    		System.out.println("Registration successful! Please login.");
-        }
-        
-        loggedOutHomePage();
-    }
+//    private void register() throws Exception{
+//    	LibraryHomePage newAccount = new LibraryHomePage();
+//    	String email;
+//    	String password;
+//    	
+//    	while (true) {
+//    		System.out.println("Enter email: ");
+//            email = input.nextLine();
+//            
+//            if (newAccount.isValidEmail(email)) {
+//                break;
+//            }
+//            System.out.println("Please enter a valid email.");
+//    	}
+// 	
+//        while (true) {          
+//            System.out.println("Enter password: ");
+//            password = input.nextLine();
+//            
+//            if (newAccount.isStrongPassword(password)) {
+//                break; 
+//            }
+//            
+//            System.out.println("Password is not strong enough. Please make a new password with the following requirements:");
+//            System.out.println("- At least 8 characters long");
+//            System.out.println("- At least one uppercase letter");
+//            System.out.println("- At least one lowercase letter");
+//            System.out.println("- At least one digit");
+//            System.out.println("- At least one symbol");
+//        }
+//        
+//        // This would be replaced with a button in implementation.
+//        System.out.println("Select Account Type: ");
+//        String accType = input.nextLine();
+//        
+//        boolean verifiedByManager = newAccount.additionalValidation(email);
+//        
+//        if ((verifiedByManager == false) && !(accType.equals("Visitor"))) {
+//        	System.out.println("Your account could not be validated. Please try signing up as a Visitor instead.");
+//            loggedOutHomePage();
+//        }
+//        
+//        Account accountExists = database.iterateDB(email, password);
+//        
+//        if (accountExists != null) {
+//        	System.out.println("You already have an account. Please try logging in instead!");
+//        }
+//        else {
+//            // TODO - Add some validation method prior to account creation if not Visitor.
+//    		database.accountGenerator(email, password, accType, 0, 0, false);
+//    		database.updateAccounts();
+//    		System.out.println("Registration successful! Please login.");
+//        }
+//        
+//        loggedOutHomePage();
+//    }
     
 
 	private void login() throws Exception{

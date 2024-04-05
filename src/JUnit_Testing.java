@@ -235,6 +235,63 @@ public class JUnit_Testing {
     	}
     }
     
+    @Test
+    public void testIsValidEmailTrue() throws Exception {
+    	LibraryHomePage hp = new LibraryHomePage();
+    	String email = "register@yorku.ca";
+    	boolean actualValidation = false;
+    	actualValidation = hp.isValidEmail(email);
+    	assertTrue(actualValidation);
+    }
+    
+    @Test
+    public void testIsValidEmailFalse() throws Exception {
+    	LibraryHomePage hp = new LibraryHomePage();
+    	String email = "registeryorku.ca";
+    	boolean actualValidation = false;
+    	actualValidation = hp.isValidEmail(email);
+    	assertFalse(actualValidation);
+    }
+    
+    @Test
+    public void testIsStrongPassword() throws Exception {
+        LibraryHomePage testAccount = new LibraryHomePage();
+
+        // Test with a strong password
+        assertTrue(testAccount.isStrongPassword("Str0ng@123"));
+
+        // less than 8 characters)
+        assertFalse(testAccount.isStrongPassword("Weak!2"));
+
+        // missing an uppercase letter
+        assertFalse(testAccount.isStrongPassword("weak@1234"));
+
+        // missing a lowercase letter
+        assertFalse(testAccount.isStrongPassword("STRONG@123"));
+
+        // missing a digit
+        assertFalse(testAccount.isStrongPassword("Strong@password"));
+
+        // missing a symbol
+        assertFalse(testAccount.isStrongPassword("Strong1234"));
+    }
+    
+    @Test
+    public void testAdditionalValidationWithValidEmail() throws Exception {
+        LibraryHomePage testAccount = new LibraryHomePage(); 
+
+        // ends with "yorku.ca"
+        assertTrue(testAccount.additionalValidation("user@yorku.ca"));
+    }
+
+    @Test
+    public void testAdditionalValidationWithInvalidEmail() throws Exception {
+        LibraryHomePage testAccount = new LibraryHomePage(); 
+
+        // does not end with "yorku.ca"
+        assertFalse(testAccount.additionalValidation("user@example.com"));
+    }
+    
     
 }
 
