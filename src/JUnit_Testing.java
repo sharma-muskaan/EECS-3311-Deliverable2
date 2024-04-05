@@ -187,31 +187,48 @@ public class JUnit_Testing {
         String expectedOutput = ""; // No notification expected
         assertEquals(expectedOutput, outContent.toString());
     }
+    
+    @Test
+    public void showPurchasableItems() throws Exception {
+    	LibraryDatabase database = LibraryDatabase.getInstance();
+    	
+    	PhysicalItem p1 = new CD("CD", "cd1", "auth1", "2nd", "pub1", "id1", "cd", 1, new Date(124, 6, 23), false, 10.67);
+    	PhysicalItem p2 = new DVD("DVD", "dvd1", "auth2", "2nd", "pub1", "id2", "dvd", 1, new Date(124, 6, 23), false, 13.67);
+    	PhysicalItem p3 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 16.67);
+    	PhysicalItem p4 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
+    	PhysicalItem p5 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, -1);
+    	PhysicalItem p6 = new Book("Book", "book1", "auth3", "2nd", "pub1", "id3", "book", 1, new Date(124, 6, 23), false, 0);
+    	
+    	ArrayList<PhysicalItem> newPhysDB = new ArrayList<PhysicalItem>();
+    	ArrayList<PhysicalItem> physItemList = new ArrayList<PhysicalItem>();
+    	ArrayList<PhysicalItem> expectedPhysItemList = new ArrayList<PhysicalItem>();
+    	
+    	database.physItemsDB.clear();
+    	database.physItemsDB.add(p1);
+    	database.physItemsDB.add(p2);
+    	database.physItemsDB.add(p3);
+    	database.physItemsDB.add(p4);
+    	database.physItemsDB.add(p5);
+    	database.physItemsDB.add(p6);
+    	
+    	expectedPhysItemList.add(p1);
+    	expectedPhysItemList.add(p2);
+    	expectedPhysItemList.add(p3);
+    	
+    	for (PhysicalItem p : database.physItemsDB) {
+			if (p.price > 0) {
+				physItemList.add(p);
+			}
+		}
+    	
+    	
+    	for (int i = 0; i < physItemList.size(); i++) {
+    		assertEquals(expectedPhysItemList.get(i), physItemList.get(i));
+    	}
+        
+    }
+    
+    
 }
 
-
-	
-//	@Test
-//    public void req3() throws Exception {
-//        Date d = new Date();
-//        LibraryDatabase database = LibraryDatabase.getInstance();
-//        Account a = database.getUsers().get(0);
-//        PhysicalItem b = new Book("Book","Harry Potter","JK Rowling","6th,Bloomsbury","123,York Stacy", null, null, 20,d,true,-1.0);
-//        b.setCopyNumber(-1);
-//        b.setDueDate(new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000)));
-//        String result = b.warningString(a);
-//        assertEquals("The book: " + b.getName() +" OVERDUE PLEASE RETURN IT", result);
-//        b.setDueDate(new Date(System.currentTimeMillis() + (12 * 60 * 60 * 1000)));
-//        String result2 = b.warningString(a);
-//        assertEquals("The book: " + b.getName() +" is due in 12 hours", result2);
-//        b.setDueDate(new Date(System.currentTimeMillis() + (24 * 60 * 60 * 1000)));
-//        String result3 = b.warningString(a);
-//        assertEquals("1 Day till " + b.getName() +" is due for return", result3);
-//        b.setDueDate(new Date(System.currentTimeMillis() + (3*24 * 60 * 60 * 1000))); 
-//        String result4 = b.warningString(a);
-//        assertEquals("3 Days till " + b.getName() +" is due for return", result4);
-//        assertEquals(a.getOverdueItems(), 1);
-//        a.setOverdueItems(0);
-//        database.updateAccounts();
-//    }
 
