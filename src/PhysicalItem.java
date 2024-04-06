@@ -67,7 +67,7 @@ public abstract class PhysicalItem extends Item {
 			System.out.println("Invalid Operation. Rentals are currently disabled for this item.");
 		}
 		
-		else if (user.getItemsBorrowed() > 10) {
+		else if (user.getItemsBorrowed() >= 10) {
 			System.out.println("Invalid Operation. You are not allowed to take more than 10 items out at a time.");
 		}
 		

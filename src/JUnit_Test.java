@@ -1,9 +1,11 @@
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.After;
@@ -24,6 +26,604 @@ public class JUnit_Test {
 
 	@After
 	public void tearDown() throws Exception {
+	}
+	
+	@Test
+	public void rentBookStudent() throws Exception {
+		// String email, String password, String accType,
+		//int itemsBorrowed, int overdueItems, boolean accountLocked
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		Calendar calendar = Calendar.getInstance();
+	    // Add one month to the current date
+	    calendar.add(Calendar.MONTH, 1);
+		
+		System.out.println(max.getPhysicalItemList());
+		 
+		// this item is technically a clone of the original so, need to check based on attributes
+		// copy number and calendar not checked bc variable and also hard coded to a value when copied
+		assertTrue(max.getPhysicalItemList().get(0).getItemType().equals(newBook.getItemType()));
+		assertTrue(max.getPhysicalItemList().get(0).getName().equals(newBook.getName()));
+		assertTrue(max.getPhysicalItemList().get(0).getAuthor().equals(newBook.getAuthor()));
+		assertTrue(max.getPhysicalItemList().get(0).getEdition().equals(newBook.getEdition()));
+		assertTrue(max.getPhysicalItemList().get(0).getPublisherName().equals(newBook.getPublisherName()));
+		assertTrue(max.getPhysicalItemList().get(0).getItemID().equals(newBook.getItemID()));
+		assertTrue(max.getPhysicalItemList().get(0).getLibLocation().equals(newBook.getLibLocation()));
+		assertTrue(max.getPhysicalItemList().get(0).isRentalEnabled() == newBook.rentalEnabled);
+		assertTrue(max.getPhysicalItemList().get(0).getPrice() == newBook.getPrice());
+		
+		database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
+	
+	@Test
+	public void rentCDFaculty() throws Exception {
+		// String email, String password, String accType,
+		//int itemsBorrowed, int overdueItems, boolean accountLocked
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newFaculty = new ConcreteAccountDecorator("jim@yorku.ca", "748hfy7Z*", 
+				"Faculty", 0, 0, false);
+		
+		Faculty jim = new Faculty(newFaculty);
+		
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		
+		arthur.addPhysicalItem(newCD);
+		
+		newCD.rentCopy(jim);
+		
+		Calendar calendar = Calendar.getInstance();
+	    // Add one month to the current date
+	    calendar.add(Calendar.MONTH, 1);
+		
+		System.out.println(jim.getPhysicalItemList());
+		 
+		// this item is technically a clone of the original so, need to check based on attributes
+		// copy number and calendar not checked bc variable and also hard coded to a value when copied
+		assertTrue(jim.getPhysicalItemList().get(0).isEqualTo(newCD));
+		
+		database.physItemsDB.remove(newCD);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
+	
+	@Test
+	public void rentMagazineNonFaculty() throws Exception {
+		// String email, String password, String accType,
+		//int itemsBorrowed, int overdueItems, boolean accountLocked
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newNonFaculty = new ConcreteAccountDecorator("Armen@yorku.ca", "o875hfa76&*", 
+				"Visitor", 0, 0, false);
+		
+		Visitor armen = new Visitor(newNonFaculty);
+		
+		Magazine newZine = new Magazine ("Magazine", "Computer Now", "Stephanie Coolier", "8th", 
+				"Magazine Central Inc.", "34562", "Magazines F5", 1, null, true, 20.99);
+		
+		arthur.addPhysicalItem(newZine);
+		
+		newZine.rentCopy(armen);
+		
+		Calendar calendar = Calendar.getInstance();
+	    // Add one month to the current date
+	    calendar.add(Calendar.MONTH, 1);
+		
+		System.out.println(armen.getPhysicalItemList());
+		 
+		// this item is technically a clone of the original so, need to check based on attributes
+		// copy number and calendar not checked bc variable and also hard coded to a value when copied
+		assertTrue(armen.getPhysicalItemList().get(0).isEqualTo(newZine));
+		
+		database.physItemsDB.remove(newZine);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
+	
+	@Test
+	public void oneDayOverdue() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(max.getPhysicalItemList().get(0).getDueDate());
+		c.add(Calendar.MONTH, -1); // change to last month bc can't change current day real time
+		c.add(Calendar.DAY_OF_MONTH, -1); // change num of days past due
+		
+		max.getPhysicalItemList().get(0).setDueDate(c.getTime());
+		
+		assertTrue(max.getPhysicalItemList().get(0).calculateFine() == 0.5);
+		
+		database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	public void tenDaysOverdue() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(max.getPhysicalItemList().get(0).getDueDate());
+		c.add(Calendar.MONTH, -1); // change to last month bc can't change current day real time
+		c.add(Calendar.DAY_OF_MONTH, -10); // change num of days past due
+		
+		max.getPhysicalItemList().get(0).setDueDate(c.getTime());
+		
+		assertTrue(max.getPhysicalItemList().get(0).calculateFine() == 5.0);
+		
+		database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	public void fifteenDaysOverdue() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(max.getPhysicalItemList().get(0).getDueDate());
+		c.add(Calendar.MONTH, -1); // change to last month bc can't change current day real time
+		c.add(Calendar.DAY_OF_MONTH, -15); // change num of days past due
+		
+		max.getPhysicalItemList().get(0).setDueDate(c.getTime());
+		
+		assertTrue(max.getPhysicalItemList().get(0).calculateFine() == 7.5);
+		
+		database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	public void rentingLimitTest() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Faculty", 0, 0, false);
+		
+		Faculty max = new Faculty(newStudent);
+		
+		Book mauriceBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", 
+				"Disney Inc.", "39583", "Children's Movies B4", 1, null, true, 30.99);
+		Magazine newZine = new Magazine ("Magazine", "Computer Now", "Stephanie Coolier", "8th", 
+				"Magazine Central Inc.", "34562", "Magazines F5", 1, null, true, 20.99);
+		Book pkdatabaseook = new Book ("Book", "Our Friends From Frolix 8",
+				"Philip K Dick", "Second",  "Orion Book", "94854", 
+				"SciFi T6", 4, null, true, 16.95);
+		Book ngBook = new Book ("Book", "The Graveyard Book",
+				"Neil Gaiman", "third",  "Morrow", "03645", 
+				"Fantasy U8", 4, null, true, 16.95);
+		Book cmqBook = new Book ("Book", "Red White and Royal Blue",
+				"Casey McQuiston", "first",  "Harper Collins", "2316", 
+				"Romance C4", 4, null, true, 16.95);
+		Book khBook = new Book ("Book", "Hounded","Kevin Hearne", "First",  
+				"Del Ray", "1234", "Fantasy T6", 4, null, true, 16.95);
+		Book stBook = new Book ("Book", "Class Act",
+				"Stuart Woods", "First",  "Putnam", "92382", 
+				"Mystery S6", 4, null, true, 16.95);
+		Book maBook = new Book ("Book", "The Handmaid's Tale",
+				"Margaret Atwood", "Fourth",  "Harper Collins", "9262447", 
+				"SciFi T6", 4, null, true, 16.95);
+		Book notRentedatabaseook = new Book ("Book", "Testing the Laws of Physics",
+				"John Criston", "First",  "Harper Collins", "71253", 
+				"Mystery T6", 4, null, true, 16.95);
+		
+		
+		arthur.addPhysicalItem(mauriceBook);
+		arthur.addPhysicalItem(newCD);
+		arthur.addPhysicalItem(newDVD);
+		arthur.addPhysicalItem(newZine);
+		arthur.addPhysicalItem(pkdatabaseook);
+		arthur.addPhysicalItem(ngBook);
+		arthur.addPhysicalItem(cmqBook);
+		arthur.addPhysicalItem(khBook);
+		arthur.addPhysicalItem(stBook);
+		arthur.addPhysicalItem(maBook);
+		arthur.addPhysicalItem(notRentedatabaseook);
+		
+		mauriceBook.rentCopy(max);
+		newCD.rentCopy(max);
+		newDVD.rentCopy(max);
+		newZine.rentCopy(max);
+		pkdatabaseook.rentCopy(max);
+		ngBook.rentCopy(max);
+		cmqBook.rentCopy(max);
+		khBook.rentCopy(max);
+		stBook.rentCopy(max);
+		maBook.rentCopy(max);
+		notRentedatabaseook.rentCopy(max); // this shouldn't be added to the list of rented books
+		
+		assertEquals(max.getPhysicalItemList().size(), 10);
+		
+		database.physItemsDB.remove(mauriceBook);
+		database.physItemsDB.remove(newCD);
+		database.physItemsDB.remove(newDVD);
+		database.physItemsDB.remove(newZine);
+		database.physItemsDB.remove(pkdatabaseook);
+		database.physItemsDB.remove(ngBook);
+		database.physItemsDB.remove(cmqBook);
+		database.physItemsDB.remove(khBook);
+		database.physItemsDB.remove(stBook);
+		database.physItemsDB.remove(maBook);
+		database.physItemsDB.remove(notRentedatabaseook);
+		
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
+	
+	@Test
+	public void accountLockedTest() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", 
+				"Disney Inc.", "39583", "Children's Movies B4", 1, null, true, 30.99);
+		
+		arthur.addPhysicalItem(newBook);
+		arthur.addPhysicalItem(newCD);
+		arthur.addPhysicalItem(newDVD);
+		
+		newBook.rentCopy(max);
+		newCD.rentCopy(max);
+		newDVD.rentCopy(max);
+		
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(max.getPhysicalItemList().get(0).getDueDate());
+		c.add(Calendar.MONTH, -1); // change to last month bc can't change current day real time
+		c.add(Calendar.DAY_OF_MONTH, -3); // change num of days past due
+		
+		for (int i = 0; i < max.getPhysicalItemList().size(); i++) {
+			max.getPhysicalItemList().get(i).setDueDate(c.getTime());
+			System.out.println(max.getPhysicalItemList().get(i).getDueDate());
+		}
+		
+		max.getPhysicalItemList().get(0).warningString(max);
+		
+		assertTrue(max.isAccountLocked());
+		
+		database.physItemsDB.remove(newBook);
+		database.physItemsDB.remove(newCD);
+		database.physItemsDB.remove(newDVD);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	public void accountNotLockedTest() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", 
+				"Disney Inc.", "39583", "Children's Movies B4", 1, null, true, 30.99);
+		
+		arthur.addPhysicalItem(newBook);
+		arthur.addPhysicalItem(newCD);
+		arthur.addPhysicalItem(newDVD);
+		
+		newBook.rentCopy(max);
+		newCD.rentCopy(max);
+		newDVD.rentCopy(max);
+		
+		max.getPhysicalItemList().get(0).warningString(max);
+		
+		assertTrue(max.isAccountLocked() == false); // check by default not locked when has three
+		
+		database.physItemsDB.remove(newBook);
+		database.physItemsDB.remove(newCD);
+		database.physItemsDB.remove(newDVD);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	public void itemLostAt15Days() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", 
+				"Disney Inc.", "39583", "Children's Movies B4", 1, null, true, 30.99);
+		
+		arthur.addPhysicalItem(newBook);
+		arthur.addPhysicalItem(newCD);
+		arthur.addPhysicalItem(newDVD);
+		
+		newBook.rentCopy(max);
+		
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(max.getPhysicalItemList().get(0).getDueDate());
+		c.add(Calendar.MONTH, -1); // change to last month bc can't change current day real time
+		c.add(Calendar.DAY_OF_MONTH, -15); // change num of days past due
+		
+		max.getPhysicalItemList().get(0).setDueDate(c.getTime());
+		
+		max.getPhysicalItemList().get(0).warningString(max);
+		
+		assertTrue(max.getPhysicalItemList().get(0).getCopyNumber() == -3);
+		// signifies lost item
+		
+		database.physItemsDB.remove(newBook);
+		database.physItemsDB.remove(newCD);
+		database.physItemsDB.remove(newDVD);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	// checking edge cases for lost item
+	public void itemNotLostat14Days() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", 
+				"Disney Inc.", "39583", "Children's Movies B4", 1, null, true, 30.99);
+		
+		arthur.addPhysicalItem(newBook);
+		arthur.addPhysicalItem(newCD);
+		arthur.addPhysicalItem(newDVD);
+		
+		newBook.rentCopy(max);
+		
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(max.getPhysicalItemList().get(0).getDueDate());
+		c.add(Calendar.MONTH, -1); // change to last month bc can't change current day real time
+		c.add(Calendar.DAY_OF_MONTH, -14); // change num of days past due
+		
+		max.getPhysicalItemList().get(0).setDueDate(c.getTime());
+		
+		max.getPhysicalItemList().get(0).warningString(max);
+		
+		assertTrue(max.getPhysicalItemList().get(0).getCopyNumber() != -3);
+		// signifies not lost
+		
+		database.physItemsDB.remove(newBook);
+		database.physItemsDB.remove(newCD);
+		database.physItemsDB.remove(newDVD);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	public void checkCopyNumChanged() throws Exception{
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 20, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+	
+		assertTrue(newBook.getCopyNumber() < 20);
+		
+		database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+		
+	}
+	
+	@Test
+	public void returnCopy() throws Exception {
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", 
+				"Disney Inc.", "39583", "Children's Movies B4", 1, null, true, 30.99);
+		
+		arthur.addPhysicalItem(newBook);
+		arthur.addPhysicalItem(newCD);
+		arthur.addPhysicalItem(newDVD);
+		
+		newBook.rentCopy(max);
+		newCD.rentCopy(max);
+		newDVD.rentCopy(max);
+		
+		
+		PhysicalItem copy = max.getPhysicalItemList().get(0);
+		
+		max.getPhysicalItemList().get(0).returnCopy(max);
+		assertTrue(max.getPhysicalItemList().contains(copy) == false);
+		
+		database.physItemsDB.remove(newBook);
+		database.physItemsDB.remove(newCD);
+		database.physItemsDB.remove(newDVD);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
+	
+	@Test
+	public void checkDueDate1Month() throws Exception {
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		newBook.rentCopy(max);
+		
+		// Get current date
+	    Calendar calendar = Calendar.getInstance();
+	    // Add one month to the current date
+	    calendar.add(Calendar.MONTH, 1);
+	    
+	    System.out.println(max.getPhysicalItemList().get(0).getDueDate());
+	    System.out.println(calendar.getTime());
+	    
+	    assertTrue(max.getPhysicalItemList().get(0).getDueDate().toString().equals(calendar.getTime().toString()));
+		// have to check as string since not same object exactly
+		
+	    database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
+	
+	@Test
+	public void rentingWithLockedAccount() throws Exception {
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, true);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		assertTrue(max.getPhysicalItemList().size() == 0);
+		// if account locked then item will not be added to array
+		
+		database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
+	}
+	
+	@Test
+	public void rentingDisabledItem() throws Exception {
+		LibraryDatabase database = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "First",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, false, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		assertTrue(max.getPhysicalItemList().size() == 0);
+		// if item disabled then item will not be added to array
+		
+		database.physItemsDB.remove(newBook);
+		database.updatePhysItems(database.physItemsDB, "src/csv/physItem_database.csv");
 	}
 	
 	@Test
@@ -316,7 +916,7 @@ public class JUnit_Test {
     }
 	
 	@Test
-    public void req3() throws Exception {
+    public void warningMessageTest() throws Exception {
         Date d = new Date();
         LibraryDatabase database = LibraryDatabase.getInstance();
         Account a = database.getUsers().get(0);
@@ -340,7 +940,7 @@ public class JUnit_Test {
     }
 	
 	@Test
-	public void req8() throws Exception {
+	public void managementTesting() throws Exception {
 		//Start Up + Initialization
 		String email = "mgr@yorku.ca";
 		String pass = "mgr_access";
@@ -398,7 +998,7 @@ public class JUnit_Test {
 	}
 	
 	@Test
-    public void req9() throws Exception {
+    public void makeAndListRequests() throws Exception {
         Account a = new ConcreteAccountDecorator("email", "email", "Student", 0, 0, false);
         DigitalItem b = new DigitalItem("Textbook", "Educational", "Science TextBook", "K", "3rd", "York");
         DigitalItem b2 = new DigitalItem("Textbook", "Self-Improvement", "Yoga TextBook", "K", "2nd", "York");
