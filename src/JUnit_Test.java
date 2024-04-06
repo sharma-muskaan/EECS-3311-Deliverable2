@@ -1,5 +1,9 @@
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -425,4 +429,47 @@ public class JUnit_Test {
         assertTrue(printedOutput.contains("3. Textbook Yoga TextBook"));
         
     }
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//Book
+    private Book book;
+ 
+    @Before
+    public void setUp() throws Exception {        
+        book = new Book("Fiction", "The Great Gatsby", "F. Scott Fitzgerald", "1st", 
+                        "Scribner", "123456", "Library", 1, 
+                        new Date(), true, 20.0);
+    }
+
+    @Test
+    public void isAvailableShouldReturnTrueWhenAvailable() {
+        book.setAvailable(true); 
+        assertTrue(book.isAvailable("Any Name"), "Book should be reported as available");
+    }
+
+    @Test
+    public void isAvailableShouldReturnFalseWhenNotAvailable() {
+        book.setAvailable(false); 
+        assertFalse(book.isAvailable("Any Name"), "Book should be reported as not available");
+    }
+	
+    private Book originalBook;
+
+    @Before
+    public void setUp2() throws Exception {
+        originalBook = new Book("Novel", "Example Book", "Author Name", "1st", 
+                                "Publisher Name", "001", "Library Section", 1, 
+                                new Date(), true, 25.0);
+    }
+
+    @Test
+    public void clonedBookShouldEqualOriginalButBeDifferentObject() {
+        PhysicalItem clonedBook = originalBook.clone();
+        assertNotSame(originalBook, clonedBook, "Cloned book should be a different object");
+        assertEquals(originalBook, clonedBook, "Cloned book should be equal to the original");
+    }
+    
+
+  
 }

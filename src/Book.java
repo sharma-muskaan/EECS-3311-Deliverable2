@@ -9,7 +9,6 @@ public class Book extends PhysicalItem {
 	public Book(String itemType, String name, String author, String edition, String publisherName, String itemID,
 			String libLocation, int copyNumber, Date dueDate, boolean rentalEnabled, double price) throws Exception {
 		super(itemType, name, author, edition, publisherName, itemID, libLocation, copyNumber, dueDate, rentalEnabled, price);
-		// TODO Auto-generated constructor stub
 	}
 	private boolean available;
 	
@@ -23,7 +22,6 @@ public class Book extends PhysicalItem {
 
 	@Override
 	public PhysicalItem clone() {
-		// TODO Auto-generated method stub
 		return new Book(this);
 	}
 }

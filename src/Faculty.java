@@ -61,22 +61,4 @@ public class Faculty extends AccountDecorator{
             System.out.println("Textbook Name: " + textbook.getName());
         }
     }
-    
-//    public void notifyNewEdition(Faculty user, DigitalItem Textbook) throws Exception {
-//    	String arr[] = new String[2];
-//    	arr = user.getEmail().split("@");
-//    	database.loadDigItems(textbooks, arr[0]);
-//    	
-//    	if()
-//    } 
-
-    
-    
-    
-
-    	
-    	
-      
-    
-
 }

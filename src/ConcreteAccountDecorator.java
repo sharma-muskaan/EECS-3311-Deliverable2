@@ -59,20 +59,15 @@ public class ConcreteAccountDecorator implements Account {
 	}
 
 	@Override
-	public void rentBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
-		
+	public void rentBook(PhysicalItem physItem) {	
 	}
 	
 	@Override
 	public void returnBook(PhysicalItem physItem) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void purchaseItem(Item item) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
