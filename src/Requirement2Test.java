@@ -484,21 +484,139 @@ class Requirement2Test {
 		
 	}
 	
+	@Test
+	void checkCopyNumChanged() throws Exception{
+		LibraryDatabase db = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 20, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
 	
+		assertTrue(newBook.getCopyNumber() < 20);
+		
+		db.physItemsDB.clear();
+		
+	}
 	
-	/**
-	 * List of Test cases to be implemented:
-	 * 
-	 * 2. Open online book ** no implementation of this either
-	 * 3. Subscribe to newsletter ** not sure I can do this
-	 * 5. Check copies
-	 * 	a) check that there are less copies once one's been rented
-	 *	b) check no more copies? 
-	 * 8. Check lost item
-	 * 	a) overdue but not lost
-	 * 	b) lost at 15
-	 * 	c) lost past 15
-	 * 9. check due date is 1 month
-	 */
+	@Test
+	void returnCopy() throws Exception {
+		LibraryDatabase db = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		CD newCD = new CD ("CD", "Lucky Break", "Jack Campbell", "First", 
+				"Alt Music Inc.", "87594", "CD A1", 1, null, true, 15.99);
+		DVD newDVD = new DVD ("DVD", "Cars", "Pixar", "2", 
+				"Disney Inc.", "39583", "Children's Movies B4", 1, null, true, 30.99);
+		
+		arthur.addPhysicalItem(newBook);
+		arthur.addPhysicalItem(newCD);
+		arthur.addPhysicalItem(newDVD);
+		
+		newBook.rentCopy(max);
+		newCD.rentCopy(max);
+		newDVD.rentCopy(max);
+		
+		
+		PhysicalItem copy = max.getPhysicalItemList().get(0);
+		
+		max.getPhysicalItemList().get(0).returnCopy(max);
+		assertTrue(max.getPhysicalItemList().contains(copy) == false);
+		
+		
+	}
+	
+	@Test
+	void checkDueDate1Month() throws Exception {
+		LibraryDatabase db = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		newBook.rentCopy(max);
+		
+		// Get current date
+	    Calendar calendar = Calendar.getInstance();
+	    // Add one month to the current date
+	    calendar.add(Calendar.MONTH, 1);
+	    
+	    System.out.println(max.getPhysicalItemList().get(0).getDueDate());
+	    System.out.println(calendar.getTime());
+	    
+	    assertTrue(max.getPhysicalItemList().get(0).getDueDate().toString().equals(calendar.getTime().toString()));
+		// have to check as string since not same object exactly
+		
+	}
+	
+	@Test
+	void rentingWithLockedAccount() throws Exception {
+		LibraryDatabase db = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, true);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "FIrst",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, true, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		assertTrue(max.getPhysicalItemList().size() == 0);
+		// if account locked then item will not be added to array
+		
+	}
+	
+	@Test
+	void rentingDisabledItem() throws Exception {
+		LibraryDatabase db = LibraryDatabase.getInstance();
+		LibraryManager arthur = new LibraryManager("alester@yorku.ca", "jdoighr^42");
+		ConcreteAccountDecorator newStudent = new ConcreteAccountDecorator("max@yorku.ca", "748hfy7Z*", 
+				"Student", 0, 0, false);
+		
+		Student max = new Student(newStudent);
+		
+		// create objects
+		Book newBook = new Book ("Book", "The Amazing Maurice and his Educated Rodents",
+				"Terry Pratchett", "First",  "Harper Collins", "29375", 
+				"SciFi T6", 4, null, false, 16.95);
+		
+		arthur.addPhysicalItem(newBook);
+		
+		newBook.rentCopy(max);
+		
+		assertTrue(max.getPhysicalItemList().size() == 0);
+		// if item disabled then item will not be added to array
+		
+	}
 
 }
